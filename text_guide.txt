@@ -1,0 +1,33 @@
+CONTEXT:
+We are designing a survey to understand students' willingness to pay to block/limit certain apps on their phone. We want to use something similar to Becker-DeGroot-Marshak elicitation mechanism. 
+
+Your job is to design a simple web app that goes through the instructions and questions, screen by screen, as a demo of this questionnaire. 
+
+
+
+DRAFT QUESTION ORDER:
+
+You are going to make some choices that will give you the chance to earn real rewards. To get these rewards, you will receive some tokens. These tokens have a value of $1000 COP, and can be exchanged for a Spotify gift card after one week that have that value.
+
+Comprehension check: How much is 1 token worth? ($1000 COP)
+Comprehension check: What can you exchange your tokens for? [rewards]
+
+To start, we are going to give you 10 tokens.
+
+(Put 10 tokens as a "counter" in the top right corner.)
+
+The choices you will make will involve setting limits for certain apps on your phone. If you choose to set a limit, and that option is chosen, then our team will actually set the limit on your phone for one week later today, and set a password so you cannot change it. So you should only select the options that you really prefer. 
+
+You will make multiple choices, and only one of your choices will randomly be selected to be implemented. This means that each question should be treated independently, and for every choice, you should give your honest answer.
+
+First, we want to ask you:
+
+Would you rather:
+RECEIVE 10 tokens (worth $10,000 COP)        OR         Block TikTok on your phone for 1 week
+RECEIVE 5 tokens (worth $5,000 COP)          OR     Block TikTok on your phone for 1 week
+(etc., for 3, 2, 0, and LOSE tokens, 2, 5)...
+
+Then the same choice for WhatsApp.
+
+
+
