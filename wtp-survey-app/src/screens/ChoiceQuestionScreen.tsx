@@ -10,6 +10,7 @@ interface ChoiceQuestionScreenProps {
   questionNumber: number;
   totalQuestions: number;
   onNext: () => void;
+  onBack: () => void;
 }
 
 export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
@@ -18,6 +19,7 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
   questionNumber,
   totalQuestions,
   onNext,
+  onBack,
 }) => {
   const [selected, setSelected] = useState<'tokens' | 'block' | null>(null);
   const { addChoice } = useSurvey();
@@ -104,13 +106,18 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
           </button>
         </div>
 
-        <Button
-          onClick={handleSubmit}
-          disabled={!selected}
-          className="w-full"
-        >
-          Continue
-        </Button>
+        <div className="flex gap-4">
+          <Button onClick={onBack} className="px-6">
+            Back
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            disabled={!selected}
+            className="flex-1"
+          >
+            Continue
+          </Button>
+        </div>
       </div>
     </div>
   );

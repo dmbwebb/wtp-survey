@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { SurveyData, Choice, AppName, APPS, INITIAL_TOKENS } from '../types/survey';
+import { SurveyData, Choice, APPS, INITIAL_TOKENS } from '../types/survey';
 
 interface SurveyContextType {
   surveyData: SurveyData;

@@ -3,6 +3,7 @@ import { SurveyProvider, useSurvey } from './contexts/SurveyContext';
 import { ParticipantIdScreen } from './screens/ParticipantIdScreen';
 import { InstructionsScreen } from './screens/InstructionsScreen';
 import { ComprehensionCheckScreen } from './screens/ComprehensionCheckScreen';
+import { ReinstructionsScreen } from './screens/ReinstructionsScreen';
 import { TokenAllocationScreen } from './screens/TokenAllocationScreen';
 import { ChoiceInstructionsScreen } from './screens/ChoiceInstructionsScreen';
 import { ChoiceQuestionScreen } from './screens/ChoiceQuestionScreen';
@@ -15,6 +16,7 @@ type Screen =
   | 'participantId'
   | 'instructions'
   | 'comprehension'
+  | 'reinstructions'
   | 'tokenAllocation'
   | 'choiceInstructions'
   | 'choices'
@@ -43,6 +45,9 @@ const SurveyFlow: React.FC = () => {
       case 'comprehension':
         setCurrentScreen('tokenAllocation');
         break;
+      case 'reinstructions':
+        setCurrentScreen('comprehension');
+        break;
       case 'tokenAllocation':
         setCurrentScreen('choiceInstructions');
         break;
@@ -68,22 +73,59 @@ const SurveyFlow: React.FC = () => {
     }
   };
 
+  const handleComprehensionFailed = () => {
+    setCurrentScreen('reinstructions');
+  };
+
+  const goToPreviousScreen = () => {
+    switch (currentScreen) {
+      case 'instructions':
+        setCurrentScreen('participantId');
+        break;
+      case 'comprehension':
+        setCurrentScreen('instructions');
+        break;
+      case 'tokenAllocation':
+        setCurrentScreen('comprehension');
+        break;
+      case 'choiceInstructions':
+        setCurrentScreen('tokenAllocation');
+        break;
+      case 'choices':
+        if (currentChoiceIndex > 0) {
+          setCurrentChoiceIndex(currentChoiceIndex - 1);
+        } else {
+          setCurrentScreen('choiceInstructions');
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       {currentScreen === 'participantId' && (
         <ParticipantIdScreen onNext={goToNextScreen} />
       )}
       {currentScreen === 'instructions' && (
-        <InstructionsScreen onNext={goToNextScreen} />
+        <InstructionsScreen onNext={goToNextScreen} onBack={goToPreviousScreen} />
       )}
       {currentScreen === 'comprehension' && (
-        <ComprehensionCheckScreen onNext={goToNextScreen} />
+        <ComprehensionCheckScreen
+          onNext={goToNextScreen}
+          onBack={goToPreviousScreen}
+          onFailed={handleComprehensionFailed}
+        />
+      )}
+      {currentScreen === 'reinstructions' && (
+        <ReinstructionsScreen onNext={goToNextScreen} />
       )}
       {currentScreen === 'tokenAllocation' && (
-        <TokenAllocationScreen onNext={goToNextScreen} />
+        <TokenAllocationScreen onNext={goToNextScreen} onBack={goToPreviousScreen} />
       )}
       {currentScreen === 'choiceInstructions' && (
-        <ChoiceInstructionsScreen onNext={goToNextScreen} />
+        <ChoiceInstructionsScreen onNext={goToNextScreen} onBack={goToPreviousScreen} />
       )}
       {currentScreen === 'choices' && (
         <ChoiceQuestionScreen
@@ -92,6 +134,7 @@ const SurveyFlow: React.FC = () => {
           questionNumber={currentChoiceIndex + 1}
           totalQuestions={allChoices.length}
           onNext={goToNextScreen}
+          onBack={goToPreviousScreen}
         />
       )}
       {currentScreen === 'randomSelection' && (

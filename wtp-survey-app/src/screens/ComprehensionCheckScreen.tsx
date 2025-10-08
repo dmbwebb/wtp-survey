@@ -5,9 +5,11 @@ import { TOKEN_VALUE_COP } from '../types/survey';
 
 interface ComprehensionCheckScreenProps {
   onNext: () => void;
+  onBack: () => void;
+  onFailed?: () => void;
 }
 
-export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> = ({ onNext }) => {
+export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> = ({ onNext, onBack, onFailed }) => {
   const [tokenValue, setTokenValue] = useState('');
   const [rewardType, setRewardType] = useState('');
   const [showErrors, setShowErrors] = useState(false);
@@ -28,6 +30,12 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
       onNext();
     } else {
       setShowErrors(true);
+      if (onFailed) {
+        // Give user a moment to see the error, then navigate to re-explanation
+        setTimeout(() => {
+          onFailed();
+        }, 1500);
+      }
     }
   };
 
@@ -87,13 +95,18 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
           </div>
         </div>
 
-        <Button
-          onClick={handleSubmit}
-          disabled={!tokenValue.trim() || !rewardType.trim()}
-          className="w-full"
-        >
-          Continue
-        </Button>
+        <div className="flex gap-4">
+          <Button onClick={onBack} className="px-6">
+            Back
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            disabled={!tokenValue.trim() || !rewardType.trim()}
+            className="flex-1"
+          >
+            Continue
+          </Button>
+        </div>
       </div>
     </div>
   );

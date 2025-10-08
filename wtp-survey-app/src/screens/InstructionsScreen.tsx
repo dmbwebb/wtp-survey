@@ -4,9 +4,10 @@ import { TOKEN_VALUE_COP } from '../types/survey';
 
 interface InstructionsScreenProps {
   onNext: () => void;
+  onBack: () => void;
 }
 
-export const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onNext }) => {
+export const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onNext, onBack }) => {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
@@ -26,9 +27,14 @@ export const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onNext }
             Please pay attention to the comprehension checks on the next screen to ensure you understand how the survey works.
           </p>
         </div>
-        <Button onClick={onNext} className="w-full">
-          Continue
-        </Button>
+        <div className="flex gap-4">
+          <Button onClick={onBack} className="px-6">
+            Back
+          </Button>
+          <Button onClick={onNext} className="flex-1">
+            Continue
+          </Button>
+        </div>
       </div>
     </div>
   );

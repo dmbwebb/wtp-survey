@@ -4,9 +4,10 @@ import { TokenCounter } from '../components/TokenCounter';
 
 interface ChoiceInstructionsScreenProps {
   onNext: () => void;
+  onBack: () => void;
 }
 
-export const ChoiceInstructionsScreen: React.FC<ChoiceInstructionsScreenProps> = ({ onNext }) => {
+export const ChoiceInstructionsScreen: React.FC<ChoiceInstructionsScreenProps> = ({ onNext, onBack }) => {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <TokenCounter />
@@ -34,9 +35,14 @@ export const ChoiceInstructionsScreen: React.FC<ChoiceInstructionsScreenProps> =
             </p>
           </div>
         </div>
-        <Button onClick={onNext} className="w-full">
-          Begin Choices
-        </Button>
+        <div className="flex gap-4">
+          <Button onClick={onBack} className="px-6">
+            Back
+          </Button>
+          <Button onClick={onNext} className="flex-1">
+            Begin Choices
+          </Button>
+        </div>
       </div>
     </div>
   );

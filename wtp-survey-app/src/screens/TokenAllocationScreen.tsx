@@ -5,9 +5,10 @@ import { INITIAL_TOKENS, TOKEN_VALUE_COP } from '../types/survey';
 
 interface TokenAllocationScreenProps {
   onNext: () => void;
+  onBack: () => void;
 }
 
-export const TokenAllocationScreen: React.FC<TokenAllocationScreenProps> = ({ onNext }) => {
+export const TokenAllocationScreen: React.FC<TokenAllocationScreenProps> = ({ onNext, onBack }) => {
   const [showCounter, setShowCounter] = useState(false);
 
   useEffect(() => {
@@ -37,9 +38,14 @@ export const TokenAllocationScreen: React.FC<TokenAllocationScreenProps> = ({ on
             Your token balance is displayed in the top right corner. It will update throughout the survey as you make your choices.
           </p>
         </div>
-        <Button onClick={onNext} className="w-full">
-          Continue
-        </Button>
+        <div className="flex gap-4">
+          <Button onClick={onBack} className="px-6">
+            Back
+          </Button>
+          <Button onClick={onNext} className="flex-1">
+            Continue
+          </Button>
+        </div>
       </div>
     </div>
   );
