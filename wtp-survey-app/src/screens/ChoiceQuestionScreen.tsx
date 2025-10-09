@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
 import { AppName, TOKEN_VALUE_COP } from '../types/survey';
@@ -23,6 +23,11 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
 }) => {
   const [selected, setSelected] = useState<'tokens' | 'block' | null>(null);
   const { addChoice } = useSurvey();
+
+  // Reset selection when question changes
+  useEffect(() => {
+    setSelected(null);
+  }, [app, tokenAmount]);
 
   const handleSubmit = () => {
     if (selected) {
