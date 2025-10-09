@@ -34,7 +34,22 @@ npm run preview
 
 # Run console error tests
 npm run test:console
+
+# Deploy to GitHub Pages
+npm run deploy
 ```
+
+## Deployment Workflow
+
+**IMPORTANT**: After pushing commits to the main branch, always deploy to GitHub Pages:
+
+```bash
+git push                    # Push to GitHub
+cd wtp-survey-app          # Navigate to app directory
+npm run deploy             # Deploy to GitHub Pages
+```
+
+This ensures the live site stays in sync with the repository.
 
 ## Architecture
 
