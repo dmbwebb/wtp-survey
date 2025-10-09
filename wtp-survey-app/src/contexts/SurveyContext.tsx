@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { SurveyData, Choice, APPS, INITIAL_TOKENS, TokenOrder } from '../types/survey';
+import { SurveyData, Choice, APPS, INITIAL_TOKENS } from '../types/survey';
 
 interface SurveyContextType {
   surveyData: SurveyData;
@@ -63,10 +63,22 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   };
 
   const addChoice = (choice: Choice) => {
-    setSurveyData(prev => ({
-      ...prev,
-      choices: [...prev.choices, choice],
-    }));
+    setSurveyData(prev => {
+      // Check if a choice with the same app and tokenAmount already exists
+      const existingIndex = prev.choices.findIndex(
+        c => c.app === choice.app && c.tokenAmount === choice.tokenAmount
+      );
+
+      if (existingIndex !== -1) {
+        // Update existing choice
+        const updatedChoices = [...prev.choices];
+        updatedChoices[existingIndex] = choice;
+        return { ...prev, choices: updatedChoices };
+      } else {
+        // Add new choice
+        return { ...prev, choices: [...prev.choices, choice] };
+      }
+    });
   };
 
   const selectRandomChoice = (): Choice => {

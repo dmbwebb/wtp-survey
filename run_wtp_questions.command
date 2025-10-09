@@ -40,10 +40,10 @@ echo ""
 echo "⏳ Waiting for server to start..."
 sleep 3
 
-# Open Chrome to the dev server
+# Open Chrome to the dev server (via clear-storage page to reset localStorage)
 echo ""
-echo "🌐 Opening Chrome..."
-open -a "Google Chrome" http://localhost:5173
+echo "🌐 Opening Chrome (clearing localStorage)..."
+open -a "Google Chrome" http://localhost:5173/clear-storage.html
 
 echo ""
 echo "=========================================="

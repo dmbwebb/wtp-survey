@@ -9,7 +9,7 @@ import { ChoiceInstructionsScreen1 } from './screens/ChoiceInstructionsScreen1';
 import { ChoiceInstructionsScreen2 } from './screens/ChoiceInstructionsScreen2';
 import { AppIntroductionScreen } from './screens/AppIntroductionScreen';
 import { ChoiceQuestionScreen } from './screens/ChoiceQuestionScreen';
-import { RandomSelectionScreen } from './screens/RandomSelectionScreen';
+import { ChoicesSummaryScreen } from './screens/ChoicesSummaryScreen';
 import { ResultsScreen } from './screens/ResultsScreen';
 import { ThankYouScreen } from './screens/ThankYouScreen';
 import { TOKEN_AMOUNTS } from './types/survey';
@@ -25,7 +25,7 @@ type Screen =
   | 'appIntroduction1'
   | 'appIntroduction2'
   | 'choices'
-  | 'randomSelection'
+  | 'choicesSummary'
   | 'results'
   | 'thankYou';
 
@@ -81,10 +81,10 @@ const SurveyFlow: React.FC = () => {
         } else if (currentChoiceIndex < allChoices.length - 1) {
           setCurrentChoiceIndex(currentChoiceIndex + 1);
         } else {
-          setCurrentScreen('randomSelection');
+          setCurrentScreen('choicesSummary');
         }
         break;
-      case 'randomSelection':
+      case 'choicesSummary':
         setCurrentScreen('results');
         break;
       case 'results':
@@ -189,8 +189,8 @@ const SurveyFlow: React.FC = () => {
           onBack={goToPreviousScreen}
         />
       )}
-      {currentScreen === 'randomSelection' && (
-        <RandomSelectionScreen onNext={goToNextScreen} />
+      {currentScreen === 'choicesSummary' && (
+        <ChoicesSummaryScreen onNext={goToNextScreen} />
       )}
       {currentScreen === 'results' && (
         <ResultsScreen onNext={goToNextScreen} />
