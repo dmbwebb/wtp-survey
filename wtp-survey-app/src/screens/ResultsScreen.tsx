@@ -9,9 +9,13 @@ interface ResultsScreenProps {
 }
 
 export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
-  const { surveyData, completeSurvey } = useSurvey();
+  const { surveyData, completeSurvey, updateTokenBalance } = useSurvey();
 
   useEffect(() => {
+    // Update token balance based on selected choice
+    if (surveyData.selectedChoice && surveyData.selectedChoice.selectedOption === 'tokens') {
+      updateTokenBalance(surveyData.selectedChoice.tokenAmount);
+    }
     completeSurvey();
   }, []);
 
@@ -50,10 +54,10 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
           ) : (
             <div className="space-y-2">
               <p className="text-gray-700">
-                You will <strong>receive {selectedChoice.tokenAmount} tokens</strong>.
+                You will <strong>{selectedChoice.tokenAmount >= 0 ? `receive ${selectedChoice.tokenAmount} tokens` : `pay ${Math.abs(selectedChoice.tokenAmount)} tokens`}</strong>.
               </p>
               <p className="text-gray-700">
-                This is worth <strong>${(selectedChoice.tokenAmount * TOKEN_VALUE_COP).toLocaleString()} COP</strong>.
+                This is worth <strong>${Math.abs(selectedChoice.tokenAmount * TOKEN_VALUE_COP).toLocaleString()} COP</strong>.
               </p>
               <p className="text-gray-700">
                 {selectedChoice.app} will <strong>not</strong> be blocked.
