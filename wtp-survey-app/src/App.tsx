@@ -7,6 +7,7 @@ import { ReinstructionsScreen } from './screens/ReinstructionsScreen';
 import { TokenAllocationScreen } from './screens/TokenAllocationScreen';
 import { ChoiceInstructionsScreen1 } from './screens/ChoiceInstructionsScreen1';
 import { ChoiceInstructionsScreen2 } from './screens/ChoiceInstructionsScreen2';
+import { AppIntroductionScreen } from './screens/AppIntroductionScreen';
 import { ChoiceQuestionScreen } from './screens/ChoiceQuestionScreen';
 import { RandomSelectionScreen } from './screens/RandomSelectionScreen';
 import { ResultsScreen } from './screens/ResultsScreen';
@@ -21,6 +22,8 @@ type Screen =
   | 'tokenAllocation'
   | 'choiceInstructions1'
   | 'choiceInstructions2'
+  | 'appIntroduction1'
+  | 'appIntroduction2'
   | 'choices'
   | 'randomSelection'
   | 'results'
@@ -57,11 +60,21 @@ const SurveyFlow: React.FC = () => {
         setCurrentScreen('choiceInstructions2');
         break;
       case 'choiceInstructions2':
+        setCurrentScreen('appIntroduction1');
+        break;
+      case 'appIntroduction1':
         setCurrentScreen('choices');
         setCurrentChoiceIndex(0);
         break;
+      case 'appIntroduction2':
+        setCurrentScreen('choices');
+        setCurrentChoiceIndex(7);
+        break;
       case 'choices':
-        if (currentChoiceIndex < allChoices.length - 1) {
+        if (currentChoiceIndex === 6) {
+          // After first 7 questions, show second app introduction
+          setCurrentScreen('appIntroduction2');
+        } else if (currentChoiceIndex < allChoices.length - 1) {
           setCurrentChoiceIndex(currentChoiceIndex + 1);
         } else {
           setCurrentScreen('randomSelection');
@@ -99,11 +112,21 @@ const SurveyFlow: React.FC = () => {
       case 'choiceInstructions2':
         setCurrentScreen('choiceInstructions1');
         break;
+      case 'appIntroduction1':
+        setCurrentScreen('choiceInstructions2');
+        break;
+      case 'appIntroduction2':
+        setCurrentScreen('choices');
+        setCurrentChoiceIndex(6);
+        break;
       case 'choices':
-        if (currentChoiceIndex > 0) {
+        if (currentChoiceIndex === 7) {
+          // Going back from first question of second app batch
+          setCurrentScreen('appIntroduction2');
+        } else if (currentChoiceIndex > 0) {
           setCurrentChoiceIndex(currentChoiceIndex - 1);
         } else {
-          setCurrentScreen('choiceInstructions2');
+          setCurrentScreen('appIntroduction1');
         }
         break;
       default:
@@ -137,6 +160,20 @@ const SurveyFlow: React.FC = () => {
       )}
       {currentScreen === 'choiceInstructions2' && (
         <ChoiceInstructionsScreen2 onNext={goToNextScreen} onBack={goToPreviousScreen} />
+      )}
+      {currentScreen === 'appIntroduction1' && (
+        <AppIntroductionScreen
+          app={surveyData.appOrder[0]}
+          onNext={goToNextScreen}
+          onBack={goToPreviousScreen}
+        />
+      )}
+      {currentScreen === 'appIntroduction2' && (
+        <AppIntroductionScreen
+          app={surveyData.appOrder[1]}
+          onNext={goToNextScreen}
+          onBack={goToPreviousScreen}
+        />
       )}
       {currentScreen === 'choices' && (
         <ChoiceQuestionScreen

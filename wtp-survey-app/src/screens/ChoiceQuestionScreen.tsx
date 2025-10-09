@@ -3,6 +3,8 @@ import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
 import { AppName, TOKEN_VALUE_COP } from '../types/survey';
 import { useSurvey } from '../contexts/SurveyContext';
+import whatsappLogo from '../assets/whatsapp-logo.svg';
+import tiktokLogo from '../assets/tiktok-logo.svg';
 
 interface ChoiceQuestionScreenProps {
   app: AppName;
@@ -50,6 +52,8 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
   const tokenValueText = tokenValue >= 0
     ? `(worth $${tokenValue.toLocaleString()} COP)`
     : `(lose $${Math.abs(tokenValue).toLocaleString()} COP)`;
+
+  const appLogo = app === 'WhatsApp' ? whatsappLogo : tiktokLogo;
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -100,7 +104,9 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
             }`}
           >
             <div className="text-center">
-              <div className="text-4xl mb-2">🚫</div>
+              <div className="mb-2 flex justify-center">
+                <img src={appLogo} alt={app} className="w-16 h-16" />
+              </div>
               <div className="text-xl font-bold text-gray-900 mb-2">
                 Block {app}
               </div>
