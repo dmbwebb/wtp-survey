@@ -46,12 +46,12 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
 
   const tokenText = tokenAmount >= 0
     ? `RECEIVE ${tokenAmount} tokens`
-    : `LOSE ${Math.abs(tokenAmount)} tokens`;
+    : `PAY ${Math.abs(tokenAmount)} tokens`;
 
   const tokenValue = tokenAmount * TOKEN_VALUE_COP;
   const tokenValueText = tokenValue >= 0
     ? `(worth $${tokenValue.toLocaleString()} COP)`
-    : `(lose $${Math.abs(tokenValue).toLocaleString()} COP)`;
+    : `(pay $${Math.abs(tokenValue).toLocaleString()} COP)`;
 
   const appLogo = app === 'WhatsApp' ? whatsappLogo : tiktokLogo;
 
