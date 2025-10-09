@@ -92,6 +92,17 @@ The SurveyContext automatically persists all survey data to localStorage on ever
 
 - **TokenCounter** - Displays current token balance (appears on most screens)
 - **Button** - Standardized button component with consistent styling
+- **VersionInfo** - Displays app version and refresh button (always visible in bottom right corner)
+
+### Version Management
+
+The app displays its current version in the bottom right corner of all screens, along with a refresh button to clear cache and localStorage.
+
+**IMPORTANT**: When making changes to the application:
+1. Update the version number in [src/version.ts](wtp-survey-app/src/version.ts)
+2. Use semantic versioning (e.g., v0.1 → v0.2 for minor changes, v1.0 for major releases)
+3. Include the version number update in your commit message
+4. This helps users on mobile devices force-refresh to get the latest version when GitHub Pages caching causes issues
 
 ## Working with this Codebase
 

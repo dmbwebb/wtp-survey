@@ -8,10 +8,12 @@ interface ParticipantIdScreenProps {
 
 export const ParticipantIdScreen: React.FC<ParticipantIdScreenProps> = ({ onNext }) => {
   const [id, setId] = useState('');
-  const { setParticipantId } = useSurvey();
+  const { setParticipantId, resetSurvey } = useSurvey();
 
   const handleSubmit = () => {
     if (id.trim()) {
+      // Clear any existing survey data before starting with new participant
+      resetSurvey();
       setParticipantId(id.trim());
       onNext();
     }

@@ -13,6 +13,7 @@ import { ChoicesSummaryScreen } from './screens/ChoicesSummaryScreen';
 import { ResultsScreen } from './screens/ResultsScreen';
 import { ThankYouScreen } from './screens/ThankYouScreen';
 import { TOKEN_AMOUNTS } from './types/survey';
+import { VersionInfo } from './components/VersionInfo';
 
 type Screen =
   | 'participantId'
@@ -204,6 +205,7 @@ function App() {
   return (
     <SurveyProvider>
       <SurveyFlow />
+      <VersionInfo />
     </SurveyProvider>
   );
 }

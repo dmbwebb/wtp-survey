@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSurvey } from '../contexts/SurveyContext';
+import { Button } from '../components/Button';
 
 export const ThankYouScreen: React.FC = () => {
   const { surveyData } = useSurvey();
@@ -13,6 +14,10 @@ export const ThankYouScreen: React.FC = () => {
     link.download = `survey-${surveyData.participantId}-${Date.now()}.json`;
     link.click();
     URL.revokeObjectURL(url);
+  };
+
+  const startNewSurvey = () => {
+    window.location.reload();
   };
 
   return (
@@ -38,10 +43,18 @@ export const ThankYouScreen: React.FC = () => {
         </div>
         <button
           onClick={downloadData}
-          className="text-blue-600 hover:text-blue-700 underline text-sm"
+          className="text-blue-600 hover:text-blue-700 underline text-sm mb-6"
         >
           Download Survey Data (for testing)
         </button>
+        <div className="mt-8 pt-6 border-t border-gray-200">
+          <Button
+            onClick={startNewSurvey}
+            className="w-full"
+          >
+            Start New Survey
+          </Button>
+        </div>
       </div>
     </div>
   );
