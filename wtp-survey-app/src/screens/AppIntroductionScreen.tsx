@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
-import tiktokLogo from '../assets/tiktok-logo.svg';
-import whatsappLogo from '../assets/whatsapp-logo.svg';
+import tiktokLogo from '../assets/tiktok-logo.png';
+import whatsappLogo from '../assets/whatsapp-logo.png';
 
 interface AppIntroductionScreenProps {
   app: string;

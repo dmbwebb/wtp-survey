@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { SurveyData, Choice, APPS, INITIAL_TOKENS } from '../types/survey';
+import { SurveyData, Choice, APPS, INITIAL_TOKENS, TokenOrder } from '../types/survey';
 
 interface SurveyContextType {
   surveyData: SurveyData;
@@ -27,6 +27,7 @@ const createInitialSurveyData = (): SurveyData => ({
   participantId: '',
   startedAt: new Date().toISOString(),
   appOrder: shuffleArray(APPS),
+  tokenOrder: Math.random() < 0.5 ? 'ascending' : 'descending',
   choices: [],
   selectedChoice: null,
   completedAt: null,

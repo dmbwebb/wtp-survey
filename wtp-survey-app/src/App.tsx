@@ -34,9 +34,13 @@ const SurveyFlow: React.FC = () => {
   const [currentChoiceIndex, setCurrentChoiceIndex] = useState(0);
   const { surveyData } = useSurvey();
 
-  // Generate all choice questions based on randomized app order
+  // Generate all choice questions based on randomized app order and token order
+  const orderedTokenAmounts = surveyData.tokenOrder === 'ascending'
+    ? [...TOKEN_AMOUNTS].reverse()
+    : TOKEN_AMOUNTS;
+
   const allChoices = surveyData.appOrder.flatMap((app) =>
-    TOKEN_AMOUNTS.map((tokenAmount) => ({ app, tokenAmount }))
+    orderedTokenAmounts.map((tokenAmount) => ({ app, tokenAmount }))
   );
 
   const goToNextScreen = () => {

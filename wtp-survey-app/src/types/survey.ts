@@ -1,4 +1,5 @@
 export type AppName = 'TikTok' | 'WhatsApp';
+export type TokenOrder = 'ascending' | 'descending';
 
 export interface Choice {
   id: string;
@@ -12,6 +13,7 @@ export interface SurveyData {
   participantId: string;
   startedAt: string;
   appOrder: AppName[];
+  tokenOrder: TokenOrder;
   choices: Choice[];
   selectedChoice: Choice | null;
   completedAt: string | null;

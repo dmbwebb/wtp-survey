@@ -3,8 +3,8 @@ import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
 import { AppName, TOKEN_VALUE_COP } from '../types/survey';
 import { useSurvey } from '../contexts/SurveyContext';
-import whatsappLogo from '../assets/whatsapp-logo.svg';
-import tiktokLogo from '../assets/tiktok-logo.svg';
+import whatsappLogo from '../assets/whatsapp-logo.png';
+import tiktokLogo from '../assets/tiktok-logo.png';
 
 interface ChoiceQuestionScreenProps {
   app: AppName;
