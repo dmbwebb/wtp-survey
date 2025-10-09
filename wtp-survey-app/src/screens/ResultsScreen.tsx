@@ -9,15 +9,11 @@ interface ResultsScreenProps {
 }
 
 export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
-  const { surveyData, completeSurvey, updateTokenBalance } = useSurvey();
+  const { surveyData, completeSurvey } = useSurvey();
 
   useEffect(() => {
-    // Only update token balance once - check if survey is not yet completed
+    // Mark survey as completed (token balance already updated in ChoicesSummaryScreen)
     if (!surveyData.completedAt) {
-      // Update token balance based on selected choice
-      if (surveyData.selectedChoice && surveyData.selectedChoice.selectedOption === 'tokens') {
-        updateTokenBalance(surveyData.selectedChoice.tokenAmount);
-      }
       completeSurvey();
     }
   }, []);

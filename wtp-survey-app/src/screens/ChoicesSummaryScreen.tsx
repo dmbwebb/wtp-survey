@@ -12,7 +12,7 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedChoice, setSelectedChoice] = useState<Choice | null>(null);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
-  const { surveyData, selectRandomChoice } = useSurvey();
+  const { surveyData, selectRandomChoice, updateTokenBalance } = useSurvey();
 
   const startRandomSelection = () => {
     setIsSelecting(true);
@@ -29,6 +29,12 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
     setTimeout(() => {
       clearInterval(interval);
       const choice = selectRandomChoice();
+
+      // Update token balance immediately if they chose tokens
+      if (choice.selectedOption === 'tokens') {
+        updateTokenBalance(choice.tokenAmount);
+      }
+
       const finalIndex = surveyData.choices.findIndex(c => c.id === choice.id);
       setHighlightedIndex(finalIndex);
       setSelectedChoice(choice);
