@@ -58,7 +58,7 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
                 setTokenValue(e.target.value);
                 setShowErrors(false);
               }}
-              placeholder="Enter amount (e.g., 1000)"
+              placeholder="Enter amount"
               className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none ${
                 showErrors && !isTokenValueCorrect ? 'border-red-500' : 'border-gray-300'
               }`}
