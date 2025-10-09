@@ -5,7 +5,8 @@ import { InstructionsScreen } from './screens/InstructionsScreen';
 import { ComprehensionCheckScreen } from './screens/ComprehensionCheckScreen';
 import { ReinstructionsScreen } from './screens/ReinstructionsScreen';
 import { TokenAllocationScreen } from './screens/TokenAllocationScreen';
-import { ChoiceInstructionsScreen } from './screens/ChoiceInstructionsScreen';
+import { ChoiceInstructionsScreen1 } from './screens/ChoiceInstructionsScreen1';
+import { ChoiceInstructionsScreen2 } from './screens/ChoiceInstructionsScreen2';
 import { ChoiceQuestionScreen } from './screens/ChoiceQuestionScreen';
 import { RandomSelectionScreen } from './screens/RandomSelectionScreen';
 import { ResultsScreen } from './screens/ResultsScreen';
@@ -18,7 +19,8 @@ type Screen =
   | 'comprehension'
   | 'reinstructions'
   | 'tokenAllocation'
-  | 'choiceInstructions'
+  | 'choiceInstructions1'
+  | 'choiceInstructions2'
   | 'choices'
   | 'randomSelection'
   | 'results'
@@ -49,9 +51,12 @@ const SurveyFlow: React.FC = () => {
         setCurrentScreen('comprehension');
         break;
       case 'tokenAllocation':
-        setCurrentScreen('choiceInstructions');
+        setCurrentScreen('choiceInstructions1');
         break;
-      case 'choiceInstructions':
+      case 'choiceInstructions1':
+        setCurrentScreen('choiceInstructions2');
+        break;
+      case 'choiceInstructions2':
         setCurrentScreen('choices');
         setCurrentChoiceIndex(0);
         break;
@@ -88,14 +93,17 @@ const SurveyFlow: React.FC = () => {
       case 'tokenAllocation':
         setCurrentScreen('comprehension');
         break;
-      case 'choiceInstructions':
+      case 'choiceInstructions1':
         setCurrentScreen('tokenAllocation');
+        break;
+      case 'choiceInstructions2':
+        setCurrentScreen('choiceInstructions1');
         break;
       case 'choices':
         if (currentChoiceIndex > 0) {
           setCurrentChoiceIndex(currentChoiceIndex - 1);
         } else {
-          setCurrentScreen('choiceInstructions');
+          setCurrentScreen('choiceInstructions2');
         }
         break;
       default:
@@ -124,8 +132,11 @@ const SurveyFlow: React.FC = () => {
       {currentScreen === 'tokenAllocation' && (
         <TokenAllocationScreen onNext={goToNextScreen} onBack={goToPreviousScreen} />
       )}
-      {currentScreen === 'choiceInstructions' && (
-        <ChoiceInstructionsScreen onNext={goToNextScreen} onBack={goToPreviousScreen} />
+      {currentScreen === 'choiceInstructions1' && (
+        <ChoiceInstructionsScreen1 onNext={goToNextScreen} onBack={goToPreviousScreen} />
+      )}
+      {currentScreen === 'choiceInstructions2' && (
+        <ChoiceInstructionsScreen2 onNext={goToNextScreen} onBack={goToPreviousScreen} />
       )}
       {currentScreen === 'choices' && (
         <ChoiceQuestionScreen
