@@ -44,7 +44,7 @@ export const RandomSelectionScreen: React.FC<RandomSelectionScreenProps> = ({ on
         {!isSelecting && !selectedChoice && (
           <div className="text-center mb-8">
             <p className="text-lg text-gray-700 mb-6">
-              You have completed all the choice questions. Now we will randomly select one of your {surveyData.choices.length} choices to implement.
+              You have completed all the choice questions. Now we will randomly select one of your choices to implement.
             </p>
             <p className="text-gray-600 mb-8">
               Click the button below to randomly select which choice will be implemented.

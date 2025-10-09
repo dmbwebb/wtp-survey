@@ -72,11 +72,11 @@ const SurveyFlow: React.FC = () => {
         break;
       case 'appIntroduction2':
         setCurrentScreen('choices');
-        setCurrentChoiceIndex(7);
+        setCurrentChoiceIndex(8);
         break;
       case 'choices':
-        if (currentChoiceIndex === 6) {
-          // After first 7 questions, show second app introduction
+        if (currentChoiceIndex === 7) {
+          // After first 8 questions, show second app introduction
           setCurrentScreen('appIntroduction2');
         } else if (currentChoiceIndex < allChoices.length - 1) {
           setCurrentChoiceIndex(currentChoiceIndex + 1);
@@ -121,10 +121,10 @@ const SurveyFlow: React.FC = () => {
         break;
       case 'appIntroduction2':
         setCurrentScreen('choices');
-        setCurrentChoiceIndex(6);
+        setCurrentChoiceIndex(7);
         break;
       case 'choices':
-        if (currentChoiceIndex === 7) {
+        if (currentChoiceIndex === 8) {
           // Going back from first question of second app batch
           setCurrentScreen('appIntroduction2');
         } else if (currentChoiceIndex > 0) {
