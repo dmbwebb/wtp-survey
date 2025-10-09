@@ -27,9 +27,12 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
   const willBlock = selectedChoice.selectedOption === 'block';
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 pt-24">
-      <TokenCounter />
-      <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col p-4">
+      <div className="w-full flex justify-end mb-4">
+        <TokenCounter />
+      </div>
+      <div className="flex-1 flex items-center justify-center">
+        <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
         <div className="text-center mb-8">
           <div className="text-6xl mb-4">{willBlock ? '🚫' : '💰'}</div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
@@ -80,6 +83,7 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
         <Button onClick={onNext} className="w-full">
           Finish Survey
         </Button>
+        </div>
       </div>
     </div>
   );

@@ -16,9 +16,14 @@ export const TokenAllocationScreen: React.FC<TokenAllocationScreenProps> = ({ on
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 pt-24">
-      {showCounter && <TokenCounter />}
-      <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col p-4">
+      {showCounter && (
+        <div className="w-full flex justify-end mb-4">
+          <TokenCounter />
+        </div>
+      )}
+      <div className="flex-1 flex items-center justify-center">
+        <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
           Your Starting Tokens
         </h1>
@@ -45,6 +50,7 @@ export const TokenAllocationScreen: React.FC<TokenAllocationScreenProps> = ({ on
           <Button onClick={onNext} className="flex-1">
             Continue
           </Button>
+        </div>
         </div>
       </div>
     </div>

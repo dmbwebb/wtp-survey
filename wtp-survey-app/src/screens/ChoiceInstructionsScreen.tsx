@@ -9,9 +9,12 @@ interface ChoiceInstructionsScreenProps {
 
 export const ChoiceInstructionsScreen: React.FC<ChoiceInstructionsScreenProps> = ({ onNext, onBack }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 pt-24">
-      <TokenCounter />
-      <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
+    <div className="min-h-screen bg-gray-50 flex flex-col p-4">
+      <div className="w-full flex justify-end mb-4">
+        <TokenCounter />
+      </div>
+      <div className="flex-1 flex items-center justify-center">
+        <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-6">
           About Your Choices
         </h1>
@@ -42,6 +45,7 @@ export const ChoiceInstructionsScreen: React.FC<ChoiceInstructionsScreenProps> =
           <Button onClick={onNext} className="flex-1">
             Begin Choices
           </Button>
+        </div>
         </div>
       </div>
     </div>
