@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Button } from '../components/Button';
 import { useSurvey } from '../contexts/SurveyContext';
 import { TOKEN_VALUE_COP } from '../types/survey';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 interface ComprehensionCheckScreenProps {
   onNext: () => void;
@@ -14,12 +16,18 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
   const [rewardType, setRewardType] = useState('');
   const [showErrors, setShowErrors] = useState(false);
   const { setComprehensionAnswer } = useSurvey();
+  const { language } = useLanguage();
 
   const correctTokenValue = TOKEN_VALUE_COP.toString();
   const isTokenValueCorrect = tokenValue.trim() === correctTokenValue;
-  const isRewardTypeCorrect = rewardType.toLowerCase().includes('spotify') ||
-                               rewardType.toLowerCase().includes('gift card') ||
-                               rewardType.toLowerCase().includes('reward');
+  const rewardLower = rewardType.toLowerCase();
+  const isRewardTypeCorrect = rewardLower.includes('spotify') ||
+                               rewardLower.includes('gift card') ||
+                               rewardLower.includes('reward') ||
+                               rewardLower.includes('tarjeta de regalo') ||
+                               rewardLower.includes('tarjeta regalo') ||
+                               rewardLower.includes('regalo') ||
+                               rewardLower.includes('recompensa');
 
   const canContinue = isTokenValueCorrect && isRewardTypeCorrect;
 
@@ -43,12 +51,12 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-6">
-          Comprehension Check
+          {t('comprehension.title', language)}
         </h1>
         <div className="space-y-6 mb-8">
           <div>
             <label htmlFor="tokenValue" className="block text-lg font-medium text-gray-700 mb-2">
-              How much is 1 token worth in COP?
+              {t('comprehension.question1', language)}
             </label>
             <input
               id="tokenValue"
@@ -58,21 +66,21 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
                 setTokenValue(e.target.value);
                 setShowErrors(false);
               }}
-              placeholder="Enter amount"
+              placeholder={t('comprehension.placeholder1', language)}
               className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none ${
                 showErrors && !isTokenValueCorrect ? 'border-red-500' : 'border-gray-300'
               }`}
             />
             {showErrors && !isTokenValueCorrect && (
               <p className="text-red-600 text-sm mt-1">
-                Incorrect. Please review the instructions.
+                {t('comprehension.error', language)}
               </p>
             )}
           </div>
 
           <div>
             <label htmlFor="rewardType" className="block text-lg font-medium text-gray-700 mb-2">
-              What can you exchange your tokens for?
+              {t('comprehension.question2', language)}
             </label>
             <input
               id="rewardType"
@@ -82,14 +90,14 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
                 setRewardType(e.target.value);
                 setShowErrors(false);
               }}
-              placeholder="Enter reward type"
+              placeholder={t('comprehension.placeholder2', language)}
               className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none ${
                 showErrors && !isRewardTypeCorrect ? 'border-red-500' : 'border-gray-300'
               }`}
             />
             {showErrors && !isRewardTypeCorrect && (
               <p className="text-red-600 text-sm mt-1">
-                Incorrect. Please review the instructions.
+                {t('comprehension.error', language)}
               </p>
             )}
           </div>
@@ -97,14 +105,14 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
 
         <div className="flex gap-4">
           <Button onClick={onBack} className="px-6">
-            Back
+            {t('common.back', language)}
           </Button>
           <Button
             onClick={handleSubmit}
             disabled={!tokenValue.trim() || !rewardType.trim()}
             className="flex-1"
           >
-            Continue
+            {t('common.continue', language)}
           </Button>
         </div>
       </div>

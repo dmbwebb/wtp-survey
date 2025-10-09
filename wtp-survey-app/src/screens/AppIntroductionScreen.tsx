@@ -3,6 +3,8 @@ import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
 import tiktokLogo from '../assets/tiktok-logo.png';
 import whatsappLogo from '../assets/whatsapp-logo.png';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 interface AppIntroductionScreenProps {
   app: string;
@@ -11,6 +13,7 @@ interface AppIntroductionScreenProps {
 }
 
 export const AppIntroductionScreen: React.FC<AppIntroductionScreenProps> = ({ app, onNext, onBack }) => {
+  const { language } = useLanguage();
   const appLogo = app === 'TikTok' ? tiktokLogo : whatsappLogo;
 
   return (
@@ -27,20 +30,20 @@ export const AppIntroductionScreen: React.FC<AppIntroductionScreenProps> = ({ ap
             className="w-24 h-24 mb-6 object-contain"
           />
           <h1 className="text-3xl font-bold text-gray-900 text-center">
-            App Blocking Questions: {app}
+            {t('appIntroduction.title', language)} {app}
           </h1>
         </div>
         <div className="space-y-4 text-gray-700 text-lg leading-relaxed mb-8">
           <p className="text-center">
-            We're now going to ask you some questions to see how willing you would be to block <strong className="font-bold">{app}</strong> for 1 week on your phone.
+            {t('appIntroduction.description', language)} {app} {t('appIntroduction.description2', language)}
           </p>
         </div>
         <div className="flex gap-4">
           <Button onClick={onBack} className="px-6">
-            Back
+            {t('common.back', language)}
           </Button>
           <Button onClick={onNext} className="flex-1">
-            Continue
+            {t('common.continue', language)}
           </Button>
         </div>
         </div>

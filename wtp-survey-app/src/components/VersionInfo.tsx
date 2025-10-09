@@ -1,7 +1,11 @@
 import React from 'react';
 import { APP_VERSION } from '../version';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 export const VersionInfo: React.FC = () => {
+  const { language } = useLanguage();
+
   const handleRefresh = () => {
     // Clear localStorage
     localStorage.clear();
@@ -17,8 +21,8 @@ export const VersionInfo: React.FC = () => {
       <button
         onClick={handleRefresh}
         className="hover:text-gray-600 transition-colors p-1"
-        title="Force refresh and clear cache"
-        aria-label="Force refresh"
+        title={t('versionInfo.refreshTitle', language)}
+        aria-label={t('versionInfo.refreshLabel', language)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

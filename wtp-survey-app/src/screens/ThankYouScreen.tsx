@@ -1,8 +1,11 @@
 import React from 'react';
 import { useSurvey } from '../contexts/SurveyContext';
 import { Button } from '../components/Button';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 export const ThankYouScreen: React.FC = () => {
+  const { language } = useLanguage();
   const { surveyData } = useSurvey();
 
   const downloadData = () => {
@@ -25,34 +28,34 @@ export const ThankYouScreen: React.FC = () => {
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8 text-center">
         <div className="text-6xl mb-6">🎉</div>
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Thank You!
+          {t('thankYou.title', language)}
         </h1>
         <p className="text-xl text-gray-700 mb-6">
-          You have completed the survey.
+          {t('thankYou.completed', language)}
         </p>
         <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
           <p className="text-gray-700 mb-2">
-            Your responses have been recorded.
+            {t('thankYou.recorded', language)}
           </p>
           <p className="text-gray-700">
-            Our team will contact you about implementing your selected choice and redeeming your tokens for a Spotify gift card.
+            {t('thankYou.contactInfo', language)}
           </p>
         </div>
         <div className="text-sm text-gray-500 mb-4">
-          Participant ID: {surveyData.participantId}
+          {t('thankYou.participantId', language)} {surveyData.participantId}
         </div>
         <button
           onClick={downloadData}
           className="text-blue-600 hover:text-blue-700 underline text-sm mb-6"
         >
-          Download Survey Data (for testing)
+          {t('thankYou.downloadData', language)}
         </button>
         <div className="mt-8 pt-6 border-t border-gray-200">
           <Button
             onClick={startNewSurvey}
             className="w-full"
           >
-            Start New Survey
+            {t('thankYou.startNew', language)}
           </Button>
         </div>
       </div>

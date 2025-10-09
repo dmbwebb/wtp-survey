@@ -3,12 +3,15 @@ import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
 import { useSurvey } from '../contexts/SurveyContext';
 import { TOKEN_VALUE_COP } from '../types/survey';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 interface ResultsScreenProps {
   onNext: () => void;
 }
 
 export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
+  const { language } = useLanguage();
   const { surveyData, completeSurvey } = useSurvey();
 
   useEffect(() => {
@@ -36,33 +39,33 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
         <div className="text-center mb-8">
           <div className="text-6xl mb-4">{willBlock ? '🚫' : '💰'}</div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            Implementation Results
+            {t('results.title', language)}
           </h1>
         </div>
 
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            What will happen:
+            {t('results.whatWillHappen', language)}
           </h2>
           {willBlock ? (
             <div className="space-y-2">
               <p className="text-gray-700">
-                <strong>{selectedChoice.app}</strong> will be blocked on your phone for <strong>1 week</strong> starting today.
+                {t('results.blockMessage1', language)} <strong>{selectedChoice.app}</strong> {t('results.blockMessage2', language)}
               </p>
               <p className="text-gray-700">
-                Our team will set the block with a password so you cannot change it.
+                {t('results.blockMessage3', language)} {t('results.blockMessage4', language)}
               </p>
             </div>
           ) : (
             <div className="space-y-2">
               <p className="text-gray-700">
-                You will <strong>{selectedChoice.tokenAmount >= 0 ? `receive ${selectedChoice.tokenAmount} tokens` : `pay ${Math.abs(selectedChoice.tokenAmount)} tokens`}</strong>.
+                {t('results.tokenMessage1', language)} <strong>{selectedChoice.tokenAmount >= 0 ? `${t('results.receive', language)} ${selectedChoice.tokenAmount} ${t('results.tokens', language)}` : `${t('results.pay', language)} ${Math.abs(selectedChoice.tokenAmount)} ${t('results.tokens', language)}`}</strong>.
               </p>
               <p className="text-gray-700">
-                This is worth <strong>${Math.abs(selectedChoice.tokenAmount * TOKEN_VALUE_COP).toLocaleString()} COP</strong>.
+                {t('results.thisIsWorth', language)} <strong>${Math.abs(selectedChoice.tokenAmount * TOKEN_VALUE_COP).toLocaleString()} COP</strong>.
               </p>
               <p className="text-gray-700">
-                {selectedChoice.app} will <strong>not</strong> be blocked.
+                {selectedChoice.app} {t('results.willNotBeBlocked', language)}
               </p>
             </div>
           )}
@@ -70,10 +73,10 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
 
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">
-            Final Token Balance:
+            {t('results.finalTokenBalance', language)}
           </h2>
           <p className="text-3xl font-bold text-blue-600">
-            {surveyData.tokenBalance} tokens
+            {surveyData.tokenBalance} {t('results.tokens', language)}
           </p>
           <p className="text-gray-600 mt-1">
             (${(surveyData.tokenBalance * TOKEN_VALUE_COP).toLocaleString()} COP)
@@ -81,7 +84,7 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
         </div>
 
         <Button onClick={onNext} className="w-full">
-          Finish Survey
+          {t('results.finishSurvey', language)}
         </Button>
         </div>
       </div>

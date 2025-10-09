@@ -5,6 +5,8 @@ import { AppName, TOKEN_VALUE_COP } from '../types/survey';
 import { useSurvey } from '../contexts/SurveyContext';
 import whatsappLogo from '../assets/whatsapp-logo.png';
 import tiktokLogo from '../assets/tiktok-logo.png';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 interface ChoiceQuestionScreenProps {
   app: AppName;
@@ -23,6 +25,7 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
   onNext,
   onBack,
 }) => {
+  const { language } = useLanguage();
   const [selected, setSelected] = useState<'tokens' | 'block' | null>(null);
   const { addChoice } = useSurvey();
 
@@ -45,13 +48,11 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
   };
 
   const tokenText = tokenAmount >= 0
-    ? `RECEIVE ${tokenAmount} tokens`
-    : `PAY ${Math.abs(tokenAmount)} tokens`;
+    ? `${t('choiceQuestion.receive', language)} ${tokenAmount} ${t('choiceQuestion.tokens', language)}`
+    : `${t('choiceQuestion.pay', language)} ${Math.abs(tokenAmount)} ${t('choiceQuestion.tokens', language)}`;
 
   const tokenValue = tokenAmount * TOKEN_VALUE_COP;
-  const tokenValueText = tokenValue >= 0
-    ? `(worth $${tokenValue.toLocaleString()} COP)`
-    : `(pay $${Math.abs(tokenValue).toLocaleString()} COP)`;
+  const tokenValueText = `(${t('choiceQuestion.worth', language)} $${Math.abs(tokenValue).toLocaleString()} COP)`;
 
   const appLogo = app === 'WhatsApp' ? whatsappLogo : tiktokLogo;
 
@@ -64,7 +65,7 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
         <div className="max-w-3xl w-full bg-white rounded-xl shadow-lg p-8">
         <div className="mb-6">
           <div className="text-sm font-semibold text-gray-500 mb-2">
-            Question {questionNumber} of {totalQuestions}
+            {t('choiceQuestion.questionOf', language)} {questionNumber} {t('choiceQuestion.of', language)} {totalQuestions}
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
@@ -75,7 +76,7 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
         </div>
 
         <h1 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-          Would you rather...
+          {t('choiceQuestion.wouldYouRather', language)}
         </h1>
 
         <div className="grid md:grid-cols-2 gap-4 mb-8">
@@ -111,10 +112,10 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
                 <img src={appLogo} alt={app} className="w-16 h-16" />
               </div>
               <div className="text-xl font-bold text-gray-900 mb-2">
-                Block {app}
+                {t('choiceQuestion.block', language)} {app}
               </div>
               <div className="text-sm text-gray-600">
-                on your phone for 1 week
+                {t('choiceQuestion.onYourPhoneFor1Week', language)}
               </div>
             </div>
           </button>
@@ -122,14 +123,14 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
 
         <div className="flex gap-4">
           <Button onClick={onBack} className="px-6">
-            Back
+            {t('common.back', language)}
           </Button>
           <Button
             onClick={handleSubmit}
             disabled={!selected}
             className="flex-1"
           >
-            Continue
+            {t('common.continue', language)}
           </Button>
         </div>
         </div>

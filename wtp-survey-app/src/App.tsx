@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SurveyProvider, useSurvey } from './contexts/SurveyContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import { ParticipantIdScreen } from './screens/ParticipantIdScreen';
 import { InstructionsScreen } from './screens/InstructionsScreen';
 import { ComprehensionCheckScreen } from './screens/ComprehensionCheckScreen';
@@ -14,6 +15,7 @@ import { ResultsScreen } from './screens/ResultsScreen';
 import { ThankYouScreen } from './screens/ThankYouScreen';
 import { TOKEN_AMOUNTS } from './types/survey';
 import { VersionInfo } from './components/VersionInfo';
+import { LanguageToggle } from './components/LanguageToggle';
 
 type Screen =
   | 'participantId'
@@ -203,10 +205,13 @@ const SurveyFlow: React.FC = () => {
 
 function App() {
   return (
-    <SurveyProvider>
-      <SurveyFlow />
-      <VersionInfo />
-    </SurveyProvider>
+    <LanguageProvider>
+      <SurveyProvider>
+        <SurveyFlow />
+        <LanguageToggle />
+        <VersionInfo />
+      </SurveyProvider>
+    </LanguageProvider>
   );
 }
 

@@ -3,12 +3,15 @@ import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
 import { useSurvey } from '../contexts/SurveyContext';
 import { Choice } from '../types/survey';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 interface ChoicesSummaryScreenProps {
   onNext: () => void;
 }
 
 export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNext }) => {
+  const { language } = useLanguage();
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedChoice, setSelectedChoice] = useState<Choice | null>(null);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
@@ -45,10 +48,10 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
   const getOptionText = (choice: Choice, option: 'tokens' | 'block') => {
     if (option === 'tokens') {
       return choice.tokenAmount >= 0
-        ? `Receive ${choice.tokenAmount} tokens`
-        : `Pay ${Math.abs(choice.tokenAmount)} tokens`;
+        ? `${t('choicesSummary.receive', language)} ${choice.tokenAmount} ${t('choicesSummary.tokens', language)}`
+        : `${t('choicesSummary.pay', language)} ${Math.abs(choice.tokenAmount)} ${t('choicesSummary.tokens', language)}`;
     }
-    return `Block ${choice.app} for 1 week`;
+    return `${t('choicesSummary.block', language)} ${choice.app} ${t('choicesSummary.for1Week', language)}`;
   };
 
   const OptionBox: React.FC<{
@@ -83,14 +86,14 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-3xl w-full bg-white rounded-xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-          Your Choices
+          {t('choicesSummary.title', language)}
         </h1>
 
         {!selectedChoice && (
           <p className="text-center text-gray-600 mb-6">
             {isSelecting
-              ? 'Randomly selecting one of your choices...'
-              : 'Here are all the choices you made. Click below to randomly select one to implement.'}
+              ? t('choicesSummary.selecting', language)
+              : t('choicesSummary.instruction', language)}
           </p>
         )}
 
@@ -117,7 +120,7 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
                 <div className="flex-1 flex gap-3">
                   <OptionBox choice={choice} option="tokens" />
                   <div className="flex items-center text-gray-400">
-                    <span>or</span>
+                    <span>{t('common.or', language)}</span>
                   </div>
                   <OptionBox choice={choice} option="block" />
                 </div>
@@ -128,7 +131,7 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
 
         {!isSelecting && !selectedChoice && (
           <Button onClick={startRandomSelection} className="w-full">
-            Randomly Select One Choice
+            {t('choicesSummary.selectButton', language)}
           </Button>
         )}
 
@@ -136,7 +139,7 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
           <div className="text-center">
             <div className="inline-flex items-center gap-2 text-lg font-semibold text-gray-900">
               <span className="animate-pulse text-3xl">🎲</span>
-              <span>Selecting...</span>
+              <span>{t('choicesSummary.selectingLabel', language)}</span>
             </div>
           </div>
         )}
@@ -147,13 +150,13 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
               <span className="text-5xl">✅</span>
             </div>
             <p className="text-xl font-semibold text-gray-900 mb-4">
-              Choice #{highlightedIndex + 1} has been selected!
+              {t('choicesSummary.choice', language)}{highlightedIndex + 1} {t('choicesSummary.selectedMessage', language)}
             </p>
             <p className="text-gray-600 mb-6">
-              This is the choice that will be implemented.
+              {t('choicesSummary.selectedDescription', language)}
             </p>
             <Button onClick={onNext} className="w-full">
-              Continue to Results
+              {t('choicesSummary.continueToResults', language)}
             </Button>
           </div>
         )}

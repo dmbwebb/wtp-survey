@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
+import { useLanguage } from '../contexts/LanguageContext';
+import { t } from '../translations';
 
 interface ChoiceInstructionsScreen2Props {
   onNext: () => void;
@@ -8,6 +10,7 @@ interface ChoiceInstructionsScreen2Props {
 }
 
 export const ChoiceInstructionsScreen2: React.FC<ChoiceInstructionsScreen2Props> = ({ onNext, onBack }) => {
+  const { language } = useLanguage();
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col p-4">
       <div className="w-full flex justify-end mb-4">
@@ -17,21 +20,21 @@ export const ChoiceInstructionsScreen2: React.FC<ChoiceInstructionsScreen2Props>
         <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
         <div className="space-y-6 text-gray-700 text-lg leading-relaxed mb-8">
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-            <p className="font-semibold text-gray-900 mb-4 text-xl">Important:</p>
+            <p className="font-semibold text-gray-900 mb-4 text-xl">{t('choiceInstructions2.important', language)}</p>
             <p className="mb-3">
-              You will make multiple choices, and <strong>only one</strong> of your choices will randomly be selected to be implemented.
+              {t('choiceInstructions2.paragraph1', language)}
             </p>
             <p>
-              This means that each question should be treated <strong>independently</strong>, and for every choice, you should give your honest answer.
+              {t('choiceInstructions2.paragraph2', language)}
             </p>
           </div>
         </div>
         <div className="flex gap-4">
           <Button onClick={onBack} className="px-6">
-            Back
+            {t('common.back', language)}
           </Button>
           <Button onClick={onNext} className="flex-1">
-            Begin Choices
+            {t('choiceInstructions2.button', language)}
           </Button>
         </div>
         </div>
