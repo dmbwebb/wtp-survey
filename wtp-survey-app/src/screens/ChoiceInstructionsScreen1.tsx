@@ -9,7 +9,7 @@ interface ChoiceInstructionsScreen1Props {
 
 export const ChoiceInstructionsScreen1: React.FC<ChoiceInstructionsScreen1Props> = ({ onNext, onBack }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 pt-24">
       <TokenCounter />
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-6">

@@ -56,7 +56,7 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
   const appLogo = app === 'WhatsApp' ? whatsappLogo : tiktokLogo;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 pt-24">
       <TokenCounter />
       <div className="max-w-3xl w-full bg-white rounded-xl shadow-lg p-8">
         <div className="mb-6">
