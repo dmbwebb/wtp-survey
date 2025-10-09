@@ -35,7 +35,7 @@ export const TokenAllocationScreen: React.FC<TokenAllocationScreenProps> = ({ on
         </div>
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
           <p className="text-gray-700">
-            Your token balance is displayed in the top right corner. It will update throughout the survey as you make your choices.
+            Your token balance is displayed in the top right corner. It will update throughout the survey as you make your choices. Whatever you have left at the end you can reimburse.
           </p>
         </div>
         <div className="flex gap-4">
