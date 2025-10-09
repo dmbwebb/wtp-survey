@@ -1,0 +1,6 @@
+TODO:
+- "Receive 0 tokens"
+- More comprehension checks
+- Remind about token endowment
+- Add visual token indicator
+- Add proper data export
