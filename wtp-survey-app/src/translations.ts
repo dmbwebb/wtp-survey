@@ -257,6 +257,46 @@ export const translations = {
     }
   },
 
+  // ChoiceComprehensionCheckScreen
+  choiceComprehensionCheck: {
+    title: {
+      en: 'Comprehension Check',
+      es: 'Verificación de Comprensión'
+    },
+    confirmTokens: {
+      en: 'To confirm, you would prefer to {action} {tokens} tokens, so that you would end up with {finalBalance} tokens at the end of the experiment, rather than block {app} for a week?',
+      es: 'Para confirmar, ¿preferirías {action} {tokens} tokens, para que termines con {finalBalance} tokens al final del experimento, en lugar de bloquear {app} por una semana?'
+    },
+    confirmBlock: {
+      en: 'To confirm, you would prefer to block {app} for a week, rather than {action} {tokens} tokens, so your token balance would remain at {currentBalance} tokens at the end of the experiment?',
+      es: 'Para confirmar, ¿preferirías bloquear {app} por una semana, en lugar de {action} {tokens} tokens, por lo que tu saldo de tokens permanecería en {currentBalance} tokens al final del experimento?'
+    },
+    receive: {
+      en: 'receive',
+      es: 'recibir'
+    },
+    pay: {
+      en: 'pay',
+      es: 'pagar'
+    },
+    receiving: {
+      en: 'receiving',
+      es: 'recibir'
+    },
+    paying: {
+      en: 'paying',
+      es: 'pagar'
+    },
+    yes: {
+      en: 'I confirm',
+      es: 'Confirmo'
+    },
+    no: {
+      en: 'Go back',
+      es: 'Volver'
+    }
+  },
+
   // ChoicesSummaryScreen
   choicesSummary: {
     title: {

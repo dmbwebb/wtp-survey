@@ -10,6 +10,7 @@ import { ChoiceInstructionsScreen1 } from './screens/ChoiceInstructionsScreen1';
 import { ChoiceInstructionsScreen2 } from './screens/ChoiceInstructionsScreen2';
 import { AppIntroductionScreen } from './screens/AppIntroductionScreen';
 import { ChoiceQuestionScreen } from './screens/ChoiceQuestionScreen';
+import { ChoiceComprehensionCheckScreen } from './screens/ChoiceComprehensionCheckScreen';
 import { ChoicesSummaryScreen } from './screens/ChoicesSummaryScreen';
 import { ResultsScreen } from './screens/ResultsScreen';
 import { ThankYouScreen } from './screens/ThankYouScreen';
@@ -28,6 +29,7 @@ type Screen =
   | 'appIntroduction1'
   | 'appIntroduction2'
   | 'choices'
+  | 'choiceComprehension'
   | 'choicesSummary'
   | 'results'
   | 'thankYou';
@@ -78,7 +80,10 @@ const SurveyFlow: React.FC = () => {
         setCurrentChoiceIndex(8);
         break;
       case 'choices':
-        if (currentChoiceIndex === 7) {
+        if (currentChoiceIndex === 0) {
+          // After first question, show choice comprehension check
+          setCurrentScreen('choiceComprehension');
+        } else if (currentChoiceIndex === 7) {
           // After first 8 questions, show second app introduction
           setCurrentScreen('appIntroduction2');
         } else if (currentChoiceIndex < allChoices.length - 1) {
@@ -86,6 +91,11 @@ const SurveyFlow: React.FC = () => {
         } else {
           setCurrentScreen('choicesSummary');
         }
+        break;
+      case 'choiceComprehension':
+        // After confirming first choice, continue to second question
+        setCurrentChoiceIndex(1);
+        setCurrentScreen('choices');
         break;
       case 'choicesSummary':
         setCurrentScreen('results');
@@ -126,10 +136,18 @@ const SurveyFlow: React.FC = () => {
         setCurrentScreen('choices');
         setCurrentChoiceIndex(7);
         break;
+      case 'choiceComprehension':
+        // Going back from choice comprehension to first question
+        setCurrentChoiceIndex(0);
+        setCurrentScreen('choices');
+        break;
       case 'choices':
         if (currentChoiceIndex === 8) {
           // Going back from first question of second app batch
           setCurrentScreen('appIntroduction2');
+        } else if (currentChoiceIndex === 1) {
+          // Going back from second question to choice comprehension
+          setCurrentScreen('choiceComprehension');
         } else if (currentChoiceIndex > 0) {
           setCurrentChoiceIndex(currentChoiceIndex - 1);
         } else {
@@ -188,6 +206,12 @@ const SurveyFlow: React.FC = () => {
           tokenAmount={allChoices[currentChoiceIndex].tokenAmount}
           questionNumber={currentChoiceIndex + 1}
           totalQuestions={allChoices.length}
+          onNext={goToNextScreen}
+          onBack={goToPreviousScreen}
+        />
+      )}
+      {currentScreen === 'choiceComprehension' && (
+        <ChoiceComprehensionCheckScreen
           onNext={goToNextScreen}
           onBack={goToPreviousScreen}
         />
