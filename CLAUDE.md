@@ -51,6 +51,27 @@ npm run deploy             # Deploy to GitHub Pages
 
 This ensures the live site stays in sync with the repository.
 
+### GitHub Pages Asset Path Issue
+
+**CRITICAL**: GitHub Pages deploys to `https://username.github.io/repo-name/`, which requires the correct `base` path in [vite.config.ts](wtp-survey-app/vite.config.ts).
+
+**Symptom**: If the deployed site shows 404 errors for assets (CSS, JS, images), the `base` path is incorrect.
+
+**Solution**: The `base` in [vite.config.ts](wtp-survey-app/vite.config.ts) must match the repository name:
+
+```typescript
+export default defineConfig({
+  base: '/wtp-survey/',  // Must match repo name for GitHub Pages
+  plugins: [react()],
+})
+```
+
+**Important Notes**:
+- For GitHub Pages: `base: '/wtp-survey/'` (repository name with slashes)
+- For custom domain deployments (like Netlify): `base: '/'`
+- After changing the base path, always rebuild and redeploy: `npm run deploy`
+- The `homepage` field in [package.json](wtp-survey-app/package.json) should match: `https://dmbwebb.github.io/wtp-survey`
+
 ## Architecture
 
 ### Survey Flow
