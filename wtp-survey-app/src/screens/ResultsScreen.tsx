@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
+import { FinalTokenVisualizer } from '../components/FinalTokenVisualizer';
 import { useSurvey } from '../contexts/SurveyContext';
 import { TOKEN_VALUE_COP } from '../types/survey';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -81,6 +82,7 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
           <p className="text-gray-600 mt-1">
             (${(surveyData.tokenBalance * TOKEN_VALUE_COP).toLocaleString()} COP)
           </p>
+          <FinalTokenVisualizer tokenCount={surveyData.tokenBalance} />
         </div>
 
         <Button onClick={onNext} className="w-full">

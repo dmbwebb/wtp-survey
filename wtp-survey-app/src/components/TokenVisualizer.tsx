@@ -7,7 +7,9 @@ interface TokenVisualizerProps {
 
 export const TokenVisualizer: React.FC<TokenVisualizerProps> = ({ tokenAmount }) => {
   const renderCoins = () => {
-    const coins: React.ReactElement[] = [];
+    const rows: React.ReactElement[] = [];
+    const firstRowCoins: React.ReactElement[] = [];
+    const secondRowCoins: React.ReactElement[] = [];
 
     if (tokenAmount < 0) {
       // Paying tokens: show grey coins first, then red coins
@@ -16,7 +18,7 @@ export const TokenVisualizer: React.FC<TokenVisualizerProps> = ({ tokenAmount })
 
       // Add grey coins
       for (let i = 0; i < greyCount; i++) {
-        coins.push(
+        firstRowCoins.push(
           <div
             key={`grey-${i}`}
             className="w-3 h-3 rounded-full bg-gray-400 border border-gray-500"
@@ -26,18 +28,24 @@ export const TokenVisualizer: React.FC<TokenVisualizerProps> = ({ tokenAmount })
 
       // Add red coins
       for (let i = 0; i < redCount; i++) {
-        coins.push(
+        firstRowCoins.push(
           <div
             key={`red-${i}`}
             className="w-3 h-3 rounded-full bg-red-500 border border-red-600"
           />
         );
       }
+
+      rows.push(
+        <div key="row-1" className="flex gap-1 justify-center">
+          {firstRowCoins}
+        </div>
+      );
     } else if (tokenAmount > 0) {
-      // Receiving tokens: show 10 grey coins, then green coins
-      // Add initial grey coins
+      // Receiving tokens: show 10 grey coins on first row, then green coins on second row
+      // Add initial grey coins (first row)
       for (let i = 0; i < INITIAL_TOKENS; i++) {
-        coins.push(
+        firstRowCoins.push(
           <div
             key={`grey-${i}`}
             className="w-3 h-3 rounded-full bg-gray-400 border border-gray-500"
@@ -45,28 +53,45 @@ export const TokenVisualizer: React.FC<TokenVisualizerProps> = ({ tokenAmount })
         );
       }
 
-      // Add green coins
+      // Add green coins (second row)
       for (let i = 0; i < tokenAmount; i++) {
-        coins.push(
+        secondRowCoins.push(
           <div
             key={`green-${i}`}
             className="w-3 h-3 rounded-full bg-green-500 border border-green-600"
           />
         );
       }
+
+      rows.push(
+        <div key="row-1" className="flex gap-1 justify-center">
+          {firstRowCoins}
+        </div>
+      );
+      rows.push(
+        <div key="row-2" className="flex gap-1 justify-center">
+          {secondRowCoins}
+        </div>
+      );
     } else {
       // Zero tokens: just show 10 grey coins
       for (let i = 0; i < INITIAL_TOKENS; i++) {
-        coins.push(
+        firstRowCoins.push(
           <div
             key={`grey-${i}`}
             className="w-3 h-3 rounded-full bg-gray-400 border border-gray-500"
           />
         );
       }
+
+      rows.push(
+        <div key="row-1" className="flex gap-1 justify-center">
+          {firstRowCoins}
+        </div>
+      );
     }
 
-    return coins;
+    return rows;
   };
 
   const getLabelColor = () => {
@@ -83,7 +108,7 @@ export const TokenVisualizer: React.FC<TokenVisualizerProps> = ({ tokenAmount })
 
   return (
     <div className="flex flex-col items-center gap-2 mt-3">
-      <div className="flex flex-wrap justify-center gap-1 max-w-[200px]">
+      <div className="flex flex-col gap-1">
         {renderCoins()}
       </div>
       <div className={`text-sm font-bold ${getLabelColor()}`}>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
+import { FinalTokenVisualizer } from '../components/FinalTokenVisualizer';
 import { INITIAL_TOKENS, TOKEN_VALUE_COP } from '../types/survey';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
@@ -40,6 +41,7 @@ export const TokenAllocationScreen: React.FC<TokenAllocationScreenProps> = ({ on
           <p className="text-lg text-gray-600 mt-2">
             ({t('tokenAllocation.worth', language)} ${(INITIAL_TOKENS * TOKEN_VALUE_COP).toLocaleString()} COP)
           </p>
+          <FinalTokenVisualizer tokenCount={INITIAL_TOKENS} />
         </div>
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
           <p className="text-gray-700">
