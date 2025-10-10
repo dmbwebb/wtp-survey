@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
+import { TokenVisualizer } from '../components/TokenVisualizer';
 import { AppName, TOKEN_VALUE_COP } from '../types/survey';
 import { useSurvey } from '../contexts/SurveyContext';
 import whatsappLogo from '../assets/whatsapp-logo.png';
@@ -96,6 +97,7 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
               <div className="text-sm text-gray-600">
                 {tokenValueText}
               </div>
+              <TokenVisualizer tokenAmount={tokenAmount} />
             </div>
           </button>
 
