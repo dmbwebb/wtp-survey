@@ -64,8 +64,8 @@ export const translations = {
       es: 'lo que quieras en la tienda escolar'
     },
     paragraph2d: {
-      en: 'after one week.',
-      es: 'después de una semana.'
+      en: '',
+      es: ''
     },
     paragraph3: {
       en: 'Please pay attention to the comprehension checks on the next screen to ensure you understand how the survey works.',
