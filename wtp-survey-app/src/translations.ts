@@ -60,12 +60,12 @@ export const translations = {
       es: ', y pueden ser canjeados por una'
     },
     paragraph2c: {
-      en: 'Spotify gift card',
-      es: 'tarjeta de regalo de Spotify'
+      en: 'whatever you want at the school shop',
+      es: 'lo que quieras en la tienda escolar'
     },
     paragraph2d: {
-      en: 'after one week that has that value.',
-      es: 'después de una semana con ese valor.'
+      en: 'after one week.',
+      es: 'después de una semana.'
     },
     paragraph3: {
       en: 'Please pay attention to the comprehension checks on the next screen to ensure you understand how the survey works.',
@@ -84,16 +84,16 @@ export const translations = {
       es: '¿Cuánto vale 1 token en COP?'
     },
     question2: {
-      en: 'What can you exchange your tokens for?',
-      es: '¿Por qué puedes canjear tus tokens?'
+      en: 'Where can you exchange your tokens to buy things?',
+      es: '¿Dónde puedes canjear tus tokens para comprar cosas?'
     },
     placeholder1: {
       en: 'Enter amount',
       es: 'Ingresa la cantidad'
     },
     placeholder2: {
-      en: 'Enter reward type',
-      es: 'Ingresa el tipo de recompensa'
+      en: 'Enter location',
+      es: 'Ingresa el lugar'
     },
     error: {
       en: 'Incorrect. Please review the instructions.',
@@ -124,8 +124,8 @@ export const translations = {
       es: 'Tipo de Recompensa:'
     },
     rewardTypeText: {
-      en: 'You can exchange your tokens for a Spotify gift card after one week.',
-      es: 'Puedes canjear tus tokens por una tarjeta de regalo de Spotify después de una semana.'
+      en: 'You can exchange your tokens at the school shop to buy whatever you want.',
+      es: 'Puedes canjear tus tokens en la tienda escolar para comprar lo que quieras.'
     },
     outro: {
       en: "Please review these details carefully. You'll have another chance to answer the comprehension questions.",
@@ -432,8 +432,8 @@ export const translations = {
       es: 'Tus respuestas han sido registradas.'
     },
     contactInfo: {
-      en: 'Our team will contact you about implementing your selected choice (app limit or tokens) and redeeming your tokens for a Spotify gift card.',
-      es: 'Nuestro equipo te contactará sobre la implementación de tu decisión seleccionada (límite de aplicación o tokens) y el canje de tus tokens por una tarjeta de regalo de Spotify.'
+      en: 'Our team will contact you about implementing your selected choice (app limit or tokens) and redeeming your tokens at the school shop.',
+      es: 'Nuestro equipo te contactará sobre la implementación de tu decisión seleccionada (límite de aplicación o tokens) y el canje de tus tokens en la tienda escolar.'
     },
     participantId: {
       en: 'Participant ID:',

@@ -21,13 +21,12 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
   const correctTokenValue = TOKEN_VALUE_COP.toString();
   const isTokenValueCorrect = tokenValue.trim() === correctTokenValue;
   const rewardLower = rewardType.toLowerCase();
-  const isRewardTypeCorrect = rewardLower.includes('spotify') ||
-                               rewardLower.includes('gift card') ||
-                               rewardLower.includes('reward') ||
-                               rewardLower.includes('tarjeta de regalo') ||
-                               rewardLower.includes('tarjeta regalo') ||
-                               rewardLower.includes('regalo') ||
-                               rewardLower.includes('recompensa');
+  const isRewardTypeCorrect = rewardLower.includes('school shop') ||
+                               rewardLower.includes('school') ||
+                               rewardLower.includes('shop') ||
+                               rewardLower.includes('tienda escolar') ||
+                               rewardLower.includes('tienda') ||
+                               rewardLower.includes('escolar');
 
   const canContinue = isTokenValueCorrect && isRewardTypeCorrect;
 
