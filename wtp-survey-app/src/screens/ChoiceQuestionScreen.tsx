@@ -27,7 +27,7 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
   onBack,
 }) => {
   const { language } = useLanguage();
-  const [selected, setSelected] = useState<'tokens' | 'block' | null>(null);
+  const [selected, setSelected] = useState<'tokens' | 'limit' | null>(null);
   const { addChoice } = useSurvey();
 
   // Reset selection when question changes
@@ -102,9 +102,9 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
           </button>
 
           <button
-            onClick={() => setSelected('block')}
+            onClick={() => setSelected('limit')}
             className={`p-6 rounded-xl border-2 transition-all duration-200 ${
-              selected === 'block'
+              selected === 'limit'
                 ? 'border-blue-600 bg-blue-50 shadow-lg'
                 : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
             }`}
@@ -114,10 +114,10 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
                 <img src={appLogo} alt={app} className="w-16 h-16" />
               </div>
               <div className="text-xl font-bold text-gray-900 mb-2">
-                {t('choiceQuestion.block', language)} {app}
+                {t('choiceQuestion.limit', language)} {app}
               </div>
               <div className="text-sm text-gray-600">
-                {t('choiceQuestion.onYourPhoneFor1Week', language)}
+                {t('choiceQuestion.limitDescription', language)}
               </div>
             </div>
           </button>

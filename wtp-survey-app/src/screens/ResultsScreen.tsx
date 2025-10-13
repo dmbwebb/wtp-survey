@@ -28,7 +28,7 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
     return null;
   }
 
-  const willBlock = selectedChoice.selectedOption === 'block';
+  const willLimit = selectedChoice.selectedOption === 'limit';
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col p-4">
@@ -38,7 +38,7 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
         <div className="text-center mb-8">
-          <div className="text-6xl mb-4">{willBlock ? '🚫' : '💰'}</div>
+          <div className="text-6xl mb-4">{willLimit ? '⏱️' : '💰'}</div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
             {t('results.title', language)}
           </h1>
@@ -48,13 +48,13 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             {t('results.whatWillHappen', language)}
           </h2>
-          {willBlock ? (
+          {willLimit ? (
             <div className="space-y-2">
               <p className="text-gray-700">
-                {t('results.blockMessage1', language)} <strong>{selectedChoice.app}</strong> {t('results.blockMessage2', language)}
+                <strong>{selectedChoice.app}</strong> {t('results.limitMessage1', language)} {t('results.limitMessage2', language)}
               </p>
               <p className="text-gray-700">
-                {t('results.blockMessage3', language)} {t('results.blockMessage4', language)}
+                {t('results.limitMessage3', language)} {t('results.limitMessage4', language)}
               </p>
             </div>
           ) : (
@@ -66,7 +66,7 @@ export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
                 {t('results.thisIsWorth', language)} <strong>${Math.abs(selectedChoice.tokenAmount * TOKEN_VALUE_COP).toLocaleString()} COP</strong>.
               </p>
               <p className="text-gray-700">
-                {selectedChoice.app} {t('results.willNotBeBlocked', language)}
+                {selectedChoice.app} {t('results.willNotBeLimited', language)}
               </p>
             </div>
           )}

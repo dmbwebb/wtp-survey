@@ -168,12 +168,12 @@ export const translations = {
       es: 'Acerca de tus Decisiones'
     },
     paragraph1: {
-      en: 'The choices you will make will involve setting limits for certain apps on your phone.',
-      es: 'Las decisiones que tomarás implicarán establecer límites para ciertas aplicaciones en tu teléfono.'
+      en: 'The choices you will make will involve limiting certain apps to 30 minutes per day on your phone.',
+      es: 'Las decisiones que tomarás implicarán limitar ciertas aplicaciones a 30 minutos por día en tu teléfono.'
     },
     paragraph2: {
-      en: 'If you choose to set a limit, and that option is chosen, then our team will actually set the limit on your phone for one week later today, and set a password so you cannot change it.',
-      es: 'Si eliges establecer un límite, y esa opción es seleccionada, entonces nuestro equipo realmente establecerá el límite en tu teléfono por una semana más tarde hoy, y pondrá una contraseña para que no puedas cambiarlo.'
+      en: 'If you choose to set a limit, and that option is chosen, then our team will actually limit the app to 30 minutes per day on your phone for one week later today, and set a password so you cannot change it.',
+      es: 'Si eliges establecer un límite, y esa opción es seleccionada, entonces nuestro equipo realmente limitará la aplicación a 30 minutos por día en tu teléfono por una semana más tarde hoy, y pondrá una contraseña para que no puedas cambiarlo.'
     },
     paragraph3: {
       en: 'So you should only select the options that you really prefer.',
@@ -204,16 +204,16 @@ export const translations = {
   // AppIntroductionScreen
   appIntroduction: {
     title: {
-      en: 'App Blocking Questions:',
-      es: 'Preguntas sobre Bloqueo de Aplicación:'
+      en: 'App Limiting Questions:',
+      es: 'Preguntas sobre Limitar Aplicación:'
     },
     description: {
-      en: "We're now going to ask you some questions to see how willing you would be to block",
-      es: 'Ahora te haremos algunas preguntas para ver qué tan dispuesto estarías a bloquear'
+      en: "We're now going to ask you some questions to see how willing you would be to limit",
+      es: 'Ahora te haremos algunas preguntas para ver qué tan dispuesto estarías a limitar'
     },
     description2: {
-      en: 'for 1 week on your phone.',
-      es: 'por 1 semana en tu teléfono.'
+      en: 'to 30 minutes per day for 1 week on your phone.',
+      es: 'a 30 minutos por día por 1 semana en tu teléfono.'
     }
   },
 
@@ -247,13 +247,13 @@ export const translations = {
       en: 'worth',
       es: 'equivalente a'
     },
-    block: {
-      en: 'Block',
-      es: 'Bloquear'
+    limit: {
+      en: 'Limit',
+      es: 'Limitar'
     },
-    onYourPhoneFor1Week: {
-      en: 'on your phone for 1 week',
-      es: 'en tu teléfono por 1 semana'
+    limitDescription: {
+      en: 'to 30 min/day for 1 week',
+      es: 'a 30 min/día por 1 semana'
     }
   },
 
@@ -264,12 +264,12 @@ export const translations = {
       es: 'Verificación de Comprensión'
     },
     confirmTokens: {
-      en: 'To confirm, you would prefer to {action} {tokens} tokens, so that you would end up with {finalBalance} tokens at the end of the experiment, rather than block {app} for a week?',
-      es: 'Para confirmar, ¿preferirías {action} {tokens} tokens, para que termines con {finalBalance} tokens al final del experimento, en lugar de bloquear {app} por una semana?'
+      en: 'To confirm, you would prefer to {action} {tokens} tokens, so that you would end up with {finalBalance} tokens at the end of the experiment, rather than limit {app} to 30 minutes per day for a week?',
+      es: 'Para confirmar, ¿preferirías {action} {tokens} tokens, para que termines con {finalBalance} tokens al final del experimento, en lugar de limitar {app} a 30 minutos por día por una semana?'
     },
-    confirmBlock: {
-      en: 'To confirm, you would prefer to block {app} for a week, rather than {action} {tokens} tokens, so your token balance would remain at {currentBalance} tokens at the end of the experiment?',
-      es: 'Para confirmar, ¿preferirías bloquear {app} por una semana, en lugar de {action} {tokens} tokens, por lo que tu saldo de tokens permanecería en {currentBalance} tokens al final del experimento?'
+    confirmLimit: {
+      en: 'To confirm, you would prefer to limit {app} to 30 minutes per day for a week, rather than {action} {tokens} tokens, so your token balance would remain at {currentBalance} tokens at the end of the experiment?',
+      es: 'Para confirmar, ¿preferirías limitar {app} a 30 minutos por día por una semana, en lugar de {action} {tokens} tokens, por lo que tu saldo de tokens permanecería en {currentBalance} tokens al final del experimento?'
     },
     receive: {
       en: 'receive',
@@ -343,13 +343,13 @@ export const translations = {
       en: 'tokens',
       es: 'tokens'
     },
-    block: {
-      en: 'Block',
-      es: 'Bloquear'
+    limit: {
+      en: 'Limit',
+      es: 'Limitar'
     },
-    for1Week: {
-      en: 'for 1 week',
-      es: 'por 1 semana'
+    limitDuration: {
+      en: 'to 30 min/day for 1 week',
+      es: 'a 30 min/día por 1 semana'
     },
     choice: {
       en: 'Choice #',
@@ -367,21 +367,21 @@ export const translations = {
       en: 'What will happen:',
       es: 'Qué sucederá:'
     },
-    blockMessage1: {
-      en: 'will be blocked on your phone for',
-      es: 'será bloqueada en tu teléfono por'
+    limitMessage1: {
+      en: 'will be limited to 30 minutes per day on your phone for',
+      es: 'será limitada a 30 minutos por día en tu teléfono por'
     },
-    blockMessage2: {
+    limitMessage2: {
       en: '1 week',
       es: '1 semana'
     },
-    blockMessage3: {
+    limitMessage3: {
       en: 'starting today.',
       es: 'comenzando hoy.'
     },
-    blockMessage4: {
-      en: 'Our team will set the block with a password so you cannot change it.',
-      es: 'Nuestro equipo establecerá el bloqueo con una contraseña para que no puedas cambiarlo.'
+    limitMessage4: {
+      en: 'Our team will set the limit with a password so you cannot change it.',
+      es: 'Nuestro equipo establecerá el límite con una contraseña para que no puedas cambiarlo.'
     },
     tokenMessage1: {
       en: 'You will',
@@ -403,9 +403,9 @@ export const translations = {
       en: 'This is worth',
       es: 'Esto equivale a'
     },
-    willNotBeBlocked: {
-      en: 'will not be blocked.',
-      es: 'no será bloqueada.'
+    willNotBeLimited: {
+      en: 'will not be limited.',
+      es: 'no será limitada.'
     },
     finalTokenBalance: {
       en: 'Final Token Balance:',
@@ -432,8 +432,8 @@ export const translations = {
       es: 'Tus respuestas han sido registradas.'
     },
     contactInfo: {
-      en: 'Our team will contact you about implementing your selected choice and redeeming your tokens for a Spotify gift card.',
-      es: 'Nuestro equipo te contactará sobre la implementación de tu decisión seleccionada y el canje de tus tokens por una tarjeta de regalo de Spotify.'
+      en: 'Our team will contact you about implementing your selected choice (app limit or tokens) and redeeming your tokens for a Spotify gift card.',
+      es: 'Nuestro equipo te contactará sobre la implementación de tu decisión seleccionada (límite de aplicación o tokens) y el canje de tus tokens por una tarjeta de regalo de Spotify.'
     },
     participantId: {
       en: 'Participant ID:',

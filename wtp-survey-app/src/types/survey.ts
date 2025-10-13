@@ -5,7 +5,7 @@ export interface Choice {
   id: string;
   app: AppName;
   tokenAmount: number;
-  selectedOption: 'tokens' | 'block' | null;
+  selectedOption: 'tokens' | 'limit' | null;
   timestamp: string;
 }
 

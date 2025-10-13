@@ -20,10 +20,10 @@ export const ChoiceInstructionsScreen: React.FC<ChoiceInstructionsScreenProps> =
         </h1>
         <div className="space-y-4 text-gray-700 text-lg leading-relaxed mb-8">
           <p>
-            The choices you will make will involve <strong>setting limits for certain apps on your phone</strong>.
+            The choices you will make will involve <strong>limiting certain apps to 30 minutes per day on your phone</strong>.
           </p>
           <p>
-            If you choose to set a limit, and that option is chosen, then our team will actually set the limit on your phone for <strong>one week</strong> later today, and set a password so you cannot change it.
+            If you choose to set a limit, and that option is chosen, then our team will actually limit the app to <strong>30 minutes per day</strong> on your phone for <strong>one week</strong> later today, and set a password so you cannot change it.
           </p>
           <p className="font-semibold text-blue-600">
             So you should only select the options that you really prefer.

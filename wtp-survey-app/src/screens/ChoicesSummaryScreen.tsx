@@ -45,18 +45,18 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
     }, 3000);
   };
 
-  const getOptionText = (choice: Choice, option: 'tokens' | 'block') => {
+  const getOptionText = (choice: Choice, option: 'tokens' | 'limit') => {
     if (option === 'tokens') {
       return choice.tokenAmount >= 0
         ? `${t('choicesSummary.receive', language)} ${choice.tokenAmount} ${t('choicesSummary.tokens', language)}`
         : `${t('choicesSummary.pay', language)} ${Math.abs(choice.tokenAmount)} ${t('choicesSummary.tokens', language)}`;
     }
-    return `${t('choicesSummary.block', language)} ${choice.app} ${t('choicesSummary.for1Week', language)}`;
+    return `${t('choicesSummary.limit', language)} ${choice.app} ${t('choicesSummary.limitDuration', language)}`;
   };
 
   const OptionBox: React.FC<{
     choice: Choice;
-    option: 'tokens' | 'block';
+    option: 'tokens' | 'limit';
   }> = ({ choice, option }) => {
     const isSelected = choice.selectedOption === option;
 
@@ -122,7 +122,7 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
                   <div className="flex items-center text-gray-400">
                     <span>{t('common.or', language)}</span>
                   </div>
-                  <OptionBox choice={choice} option="block" />
+                  <OptionBox choice={choice} option="limit" />
                 </div>
               </div>
             </div>

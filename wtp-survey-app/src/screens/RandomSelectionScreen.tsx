@@ -93,7 +93,7 @@ export const RandomSelectionScreen: React.FC<RandomSelectionScreenProps> = ({ on
                   <strong>Your choice:</strong>{' '}
                   {selectedChoice.selectedOption === 'tokens'
                     ? `Receive ${selectedChoice.tokenAmount} tokens`
-                    : `Block ${selectedChoice.app} for 1 week`}
+                    : `Limit ${selectedChoice.app} to 30 min/day for 1 week`}
                 </p>
               </div>
             </div>

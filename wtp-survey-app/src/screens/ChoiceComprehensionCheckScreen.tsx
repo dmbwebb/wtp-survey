@@ -45,13 +45,13 @@ export const ChoiceComprehensionCheckScreen: React.FC<ChoiceComprehensionCheckSc
       .replace('{finalBalance}', finalBalance.toString())
       .replace('{app}', app);
   } else {
-    // They chose to block the app
+    // They chose to limit the app
     const tokenAction = tokenAmount >= 0
       ? t('choiceComprehensionCheck.receiving', language)
       : t('choiceComprehensionCheck.paying', language);
     const absTokens = Math.abs(tokenAmount);
 
-    message = t('choiceComprehensionCheck.confirmBlock', language)
+    message = t('choiceComprehensionCheck.confirmLimit', language)
       .replace('{app}', app)
       .replace('{action}', tokenAction)
       .replace('{tokens}', absTokens.toString())
