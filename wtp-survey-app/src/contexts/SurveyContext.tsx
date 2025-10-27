@@ -357,24 +357,25 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     }));
 
     try {
-      // Get all unsynced surveys
+      // Get ALL surveys (not just unsynced)
       const allSurveys = await safeIndexedDBOperation(
         () => getAllFromIndexedDB(),
         []
       );
 
-      // Manual sync: sync ALL unsynced surveys (including in-progress)
-      const unsyncedSurveys = allSurveys.filter(s => !s.synced);
-      const completedCount = unsyncedSurveys.filter(s => s.surveyData.completedAt).length;
-      const inProgressCount = unsyncedSurveys.filter(s => !s.surveyData.completedAt).length;
+      // Manual sync: sync ALL surveys (including already-synced ones)
+      // This ensures that partially-synced surveys get updated with new data
+      const surveysToSync = allSurveys;
+      const completedCount = surveysToSync.filter(s => s.surveyData.completedAt).length;
+      const inProgressCount = surveysToSync.filter(s => !s.surveyData.completedAt).length;
 
-      console.log(`Manual sync: ${completedCount} completed, ${inProgressCount} in-progress surveys...`);
+      console.log(`Manual sync: ${surveysToSync.length} total surveys (${completedCount} completed, ${inProgressCount} in-progress)...`);
 
       let successCount = 0;
       let failCount = 0;
 
       // Sync each survey
-      for (const survey of unsyncedSurveys) {
+      for (const survey of surveysToSync) {
         try {
           await syncSurveyToFirebase(survey);
           await updateSyncStatus(survey.id, true);

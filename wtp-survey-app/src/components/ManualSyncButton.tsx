@@ -20,9 +20,11 @@ export const ManualSyncButton: React.FC = () => {
     }
   };
 
-  if (syncStatus.pending === 0) {
-    return null; // Don't show button if nothing to sync
-  }
+  const buttonLabel = () => {
+    if (isSyncing) return 'Syncing...';
+    if (syncStatus.pending === 0) return 'All Synced';
+    return `Sync Now (${syncStatus.pending})`;
+  };
 
   return (
     <div className="fixed bottom-4 left-4 z-50">
@@ -30,9 +32,9 @@ export const ManualSyncButton: React.FC = () => {
         onClick={handleSync}
         disabled={isSyncing || !isOnline}
         variant="primary"
-        title="Sync all unsynced surveys (including in-progress) to Firebase"
+        title="Sync all surveys (including in-progress and already-synced) to Firebase"
       >
-        {isSyncing ? 'Syncing...' : `Sync Now (${syncStatus.pending})`}
+        {buttonLabel()}
       </Button>
       {!isOnline && (
         <div className="text-xs text-red-600 mt-1 text-center">
