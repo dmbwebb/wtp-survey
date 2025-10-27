@@ -1,15 +1,21 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { SurveyData, Choice, APPS, INITIAL_TOKENS } from '../types/survey';
+import { SurveyData, Choice, APPS, INITIAL_TOKENS, AppName, TOKEN_AMOUNTS } from '../types/survey';
 
 interface SurveyContextType {
   surveyData: SurveyData;
   setParticipantId: (id: string) => void;
   setComprehensionAnswer: (field: 'tokenValue' | 'rewardType', value: string) => void;
   addChoice: (choice: Choice) => void;
+  removeChoice: (app: AppName, tokenAmount: number) => void;
   selectRandomChoice: () => Choice;
   updateTokenBalance: (amount: number) => void;
   completeSurvey: () => void;
   resetSurvey: () => void;
+  setSwitchingPoint: (app: AppName, tokenAmount: number, switchedTo: 'tokens' | 'limit') => void;
+  confirmSwitchingPoint: (app: AppName) => void;
+  autoFillChoices: (app: AppName) => void;
+  clearAutoFilledChoices: (app: AppName) => void;
+  hasSwitchingPoint: (app: AppName) => boolean;
 }
 
 const SurveyContext = createContext<SurveyContextType | undefined>(undefined);
@@ -36,6 +42,7 @@ const createInitialSurveyData = (): SurveyData => ({
     tokenValue: '',
     rewardType: '',
   },
+  switchingPoints: {},
 });
 
 export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -81,6 +88,15 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     });
   };
 
+  const removeChoice = (app: AppName, tokenAmount: number) => {
+    setSurveyData(prev => ({
+      ...prev,
+      choices: prev.choices.filter(
+        choice => !(choice.app === app && choice.tokenAmount === tokenAmount)
+      ),
+    }));
+  };
+
   const selectRandomChoice = (): Choice => {
     const randomIndex = Math.floor(Math.random() * surveyData.choices.length);
     const selected = surveyData.choices[randomIndex];
@@ -101,6 +117,88 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     localStorage.removeItem('surveyData');
   };
 
+  const setSwitchingPoint = (app: AppName, tokenAmount: number, switchedTo: 'tokens' | 'limit') => {
+    setSurveyData(prev => ({
+      ...prev,
+      switchingPoints: {
+        ...prev.switchingPoints,
+        [app]: {
+          tokenAmount,
+          switchedTo,
+          confirmed: false,
+        },
+      },
+    }));
+  };
+
+  const confirmSwitchingPoint = (app: AppName) => {
+    setSurveyData(prev => {
+      const switchingPoint = prev.switchingPoints[app];
+      if (!switchingPoint) return prev;
+
+      return {
+        ...prev,
+        switchingPoints: {
+          ...prev.switchingPoints,
+          [app]: {
+            ...switchingPoint,
+            confirmed: true,
+          },
+        },
+      };
+    });
+  };
+
+  const autoFillChoices = (app: AppName) => {
+    setSurveyData(prev => {
+      const switchingPoint = prev.switchingPoints[app];
+      if (!switchingPoint || !switchingPoint.confirmed) return prev;
+
+      // Get the order of token amounts based on survey order
+      const orderedTokenAmounts = prev.tokenOrder === 'ascending'
+        ? [...TOKEN_AMOUNTS].reverse()
+        : TOKEN_AMOUNTS;
+
+      // Find the index of the switching point
+      const switchIndex = orderedTokenAmounts.findIndex(amt => amt === switchingPoint.tokenAmount);
+      if (switchIndex === -1) return prev;
+
+      // Get all token amounts after the switching point
+      const remainingTokenAmounts = orderedTokenAmounts.slice(switchIndex + 1);
+
+      // Create auto-filled choices for remaining token amounts
+      const autoFilledChoices: Choice[] = remainingTokenAmounts.map(tokenAmount => ({
+        id: `${app}-${tokenAmount}-${Date.now()}-autofilled`,
+        app,
+        tokenAmount,
+        selectedOption: switchingPoint.switchedTo,
+        timestamp: new Date().toISOString(),
+        autoFilled: true,
+      }));
+
+      // Add auto-filled choices to existing choices
+      return {
+        ...prev,
+        choices: [...prev.choices, ...autoFilledChoices],
+      };
+    });
+  };
+
+  const clearAutoFilledChoices = (app: AppName) => {
+    setSurveyData(prev => ({
+      ...prev,
+      choices: prev.choices.filter(choice => !(choice.app === app && choice.autoFilled)),
+      switchingPoints: {
+        ...prev.switchingPoints,
+        [app]: undefined,
+      },
+    }));
+  };
+
+  const hasSwitchingPoint = (app: AppName): boolean => {
+    return !!surveyData.switchingPoints[app]?.confirmed;
+  };
+
   return (
     <SurveyContext.Provider
       value={{
@@ -108,10 +206,16 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         setParticipantId,
         setComprehensionAnswer,
         addChoice,
+        removeChoice,
         selectRandomChoice,
         updateTokenBalance,
         completeSurvey,
         resetSurvey,
+        setSwitchingPoint,
+        confirmSwitchingPoint,
+        autoFillChoices,
+        clearAutoFilledChoices,
+        hasSwitchingPoint,
       }}
     >
       {children}

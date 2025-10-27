@@ -20,13 +20,22 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
 
   const correctTokenValue = TOKEN_VALUE_COP.toString();
   const isTokenValueCorrect = tokenValue.trim() === correctTokenValue;
-  const rewardLower = rewardType.toLowerCase();
+  const rewardLower = rewardType.toLowerCase().trim();
   const isRewardTypeCorrect = rewardLower.includes('school shop') ||
                                rewardLower.includes('school') ||
+                               rewardLower.includes('scool') ||  // common misspelling
+                               rewardLower.includes('shool') ||  // common misspelling
                                rewardLower.includes('shop') ||
+                               rewardLower.includes('store') ||  // alternative word
                                rewardLower.includes('tienda escolar') ||
                                rewardLower.includes('tienda') ||
-                               rewardLower.includes('escolar');
+                               rewardLower.includes('tiemda') ||  // common misspelling
+                               rewardLower.includes('escolar') ||
+                               rewardLower.includes('escuela') ||
+                               rewardLower.includes('escela') ||  // common misspelling (missing u)
+                               rewardLower.includes('escuella') ||  // common misspelling (double l)
+                               rewardLower.includes('colegio') ||  // alternative word for school
+                               rewardLower.includes('cole');
 
   const canContinue = isTokenValueCorrect && isRewardTypeCorrect;
 

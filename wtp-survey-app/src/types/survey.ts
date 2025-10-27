@@ -7,6 +7,13 @@ export interface Choice {
   tokenAmount: number;
   selectedOption: 'tokens' | 'limit' | null;
   timestamp: string;
+  autoFilled?: boolean; // Indicates if this choice was auto-filled after switching point
+}
+
+export interface SwitchingPoint {
+  tokenAmount: number;
+  switchedTo: 'tokens' | 'limit';
+  confirmed: boolean;
 }
 
 export interface SurveyData {
@@ -22,9 +29,12 @@ export interface SurveyData {
     tokenValue: string;
     rewardType: string;
   };
+  switchingPoints: {
+    [app in AppName]?: SwitchingPoint;
+  };
 }
 
-export const TOKEN_AMOUNTS = [5, 2, 1, 0, -1, -2, -5, -10] as const;
+export const TOKEN_AMOUNTS = [5, 2, 0, -1, -2, -5, -8, -10] as const;
 export const APPS: AppName[] = ['TikTok', 'WhatsApp'];
 export const TOKEN_VALUE_COP = 1000;
 export const INITIAL_TOKENS = 10;

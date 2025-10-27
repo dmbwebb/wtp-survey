@@ -491,6 +491,110 @@ export const translations = {
       en: 'Force refresh',
       es: 'Forzar actualización'
     }
+  },
+
+  // SwitchingPointConfirmationScreen
+  switchingPoint: {
+    title: {
+      en: 'Please Confirm Your Choice',
+      es: 'Por Favor Confirma tu Decisión'
+    },
+    yourChoice: {
+      en: 'Your Choice:',
+      es: 'Tu Decisión:'
+    },
+    whatThisMeans: {
+      en: 'What This Means:',
+      es: 'Qué Significa Esto:'
+    },
+    choseLimitOverReceive: {
+      en: 'You chose to limit {app} rather than receive {tokenAmount} tokens (worth {value} COP).',
+      es: 'Elegiste limitar {app} en lugar de recibir {tokenAmount} tokens (equivalente a {value} COP).'
+    },
+    choseLimitOverPay: {
+      en: 'You chose to limit {app} rather than pay {tokenAmount} tokens (worth {value} COP) to avoid limiting.',
+      es: 'Elegiste limitar {app} en lugar de pagar {tokenAmount} tokens (equivalente a {value} COP) para evitar limitar.'
+    },
+    choseLimitOverZero: {
+      en: 'You chose to limit {app} rather than keep your tokens unchanged.',
+      es: 'Elegiste limitar {app} en lugar de mantener tus tokens sin cambios.'
+    },
+    chosePayOverLimit: {
+      en: 'You were willing to pay {tokenAmount} tokens (worth {value} COP) to avoid limiting {app}.',
+      es: 'Estuviste dispuesto a pagar {tokenAmount} tokens (equivalente a {value} COP) para evitar limitar {app}.'
+    },
+    choseReceiveOverLimit: {
+      en: 'You chose to receive {tokenAmount} tokens (worth {value} COP) rather than limit {app}.',
+      es: 'Elegiste recibir {tokenAmount} tokens (equivalente a {value} COP) en lugar de limitar {app}.'
+    },
+    choseZeroOverLimit: {
+      en: 'You chose to keep your tokens unchanged rather than limit {app}.',
+      es: 'Elegiste mantener tus tokens sin cambios en lugar de limitar {app}.'
+    },
+    implicationLimitDescending: {
+      en: 'Since you prefer to limit {app} rather than receive these tokens, we assume you would also prefer to limit for smaller amounts (like 0 tokens), and that you would NOT want to PAY tokens to avoid limiting {app}.',
+      es: 'Dado que prefieres limitar {app} en lugar de recibir estos tokens, asumimos que también preferirías limitar por cantidades menores (como 0 tokens), y que NO querrías PAGAR tokens para evitar limitar {app}.'
+    },
+    implicationLimitAscending: {
+      en: 'Since you prefer to limit {app} rather than pay these tokens, we assume you would also prefer to limit if you had to pay LESS, or even if you received tokens instead.',
+      es: 'Dado que prefieres limitar {app} en lugar de pagar estos tokens, asumimos que también preferirías limitar si tuvieras que pagar MENOS, o incluso si recibieras tokens.'
+    },
+    implicationLimitFromZero: {
+      en: 'Since you prefer to limit {app} rather than keep your tokens unchanged, we assume you would also prefer to limit even if you had to PAY tokens, or if you received tokens.',
+      es: 'Dado que prefieres limitar {app} en lugar de mantener tus tokens sin cambios, asumimos que también preferirías limitar incluso si tuvieras que PAGAR tokens, o si recibieras tokens.'
+    },
+    implicationPayAscending: {
+      en: 'Since you were willing to pay tokens to avoid limiting {app}, we assume you would also be willing to pay LESS, pay nothing (0 tokens), or even RECEIVE tokens instead of limiting.',
+      es: 'Dado que estuviste dispuesto a pagar tokens para evitar limitar {app}, asumimos que también estarías dispuesto a pagar MENOS, no pagar nada (0 tokens), o incluso RECIBIR tokens en lugar de limitar.'
+    },
+    implicationReceiveDescending: {
+      en: 'Since you chose to receive tokens rather than limit {app}, we assume you would also choose to receive smaller amounts, receive nothing (0 tokens), or even PAY tokens to avoid limiting.',
+      es: 'Dado que elegiste recibir tokens en lugar de limitar {app}, asumimos que también elegirías recibir cantidades más pequeñas, no recibir nada (0 tokens), o incluso PAGAR tokens para evitar limitar.'
+    },
+    implicationTokensFromZero: {
+      en: 'Since you chose to keep your tokens rather than limit {app}, we assume you would also choose to receive tokens, or even PAY tokens to avoid limiting.',
+      es: 'Dado que elegiste mantener tus tokens en lugar de limitar {app}, asumimos que también elegirías recibir tokens, o incluso PAGAR tokens para evitar limitar.'
+    },
+    autoFillNotice: {
+      en: 'We will automatically fill in the remaining {count} questions for {app} based on your choice.',
+      es: 'Automáticamente completaremos las {count} preguntas restantes para {app} según tu decisión.'
+    },
+    confirmQuestion: {
+      en: 'Is this understanding correct?',
+      es: '¿Es correcta esta interpretación?'
+    },
+    goBack: {
+      en: 'No, Go Back',
+      es: 'No, Volver'
+    },
+    confirm: {
+      en: 'Yes, Continue',
+      es: 'Sí, Continuar'
+    }
+  },
+
+  // AutoFilledExplanationScreen
+  autoFilled: {
+    title: {
+      en: 'Questions Completed for {app}',
+      es: 'Preguntas Completadas para {app}'
+    },
+    explanation: {
+      en: 'Based on your previous choice, we have automatically filled {count} remaining questions for {app}.',
+      es: 'Según tu decisión anterior, hemos completado automáticamente {count} preguntas restantes para {app}.'
+    },
+    filledAnswers: {
+      en: 'Automatically Filled Answers:',
+      es: 'Respuestas Completadas Automáticamente:'
+    },
+    question: {
+      en: 'Question',
+      es: 'Pregunta'
+    },
+    canGoBack: {
+      en: 'If you want to change your answer, you can go back to modify your choice.',
+      es: 'Si quieres cambiar tu respuesta, puedes volver atrás para modificar tu decisión.'
+    }
   }
 };
 

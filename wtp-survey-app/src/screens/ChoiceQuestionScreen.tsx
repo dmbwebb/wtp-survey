@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
 import { TokenVisualizer } from '../components/TokenVisualizer';
-import { AppName, TOKEN_VALUE_COP } from '../types/survey';
+import { AppName, TOKEN_VALUE_COP, TOKEN_AMOUNTS } from '../types/survey';
 import { useSurvey } from '../contexts/SurveyContext';
 import whatsappLogo from '../assets/whatsapp-logo.png';
 import tiktokLogo from '../assets/tiktok-logo.png';
@@ -15,6 +15,7 @@ interface ChoiceQuestionScreenProps {
   questionNumber: number;
   totalQuestions: number;
   onNext: () => void;
+  onSwitchingPointDetected: () => void;
   onBack: () => void;
 }
 
@@ -24,19 +25,99 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
   questionNumber,
   totalQuestions,
   onNext,
+  onSwitchingPointDetected,
   onBack,
 }) => {
   const { language } = useLanguage();
   const [selected, setSelected] = useState<'tokens' | 'limit' | null>(null);
-  const { addChoice } = useSurvey();
+  const { addChoice, surveyData, setSwitchingPoint, clearAutoFilledChoices } = useSurvey();
 
   // Reset selection when question changes
   useEffect(() => {
     setSelected(null);
   }, [app, tokenAmount]);
 
+  const detectSwitch = (currentChoice: 'tokens' | 'limit'): boolean => {
+    // Get all previous choices for this app (excluding auto-filled ones and current question)
+    const previousChoices = surveyData.choices.filter(
+      choice => choice.app === app && !choice.autoFilled && choice.tokenAmount !== tokenAmount
+    );
+
+    // If this is the first choice for this app, no switch
+    if (previousChoices.length === 0) {
+      return false;
+    }
+
+    // Check if all previous choices were the same and different from current
+    const allPreviousSame = previousChoices.every(
+      choice => choice.selectedOption === previousChoices[0].selectedOption
+    );
+
+    if (!allPreviousSame) {
+      return false; // Previous choices were inconsistent
+    }
+
+    const previousOption = previousChoices[0].selectedOption;
+    return previousOption !== currentChoice;
+  };
+
+  const checkIfBreaksSwitchingPoint = (currentChoice: 'tokens' | 'limit'): boolean => {
+    // Check if there's a confirmed switching point for this app
+    const switchingPoint = surveyData.switchingPoints[app];
+    if (!switchingPoint || !switchingPoint.confirmed) {
+      return false;
+    }
+
+    // Get the order of token amounts
+    const orderedTokenAmounts = surveyData.tokenOrder === 'ascending'
+      ? [...TOKEN_AMOUNTS].reverse()
+      : TOKEN_AMOUNTS;
+
+    // Find the indices
+    const currentIndex = orderedTokenAmounts.findIndex(amt => amt === tokenAmount);
+    const switchIndex = orderedTokenAmounts.findIndex(amt => amt === switchingPoint.tokenAmount);
+
+    // If this question is not before the switching point, it doesn't break it
+    if (currentIndex >= switchIndex) {
+      return false;
+    }
+
+    // This question is before the switching point
+    // Get all non-auto-filled choices for this app before the switch (excluding current question)
+    const choicesBeforeSwitch = surveyData.choices.filter(
+      choice => choice.app === app &&
+                !choice.autoFilled &&
+                choice.tokenAmount !== tokenAmount &&
+                orderedTokenAmounts.findIndex(amt => amt === choice.tokenAmount) < switchIndex
+    );
+
+    // If there are previous choices, check if they all match the expected pattern
+    if (choicesBeforeSwitch.length > 0) {
+      const expectedOption = choicesBeforeSwitch[0].selectedOption;
+
+      // If current choice doesn't match the pattern, it breaks the switching point
+      if (currentChoice !== expectedOption) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const handleSubmit = () => {
     if (selected) {
+      // Check if this answer breaks an existing switching point
+      const breaksSwitchingPoint = checkIfBreaksSwitchingPoint(selected);
+
+      if (breaksSwitchingPoint) {
+        // Clear the switching point and all auto-filled choices
+        clearAutoFilledChoices(app);
+      }
+
+      // Check if this is a switching point BEFORE adding the choice
+      const isSwitch = detectSwitch(selected);
+
+      // Add the current choice
       addChoice({
         id: `${app}-${tokenAmount}-${Date.now()}`,
         app,
@@ -44,7 +125,16 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
         selectedOption: selected,
         timestamp: new Date().toISOString(),
       });
-      onNext();
+
+      if (isSwitch) {
+        // Set the switching point for confirmation
+        setSwitchingPoint(app, tokenAmount, selected);
+        // Navigate directly to confirmation screen (not through normal flow)
+        onSwitchingPointDetected();
+      } else {
+        // Normal navigation
+        onNext();
+      }
     }
   };
 

@@ -11,6 +11,8 @@ import { ChoiceInstructionsScreen2 } from './screens/ChoiceInstructionsScreen2';
 import { AppIntroductionScreen } from './screens/AppIntroductionScreen';
 import { ChoiceQuestionScreen } from './screens/ChoiceQuestionScreen';
 import { ChoiceComprehensionCheckScreen } from './screens/ChoiceComprehensionCheckScreen';
+import { SwitchingPointConfirmationScreen } from './screens/SwitchingPointConfirmationScreen';
+import { AutoFilledExplanationScreen } from './screens/AutoFilledExplanationScreen';
 import { ChoicesSummaryScreen } from './screens/ChoicesSummaryScreen';
 import { ResultsScreen } from './screens/ResultsScreen';
 import { ThankYouScreen } from './screens/ThankYouScreen';
@@ -30,6 +32,8 @@ type Screen =
   | 'appIntroduction2'
   | 'choices'
   | 'choiceComprehension'
+  | 'switchingPointConfirmation'
+  | 'autoFilledExplanation'
   | 'choicesSummary'
   | 'results'
   | 'thankYou';
@@ -37,7 +41,7 @@ type Screen =
 const SurveyFlow: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('participantId');
   const [currentChoiceIndex, setCurrentChoiceIndex] = useState(0);
-  const { surveyData } = useSurvey();
+  const { surveyData, autoFillChoices, hasSwitchingPoint, clearAutoFilledChoices, removeChoice } = useSurvey();
 
   // Generate all choice questions based on randomized app order and token order
   const orderedTokenAmounts = surveyData.tokenOrder === 'ascending'
@@ -79,7 +83,27 @@ const SurveyFlow: React.FC = () => {
         setCurrentScreen('choices');
         setCurrentChoiceIndex(8);
         break;
-      case 'choices':
+      case 'choices': {
+        // Get the current app from the current choice
+        const currentApp = allChoices[currentChoiceIndex].app;
+
+        // Check if we just confirmed a switching point and should skip remaining questions
+        if (hasSwitchingPoint(currentApp)) {
+          // Find the next question that's for a different app or end of choices
+          let nextIndex = currentChoiceIndex + 1;
+          while (nextIndex < allChoices.length && allChoices[nextIndex].app === currentApp) {
+            nextIndex++;
+          }
+
+          // If we're still on questions for the same app, show auto-filled explanation
+          if (nextIndex > currentChoiceIndex + 1) {
+            setCurrentScreen('autoFilledExplanation');
+            setCurrentChoiceIndex(nextIndex);
+            break;
+          }
+        }
+
+        // Normal progression logic
         if (currentChoiceIndex === 0) {
           // After first question, show choice comprehension check
           setCurrentScreen('choiceComprehension');
@@ -92,11 +116,34 @@ const SurveyFlow: React.FC = () => {
           setCurrentScreen('choicesSummary');
         }
         break;
+      }
       case 'choiceComprehension':
         // After confirming first choice, continue to second question
         setCurrentChoiceIndex(1);
         setCurrentScreen('choices');
         break;
+      case 'switchingPointConfirmation': {
+        // Confirm the switching point and auto-fill choices
+        const currentApp = allChoices[currentChoiceIndex].app;
+        autoFillChoices(currentApp);
+
+        // Show auto-filled explanation
+        setCurrentScreen('autoFilledExplanation');
+        break;
+      }
+      case 'autoFilledExplanation': {
+        // After seeing auto-filled explanation, move to next app or summary
+        // currentChoiceIndex should already be set to the next question for different app
+        if (currentChoiceIndex === 8) {
+          // Moving to second app
+          setCurrentScreen('appIntroduction2');
+        } else if (currentChoiceIndex < allChoices.length) {
+          setCurrentScreen('choices');
+        } else {
+          setCurrentScreen('choicesSummary');
+        }
+        break;
+      }
       case 'choicesSummary':
         setCurrentScreen('results');
         break;
@@ -110,6 +157,10 @@ const SurveyFlow: React.FC = () => {
 
   const handleComprehensionFailed = () => {
     setCurrentScreen('reinstructions');
+  };
+
+  const handleSwitchingPointDetected = () => {
+    setCurrentScreen('switchingPointConfirmation');
   };
 
   const goToPreviousScreen = () => {
@@ -141,7 +192,63 @@ const SurveyFlow: React.FC = () => {
         setCurrentChoiceIndex(0);
         setCurrentScreen('choices');
         break;
-      case 'choices':
+      case 'switchingPointConfirmation': {
+        // Going back from switching point confirmation - clear the unconfirmed switching point
+        const currentApp = allChoices[currentChoiceIndex].app;
+        const currentTokenAmount = allChoices[currentChoiceIndex].tokenAmount;
+
+        // Remove the switching choice itself
+        removeChoice(currentApp, currentTokenAmount);
+
+        // Clear the switching point
+        clearAutoFilledChoices(currentApp);
+
+        setCurrentScreen('choices');
+        break;
+      }
+      case 'autoFilledExplanation': {
+        // Going back from auto-filled explanation - clear auto-filled choices
+        const currentApp = allChoices[currentChoiceIndex - 1]?.app || allChoices[0].app;
+        clearAutoFilledChoices(currentApp);
+
+        // Find the last manually answered question for this app
+        const lastManualIndex = surveyData.choices.findIndex(
+          choice => choice.app === currentApp && !choice.autoFilled
+        );
+
+        if (lastManualIndex !== -1) {
+          // Find this question in allChoices
+          const manualChoice = surveyData.choices[lastManualIndex];
+          const indexInAllChoices = allChoices.findIndex(
+            q => q.app === manualChoice.app && q.tokenAmount === manualChoice.tokenAmount
+          );
+          setCurrentChoiceIndex(indexInAllChoices);
+        } else {
+          // Default to first question of this app
+          const firstIndexForApp = allChoices.findIndex(q => q.app === currentApp);
+          setCurrentChoiceIndex(firstIndexForApp);
+        }
+
+        setCurrentScreen('choices');
+        break;
+      }
+      case 'choices': {
+        const currentApp = allChoices[currentChoiceIndex].app;
+
+        // Check if this app has auto-filled choices (user might want to go back further)
+        if (hasSwitchingPoint(currentApp)) {
+          const previousIndex = currentChoiceIndex - 1;
+          if (previousIndex >= 0 && allChoices[previousIndex].app !== currentApp) {
+            // We're at the first question of an app with switching point
+            // Go to auto-filled explanation screen
+            const firstIndexForApp = allChoices.findIndex(q => q.app === currentApp);
+            setCurrentChoiceIndex(firstIndexForApp + 1);
+            setCurrentScreen('autoFilledExplanation');
+            break;
+          }
+        }
+
+        // Normal back navigation
         if (currentChoiceIndex === 8) {
           // Going back from first question of second app batch
           setCurrentScreen('appIntroduction2');
@@ -154,6 +261,7 @@ const SurveyFlow: React.FC = () => {
           setCurrentScreen('appIntroduction1');
         }
         break;
+      }
       default:
         break;
     }
@@ -207,6 +315,7 @@ const SurveyFlow: React.FC = () => {
           questionNumber={currentChoiceIndex + 1}
           totalQuestions={allChoices.length}
           onNext={goToNextScreen}
+          onSwitchingPointDetected={handleSwitchingPointDetected}
           onBack={goToPreviousScreen}
         />
       )}
@@ -214,6 +323,20 @@ const SurveyFlow: React.FC = () => {
         <ChoiceComprehensionCheckScreen
           onNext={goToNextScreen}
           onBack={goToPreviousScreen}
+        />
+      )}
+      {currentScreen === 'switchingPointConfirmation' && (
+        <SwitchingPointConfirmationScreen
+          app={allChoices[currentChoiceIndex].app}
+          onConfirm={goToNextScreen}
+          onGoBack={goToPreviousScreen}
+        />
+      )}
+      {currentScreen === 'autoFilledExplanation' && (
+        <AutoFilledExplanationScreen
+          app={allChoices[currentChoiceIndex - 1]?.app || allChoices[0].app}
+          onNext={goToNextScreen}
+          onGoBack={goToPreviousScreen}
         />
       )}
       {currentScreen === 'choicesSummary' && (
