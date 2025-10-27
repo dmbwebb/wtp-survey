@@ -1,0 +1,22 @@
+{
+  "name": "WTP Survey App",
+  "short_name": "WTP Survey",
+  "description": "Willingness-to-pay survey for app blocking research",
+  "start_url": "/wtp-survey/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/wtp-survey/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/wtp-survey/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
