@@ -127,6 +127,13 @@ const SurveyFlow: React.FC = () => {
         const currentApp = allChoices[currentChoiceIndex].app;
         autoFillChoices(currentApp);
 
+        // Find the next question that's for a different app or end of choices
+        let nextIndex = currentChoiceIndex + 1;
+        while (nextIndex < allChoices.length && allChoices[nextIndex].app === currentApp) {
+          nextIndex++;
+        }
+        setCurrentChoiceIndex(nextIndex);
+
         // Show auto-filled explanation
         setCurrentScreen('autoFilledExplanation');
         break;

@@ -62,29 +62,30 @@ export const AutoFilledExplanationScreen: React.FC<AutoFilledExplanationScreenPr
               <h3 className="font-semibold text-gray-900 mb-3">
                 {t('autoFilled.filledAnswers', language)}
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {autoFilledChoices.map((choice, index) => {
                   const tokenText = choice.tokenAmount > 0
-                    ? `${t('choiceQuestion.receive', language)} ${choice.tokenAmount} ${t('choiceQuestion.tokens', language)}`
+                    ? `${t('choiceQuestion.receive', language).toLowerCase()} ${choice.tokenAmount} ${t('choiceQuestion.tokens', language)}`
                     : choice.tokenAmount < 0
-                    ? `${t('choiceQuestion.pay', language)} ${Math.abs(choice.tokenAmount)} ${t('choiceQuestion.tokens', language)}`
-                    : `${t('choiceQuestion.doNotLimit', language)} ${app}`;
+                    ? `${t('choiceQuestion.pay', language).toLowerCase()} ${Math.abs(choice.tokenAmount)} ${t('choiceQuestion.tokens', language)}`
+                    : `${t('choiceQuestion.doNotLimit', language).toLowerCase()} ${app}`;
 
                   const choiceText = choice.selectedOption === 'tokens'
                     ? tokenText
                     : `${t('choiceQuestion.limit', language)} ${app}`;
 
+                  const limitOption = `${t('choiceQuestion.limit', language)} ${app}`;
+                  const fullQuestion = `${limitOption} vs ${tokenText}`;
+
                   return (
                     <div
                       key={choice.id}
-                      className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded"
+                      className="py-2 px-3 bg-gray-50 rounded"
                     >
-                      <span className="text-sm text-gray-600">
-                        {t('autoFilled.question', language)} {index + 1}:
-                      </span>
-                      <span className="text-sm font-semibold text-gray-900">
-                        {choiceText}
-                      </span>
+                      <div className="text-sm text-gray-700">
+                        <span className="text-gray-600">{t('autoFilled.question', language)} {index + 1}:</span>{' '}
+                        {fullQuestion} → {t('autoFilled.decision', language)}: <span className="font-bold text-gray-900">{choiceText}</span>
+                      </div>
                     </div>
                   );
                 })}

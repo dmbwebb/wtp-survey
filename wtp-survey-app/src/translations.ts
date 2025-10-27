@@ -591,6 +591,10 @@ export const translations = {
       en: 'Question',
       es: 'Pregunta'
     },
+    decision: {
+      en: 'Choice',
+      es: 'Decisión'
+    },
     canGoBack: {
       en: 'If you want to change your answer, you can go back to modify your choice.',
       es: 'Si quieres cambiar tu respuesta, puedes volver atrás para modificar tu decisión.'
