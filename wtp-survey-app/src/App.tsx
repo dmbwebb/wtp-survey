@@ -42,9 +42,25 @@ type Screen =
   | 'thankYou';
 
 const SurveyFlow: React.FC = () => {
-  const [currentScreen, setCurrentScreen] = useState<Screen>('participantId');
-  const [currentChoiceIndex, setCurrentChoiceIndex] = useState(0);
+  const [currentScreen, setCurrentScreen] = useState<Screen>(() => {
+    const saved = localStorage.getItem('currentScreen');
+    return (saved as Screen) || 'participantId';
+  });
+  const [currentChoiceIndex, setCurrentChoiceIndex] = useState(() => {
+    const saved = localStorage.getItem('currentChoiceIndex');
+    return saved ? parseInt(saved, 10) : 0;
+  });
   const { surveyData, autoFillChoices, hasSwitchingPoint, clearAutoFilledChoices, removeChoice, resetSurvey } = useSurvey();
+
+  // Persist screen position to localStorage
+  React.useEffect(() => {
+    localStorage.setItem('currentScreen', currentScreen);
+  }, [currentScreen]);
+
+  // Persist choice index to localStorage
+  React.useEffect(() => {
+    localStorage.setItem('currentChoiceIndex', currentChoiceIndex.toString());
+  }, [currentChoiceIndex]);
 
   // Generate all choice questions based on randomized app order and token order
   const orderedTokenAmounts = surveyData.tokenOrder === 'ascending'
@@ -176,6 +192,10 @@ const SurveyFlow: React.FC = () => {
   const handleStartNewSurvey = async () => {
     // Reset survey data (generates new ID, clears all data)
     await resetSurvey();
+
+    // Clear screen position from localStorage
+    localStorage.removeItem('currentScreen');
+    localStorage.removeItem('currentChoiceIndex');
 
     // Reset screen state
     setCurrentScreen('participantId');
