@@ -23,7 +23,7 @@ export const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onNext, 
             {t('instructions.paragraph1', language)}
           </p>
           <p>
-            {t('instructions.paragraph2', language)} <strong>${TOKEN_VALUE_COP.toLocaleString()} COP</strong>{t('instructions.paragraph2b', language)} <strong>{t('instructions.paragraph2c', language)}</strong> {t('instructions.paragraph2d', language)}
+            {t('instructions.paragraph2', language)} <strong>${TOKEN_VALUE_COP.toLocaleString()} COP</strong>{t('instructions.paragraph2b', language)} <strong>{t('instructions.paragraph2c', language)}</strong>.
           </p>
           <p>
             {t('instructions.paragraph3', language)}

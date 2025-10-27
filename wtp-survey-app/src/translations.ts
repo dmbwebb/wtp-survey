@@ -63,10 +63,6 @@ export const translations = {
       en: 'whatever you want at the school shop',
       es: 'lo que quieras en la tienda escolar'
     },
-    paragraph2d: {
-      en: '',
-      es: ''
-    },
     paragraph3: {
       en: 'Please pay attention to the comprehension checks on the next screen to ensure you understand how the survey works.',
       es: 'Por favor presta atención a las preguntas de comprensión en la siguiente pantalla para asegurarte de que entiendes cómo funciona la encuesta.'
@@ -280,8 +276,12 @@ export const translations = {
       es: 'Verificación de Comprensión'
     },
     confirmTokens: {
-      en: 'To confirm, you would prefer to {action} {tokens} tokens, so that you would end up with {finalBalance} tokens at the end of the experiment, rather than limit {app} to 30 minutes per day for a week?',
-      es: 'Para confirmar, ¿preferirías {action} {tokens} tokens, para que termines con {finalBalance} tokens al final del experimento, en lugar de limitar {app} a 30 minutos por día por una semana?'
+      en: 'To confirm, you would prefer to {action} {tokens} tokens {connector} NOT limit {app}, so that you would end up with {finalBalance} tokens at the end of the experiment?',
+      es: 'Para confirmar, ¿preferirías {action} {tokens} tokens {connector} NO limitar {app}, para que termines con {finalBalance} tokens al final del experimento?'
+    },
+    confirmTokensZero: {
+      en: 'To confirm, you would prefer to NOT limit {app} and maintain your token balance at {currentBalance} tokens at the end of the experiment?',
+      es: 'Para confirmar, ¿preferirías NO limitar {app} y mantener tu saldo de tokens en {currentBalance} tokens al final del experimento?'
     },
     confirmLimit: {
       en: 'To confirm, you would prefer to limit {app} to 30 minutes per day for a week, rather than {action} {tokens} tokens, so your token balance would remain at {currentBalance} tokens at the end of the experiment?',
@@ -302,6 +302,14 @@ export const translations = {
     paying: {
       en: 'paying',
       es: 'pagar'
+    },
+    and: {
+      en: 'AND',
+      es: 'Y'
+    },
+    but: {
+      en: 'BUT',
+      es: 'PERO'
     },
     yes: {
       en: 'I confirm',

@@ -34,16 +34,28 @@ export const ChoiceComprehensionCheckScreen: React.FC<ChoiceComprehensionCheckSc
 
   if (selectedOption === 'tokens') {
     // They chose to receive/pay tokens
-    const tokenAction = tokenAmount >= 0
-      ? t('choiceComprehensionCheck.receive', language)
-      : t('choiceComprehensionCheck.pay', language);
-    const absTokens = Math.abs(tokenAmount);
+    if (tokenAmount === 0) {
+      // Special case for zero tokens
+      message = t('choiceComprehensionCheck.confirmTokensZero', language)
+        .replace('{app}', app)
+        .replace('{currentBalance}', surveyData.tokenBalance.toString());
+    } else {
+      // Positive or negative tokens
+      const tokenAction = tokenAmount > 0
+        ? t('choiceComprehensionCheck.receive', language)
+        : t('choiceComprehensionCheck.pay', language);
+      const connector = tokenAmount > 0
+        ? t('choiceComprehensionCheck.and', language)
+        : t('choiceComprehensionCheck.but', language);
+      const absTokens = Math.abs(tokenAmount);
 
-    message = t('choiceComprehensionCheck.confirmTokens', language)
-      .replace('{action}', tokenAction)
-      .replace('{tokens}', absTokens.toString())
-      .replace('{finalBalance}', finalBalance.toString())
-      .replace('{app}', app);
+      message = t('choiceComprehensionCheck.confirmTokens', language)
+        .replace('{action}', tokenAction)
+        .replace('{tokens}', absTokens.toString())
+        .replace('{connector}', connector)
+        .replace('{finalBalance}', finalBalance.toString())
+        .replace('{app}', app);
+    }
   } else {
     // They chose to limit the app
     const tokenAction = tokenAmount >= 0
