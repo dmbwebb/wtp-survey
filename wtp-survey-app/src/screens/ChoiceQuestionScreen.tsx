@@ -48,12 +48,22 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
     }
   };
 
-  const tokenText = tokenAmount >= 0
+  const tokenText = tokenAmount > 0
     ? `${t('choiceQuestion.receive', language)} ${tokenAmount} ${t('choiceQuestion.tokens', language)}`
-    : `${t('choiceQuestion.pay', language)} ${Math.abs(tokenAmount)} ${t('choiceQuestion.tokens', language)}`;
+    : tokenAmount < 0
+    ? `${t('choiceQuestion.pay', language)} ${Math.abs(tokenAmount)} ${t('choiceQuestion.tokens', language)}`
+    : `${t('choiceQuestion.doNotLimit', language)} ${app}`;
+
+  const notLimitText = tokenAmount > 0
+    ? `${t('choiceQuestion.andNotLimit', language)} ${app}`
+    : tokenAmount < 0
+    ? `${t('choiceQuestion.butNotLimit', language)} ${app}`
+    : t('choiceQuestion.maintainTokens', language);
 
   const tokenValue = tokenAmount * TOKEN_VALUE_COP;
-  const tokenValueText = `(${t('choiceQuestion.worth', language)} $${Math.abs(tokenValue).toLocaleString()} COP)`;
+  const tokenValueText = tokenAmount !== 0
+    ? `(${t('choiceQuestion.worth', language)} $${Math.abs(tokenValue).toLocaleString()} COP)`
+    : '';
 
   const appLogo = app === 'WhatsApp' ? whatsappLogo : tiktokLogo;
 
@@ -93,6 +103,9 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
               <div className="text-4xl mb-2">💰</div>
               <div className="text-xl font-bold text-gray-900 mb-2">
                 {tokenText}
+              </div>
+              <div className="text-lg font-semibold text-gray-700 mb-2">
+                {notLimitText}
               </div>
               <div className="text-sm text-gray-600">
                 {tokenValueText}

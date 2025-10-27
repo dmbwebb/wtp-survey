@@ -254,6 +254,22 @@ export const translations = {
     limitDescription: {
       en: 'to 30 min/day for 1 week',
       es: 'a 30 min/día por 1 semana'
+    },
+    andNotLimit: {
+      en: 'AND NOT limit',
+      es: 'Y NO limitar'
+    },
+    butNotLimit: {
+      en: 'BUT NOT limit',
+      es: 'PERO NO limitar'
+    },
+    doNotLimit: {
+      en: 'DO NOT limit',
+      es: 'NO limitar'
+    },
+    maintainTokens: {
+      en: 'and maintain token balance',
+      es: 'y mantener el saldo de tokens'
     }
   },
 
