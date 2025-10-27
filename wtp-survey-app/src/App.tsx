@@ -19,6 +19,9 @@ import { ThankYouScreen } from './screens/ThankYouScreen';
 import { TOKEN_AMOUNTS } from './types/survey';
 import { VersionInfo } from './components/VersionInfo';
 import { LanguageToggle } from './components/LanguageToggle';
+import { SyncStatus } from './components/SyncStatus';
+import { ExportButton } from './components/ExportButton';
+import { ManualSyncButton } from './components/ManualSyncButton';
 
 type Screen =
   | 'participantId'
@@ -364,6 +367,9 @@ function App() {
         <SurveyFlow />
         <LanguageToggle />
         <VersionInfo />
+        <SyncStatus />
+        <ExportButton />
+        <ManualSyncButton />
       </SurveyProvider>
     </LanguageProvider>
   );

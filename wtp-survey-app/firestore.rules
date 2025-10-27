@@ -1,0 +1,18 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow anonymous authenticated users to write surveys
+    match /surveys/{surveyId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow update: if request.auth != null &&
+                       resource.data.deviceId == request.resource.data.deviceId;
+      allow delete: if false; // Prevent accidental deletion
+    }
+
+    // Admin-only access for dashboard (implement later)
+    match /admin/{document=**} {
+      allow read, write: if false; // Configure admin auth later
+    }
+  }
+}

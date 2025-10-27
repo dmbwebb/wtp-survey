@@ -1,8 +1,19 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { SurveyData, Choice, APPS, INITIAL_TOKENS, AppName, TOKEN_AMOUNTS } from '../types/survey';
+import { SurveyData, Choice, APPS, INITIAL_TOKENS, AppName, TOKEN_AMOUNTS, SyncStatus } from '../types/survey';
+import {
+  saveToIndexedDB,
+  getAllFromIndexedDB,
+  updateSyncStatus,
+  safeIndexedDBOperation,
+  StoredSurvey,
+} from '../utils/indexedDB';
+import { syncSurveyToFirebase, getDeviceId } from '../utils/firebase';
+import { v4 as uuidv4 } from 'uuid';
 
 interface SurveyContextType {
   surveyData: SurveyData;
+  currentSurveyId: string;
+  syncStatus: SyncStatus;
   setParticipantId: (id: string) => void;
   setComprehensionAnswer: (field: 'tokenValue' | 'rewardType', value: string) => void;
   addChoice: (choice: Choice) => void;
@@ -16,6 +27,8 @@ interface SurveyContextType {
   autoFillChoices: (app: AppName) => void;
   clearAutoFilledChoices: (app: AppName) => void;
   hasSwitchingPoint: (app: AppName) => boolean;
+  exportAllData: () => Promise<void>;
+  triggerManualSync: () => Promise<void>;
 }
 
 const SurveyContext = createContext<SurveyContextType | undefined>(undefined);
@@ -51,9 +64,83 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     return saved ? JSON.parse(saved) : createInitialSurveyData();
   });
 
+  const [currentSurveyId] = useState<string>(() => {
+    const saved = localStorage.getItem('currentSurveyId');
+    return saved || uuidv4();
+  });
+
+  const [syncStatus, setSyncStatus] = useState<SyncStatus>({
+    pending: 0,
+    synced: 0,
+    failed: 0,
+    lastSyncAttempt: null,
+    lastSuccessfulSync: null,
+  });
+
+  // Save to both localStorage and IndexedDB on every change
   useEffect(() => {
-    localStorage.setItem('surveyData', JSON.stringify(surveyData));
-  }, [surveyData]);
+    const saveDualStorage = async () => {
+      // Save to localStorage (existing behavior)
+      localStorage.setItem('surveyData', JSON.stringify(surveyData));
+      localStorage.setItem('currentSurveyId', currentSurveyId);
+
+      // Save to IndexedDB (new redundancy)
+      const storedSurvey: StoredSurvey = {
+        id: currentSurveyId,
+        surveyData,
+        synced: false,
+        syncedAt: null,
+        createdAt: surveyData.startedAt,
+        deviceId: getDeviceId(),
+      };
+
+      await safeIndexedDBOperation(
+        () => saveToIndexedDB(storedSurvey),
+        undefined
+      );
+    };
+
+    saveDualStorage();
+  }, [surveyData, currentSurveyId]);
+
+  // Load sync status on mount
+  useEffect(() => {
+    const loadSyncStatus = async () => {
+      const allSurveys = await safeIndexedDBOperation(
+        () => getAllFromIndexedDB(),
+        []
+      );
+
+      const pending = allSurveys.filter(s => !s.synced).length;
+      const synced = allSurveys.filter(s => s.synced).length;
+
+      setSyncStatus(prev => ({
+        ...prev,
+        pending,
+        synced,
+      }));
+    };
+
+    loadSyncStatus();
+  }, []);
+
+  // Auto-sync when online
+  useEffect(() => {
+    const handleOnline = async () => {
+      console.log('Internet connection detected, attempting auto-sync...');
+      await triggerManualSync();
+    };
+
+    window.addEventListener('online', handleOnline);
+
+    // Also try syncing on mount if online
+    if (navigator.onLine) {
+      handleOnline();
+    }
+
+    return () => window.removeEventListener('online', handleOnline);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setParticipantId = (id: string) => {
     setSurveyData(prev => ({ ...prev, participantId: id }));
@@ -108,13 +195,127 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     setSurveyData(prev => ({ ...prev, tokenBalance: prev.tokenBalance + amount }));
   };
 
-  const completeSurvey = () => {
-    setSurveyData(prev => ({ ...prev, completedAt: new Date().toISOString() }));
+  const completeSurvey = async () => {
+    const completedData = {
+      ...surveyData,
+      completedAt: new Date().toISOString(),
+    };
+
+    setSurveyData(completedData);
+
+    // Mark as completed in IndexedDB
+    const storedSurvey: StoredSurvey = {
+      id: currentSurveyId,
+      surveyData: completedData,
+      synced: false,
+      syncedAt: null,
+      createdAt: surveyData.startedAt,
+      deviceId: getDeviceId(),
+    };
+
+    await safeIndexedDBOperation(
+      () => saveToIndexedDB(storedSurvey),
+      undefined
+    );
+
+    // Try to sync immediately if online
+    if (navigator.onLine) {
+      await triggerManualSync();
+    }
   };
 
   const resetSurvey = () => {
-    setSurveyData(createInitialSurveyData());
-    localStorage.removeItem('surveyData');
+    const newSurveyData = createInitialSurveyData();
+    setSurveyData(newSurveyData);
+    localStorage.setItem('currentSurveyId', uuidv4());
+  };
+
+  const exportAllData = async () => {
+    // Get all surveys from IndexedDB
+    const allSurveys = await safeIndexedDBOperation(
+      () => getAllFromIndexedDB(),
+      []
+    );
+
+    // Create export object
+    const exportData = {
+      exportedAt: new Date().toISOString(),
+      deviceId: getDeviceId(),
+      totalSurveys: allSurveys.length,
+      syncedSurveys: allSurveys.filter(s => s.synced).length,
+      pendingSurveys: allSurveys.filter(s => !s.synced).length,
+      surveys: allSurveys,
+    };
+
+    // Create downloadable JSON file
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+      type: 'application/json'
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `wtp-survey-export-${getDeviceId()}-${Date.now()}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const triggerManualSync = async () => {
+    if (!navigator.onLine) {
+      console.warn('Cannot sync: device is offline');
+      return;
+    }
+
+    setSyncStatus(prev => ({
+      ...prev,
+      lastSyncAttempt: new Date().toISOString(),
+    }));
+
+    try {
+      // Get all unsynced surveys
+      const allSurveys = await safeIndexedDBOperation(
+        () => getAllFromIndexedDB(),
+        []
+      );
+
+      const unsyncedSurveys = allSurveys.filter(s => !s.synced && s.surveyData.completedAt);
+
+      console.log(`Syncing ${unsyncedSurveys.length} surveys...`);
+
+      let successCount = 0;
+      let failCount = 0;
+
+      // Sync each survey
+      for (const survey of unsyncedSurveys) {
+        try {
+          await syncSurveyToFirebase(survey);
+          await updateSyncStatus(survey.id, true);
+          successCount++;
+        } catch (error) {
+          console.error(`Failed to sync survey ${survey.id}:`, error);
+          failCount++;
+        }
+      }
+
+      // Update sync status
+      const allSurveysAfterSync = await safeIndexedDBOperation(
+        () => getAllFromIndexedDB(),
+        []
+      );
+
+      setSyncStatus({
+        pending: allSurveysAfterSync.filter(s => !s.synced).length,
+        synced: allSurveysAfterSync.filter(s => s.synced).length,
+        failed: failCount,
+        lastSyncAttempt: new Date().toISOString(),
+        lastSuccessfulSync: successCount > 0 ? new Date().toISOString() : syncStatus.lastSuccessfulSync,
+      });
+
+      console.log(`Sync complete: ${successCount} succeeded, ${failCount} failed`);
+    } catch (error) {
+      console.error('Sync error:', error);
+    }
   };
 
   const setSwitchingPoint = (app: AppName, tokenAmount: number, switchedTo: 'tokens' | 'limit') => {
@@ -203,6 +404,8 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     <SurveyContext.Provider
       value={{
         surveyData,
+        currentSurveyId,
+        syncStatus,
         setParticipantId,
         setComprehensionAnswer,
         addChoice,
@@ -216,6 +419,8 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         autoFillChoices,
         clearAutoFilledChoices,
         hasSwitchingPoint,
+        exportAllData,
+        triggerManualSync,
       }}
     >
       {children}
