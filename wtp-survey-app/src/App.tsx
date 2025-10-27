@@ -17,11 +17,8 @@ import { ChoicesSummaryScreen } from './screens/ChoicesSummaryScreen';
 import { ResultsScreen } from './screens/ResultsScreen';
 import { ThankYouScreen } from './screens/ThankYouScreen';
 import { TOKEN_AMOUNTS } from './types/survey';
-import { VersionInfo } from './components/VersionInfo';
 import { LanguageToggle } from './components/LanguageToggle';
-import { SyncStatus } from './components/SyncStatus';
-import { ExportButton } from './components/ExportButton';
-import { ManualSyncButton } from './components/ManualSyncButton';
+import { SurveyFooter } from './components/SurveyFooter';
 
 type Screen =
   | 'participantId'
@@ -395,12 +392,13 @@ function App() {
   return (
     <LanguageProvider>
       <SurveyProvider>
-        <SurveyFlow />
-        <LanguageToggle />
-        <VersionInfo />
-        <SyncStatus />
-        <ExportButton />
-        <ManualSyncButton />
+        <div className="flex flex-col min-h-screen">
+          <div className="flex-1">
+            <SurveyFlow />
+          </div>
+          <SurveyFooter />
+          <LanguageToggle />
+        </div>
       </SurveyProvider>
     </LanguageProvider>
   );

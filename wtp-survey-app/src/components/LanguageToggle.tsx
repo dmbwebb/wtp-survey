@@ -5,7 +5,7 @@ export const LanguageToggle: React.FC = () => {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="fixed bottom-4 left-4 flex items-center gap-1 text-sm bg-white rounded-lg shadow-md px-3 py-2">
+    <div className="fixed top-4 left-4 flex items-center gap-1 text-sm bg-white rounded-lg shadow-md px-3 py-2 z-50">
       <button
         onClick={() => setLanguage('es')}
         className={`px-2 py-1 rounded transition-colors ${
