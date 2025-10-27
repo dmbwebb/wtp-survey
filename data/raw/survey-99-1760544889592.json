@@ -1,0 +1,136 @@
+{
+  "participantId": "99",
+  "startedAt": "2025-10-15T15:22:16.902Z",
+  "appOrder": [
+    "TikTok",
+    "WhatsApp"
+  ],
+  "tokenOrder": "ascending",
+  "choices": [
+    {
+      "id": "TikTok--10-1760541810017",
+      "app": "TikTok",
+      "tokenAmount": -10,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:23:30.017Z"
+    },
+    {
+      "id": "TikTok--5-1760541826666",
+      "app": "TikTok",
+      "tokenAmount": -5,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:23:46.666Z"
+    },
+    {
+      "id": "TikTok--2-1760541831782",
+      "app": "TikTok",
+      "tokenAmount": -2,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:23:51.782Z"
+    },
+    {
+      "id": "TikTok--1-1760541835800",
+      "app": "TikTok",
+      "tokenAmount": -1,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:23:55.800Z"
+    },
+    {
+      "id": "TikTok-0-1760541841500",
+      "app": "TikTok",
+      "tokenAmount": 0,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:01.500Z"
+    },
+    {
+      "id": "TikTok-1-1760541843998",
+      "app": "TikTok",
+      "tokenAmount": 1,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:03.998Z"
+    },
+    {
+      "id": "TikTok-2-1760541845815",
+      "app": "TikTok",
+      "tokenAmount": 2,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:05.815Z"
+    },
+    {
+      "id": "TikTok-5-1760541847649",
+      "app": "TikTok",
+      "tokenAmount": 5,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:07.649Z"
+    },
+    {
+      "id": "WhatsApp--10-1760541853849",
+      "app": "WhatsApp",
+      "tokenAmount": -10,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:13.849Z"
+    },
+    {
+      "id": "WhatsApp--5-1760541855732",
+      "app": "WhatsApp",
+      "tokenAmount": -5,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:15.732Z"
+    },
+    {
+      "id": "WhatsApp--2-1760541857517",
+      "app": "WhatsApp",
+      "tokenAmount": -2,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:17.517Z"
+    },
+    {
+      "id": "WhatsApp--1-1760541859016",
+      "app": "WhatsApp",
+      "tokenAmount": -1,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:19.016Z"
+    },
+    {
+      "id": "WhatsApp-0-1760541860649",
+      "app": "WhatsApp",
+      "tokenAmount": 0,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:20.649Z"
+    },
+    {
+      "id": "WhatsApp-1-1760541862883",
+      "app": "WhatsApp",
+      "tokenAmount": 1,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:22.883Z"
+    },
+    {
+      "id": "WhatsApp-2-1760541864450",
+      "app": "WhatsApp",
+      "tokenAmount": 2,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:24.450Z"
+    },
+    {
+      "id": "WhatsApp-5-1760541867152",
+      "app": "WhatsApp",
+      "tokenAmount": 5,
+      "selectedOption": "limit",
+      "timestamp": "2025-10-15T15:24:27.152Z"
+    }
+  ],
+  "selectedChoice": {
+    "id": "TikTok--5-1760541826666",
+    "app": "TikTok",
+    "tokenAmount": -5,
+    "selectedOption": "limit",
+    "timestamp": "2025-10-15T15:23:46.666Z"
+  },
+  "completedAt": "2025-10-15T16:14:46.661Z",
+  "tokenBalance": 10,
+  "comprehensionAnswers": {
+    "tokenValue": "1000",
+    "rewardType": "tienda escolar"
+  }
+}
