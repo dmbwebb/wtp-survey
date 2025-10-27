@@ -30,6 +30,7 @@ export const ManualSyncButton: React.FC = () => {
         onClick={handleSync}
         disabled={isSyncing || !isOnline}
         variant="primary"
+        title="Sync all unsynced surveys (including in-progress) to Firebase"
       >
         {isSyncing ? 'Syncing...' : `Sync Now (${syncStatus.pending})`}
       </Button>

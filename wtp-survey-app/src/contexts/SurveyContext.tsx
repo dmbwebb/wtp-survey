@@ -128,7 +128,7 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
   useEffect(() => {
     const handleOnline = async () => {
       console.log('Internet connection detected, attempting auto-sync...');
-      await triggerManualSync();
+      await triggerAutoSync();
     };
 
     window.addEventListener('online', handleOnline);
@@ -218,9 +218,9 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
       undefined
     );
 
-    // Try to sync immediately if online
+    // Try to sync immediately if online (auto-sync only completed surveys)
     if (navigator.onLine) {
-      await triggerManualSync();
+      await triggerAutoSync();
     }
   };
 
@@ -287,7 +287,7 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     URL.revokeObjectURL(url);
   };
 
-  const triggerManualSync = async () => {
+  const triggerAutoSync = async () => {
     if (!navigator.onLine) {
       console.warn('Cannot sync: device is offline');
       return;
@@ -305,9 +305,10 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         []
       );
 
+      // Auto-sync only COMPLETED surveys
       const unsyncedSurveys = allSurveys.filter(s => !s.synced && s.surveyData.completedAt);
 
-      console.log(`Syncing ${unsyncedSurveys.length} surveys...`);
+      console.log(`Auto-syncing ${unsyncedSurveys.length} completed surveys...`);
 
       let successCount = 0;
       let failCount = 0;
@@ -338,9 +339,69 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         lastSuccessfulSync: successCount > 0 ? new Date().toISOString() : syncStatus.lastSuccessfulSync,
       });
 
-      console.log(`Sync complete: ${successCount} succeeded, ${failCount} failed`);
+      console.log(`Auto-sync complete: ${successCount} succeeded, ${failCount} failed`);
     } catch (error) {
-      console.error('Sync error:', error);
+      console.error('Auto-sync error:', error);
+    }
+  };
+
+  const triggerManualSync = async () => {
+    if (!navigator.onLine) {
+      console.warn('Cannot sync: device is offline');
+      return;
+    }
+
+    setSyncStatus(prev => ({
+      ...prev,
+      lastSyncAttempt: new Date().toISOString(),
+    }));
+
+    try {
+      // Get all unsynced surveys
+      const allSurveys = await safeIndexedDBOperation(
+        () => getAllFromIndexedDB(),
+        []
+      );
+
+      // Manual sync: sync ALL unsynced surveys (including in-progress)
+      const unsyncedSurveys = allSurveys.filter(s => !s.synced);
+      const completedCount = unsyncedSurveys.filter(s => s.surveyData.completedAt).length;
+      const inProgressCount = unsyncedSurveys.filter(s => !s.surveyData.completedAt).length;
+
+      console.log(`Manual sync: ${completedCount} completed, ${inProgressCount} in-progress surveys...`);
+
+      let successCount = 0;
+      let failCount = 0;
+
+      // Sync each survey
+      for (const survey of unsyncedSurveys) {
+        try {
+          await syncSurveyToFirebase(survey);
+          await updateSyncStatus(survey.id, true);
+          successCount++;
+        } catch (error) {
+          console.error(`Failed to sync survey ${survey.id}:`, error);
+          failCount++;
+        }
+      }
+
+      // Update sync status
+      const allSurveysAfterSync = await safeIndexedDBOperation(
+        () => getAllFromIndexedDB(),
+        []
+      );
+
+      setSyncStatus({
+        pending: allSurveysAfterSync.filter(s => !s.synced).length,
+        synced: allSurveysAfterSync.filter(s => s.synced).length,
+        failed: failCount,
+        lastSyncAttempt: new Date().toISOString(),
+        lastSuccessfulSync: successCount > 0 ? new Date().toISOString() : syncStatus.lastSuccessfulSync,
+      });
+
+      console.log(`Manual sync complete: ${successCount} succeeded, ${failCount} failed`);
+    } catch (error) {
+      console.error('Manual sync error:', error);
     }
   };
 
