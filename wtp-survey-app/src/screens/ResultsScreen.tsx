@@ -14,13 +14,16 @@ interface ResultsScreenProps {
 export const ResultsScreen: React.FC<ResultsScreenProps> = ({ onNext }) => {
   const { language } = useLanguage();
   const { surveyData, completeSurvey } = useSurvey();
+  const [hasCompleted, setHasCompleted] = React.useState(false);
 
   useEffect(() => {
     // Mark survey as completed (token balance already updated in ChoicesSummaryScreen)
-    if (!surveyData.completedAt) {
+    // Only complete once to avoid any state corruption
+    if (!surveyData.completedAt && !hasCompleted) {
+      setHasCompleted(true);
       completeSurvey();
     }
-  }, []);
+  }, [surveyData.completedAt, completeSurvey, hasCompleted]);
 
   const selectedChoice = surveyData.selectedChoice;
 
