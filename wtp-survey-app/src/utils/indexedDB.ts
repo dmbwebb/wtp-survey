@@ -46,9 +46,26 @@ export const saveToIndexedDB = async (survey: StoredSurvey): Promise<void> => {
     const transaction = db.transaction([STORE_NAME], 'readwrite');
     const objectStore = transaction.objectStore(STORE_NAME);
 
-    objectStore.put(survey);
+    // Check if a survey with this ID already exists and is synced
+    const existingRequest = objectStore.get(survey.id);
 
     return new Promise((resolve, reject) => {
+      existingRequest.onsuccess = () => {
+        const existing = existingRequest.result;
+
+        // Warn if we're about to overwrite a synced survey (data safety check)
+        if (existing && existing.synced && !survey.synced) {
+          console.warn(
+            `WARNING: Attempting to overwrite synced survey ${survey.id}. ` +
+            `This might indicate a bug with survey ID generation.`
+          );
+        }
+
+        // Save the survey (will overwrite if ID exists)
+        objectStore.put(survey);
+      };
+
+      existingRequest.onerror = () => reject(existingRequest.error);
       transaction.oncomplete = () => resolve();
       transaction.onerror = () => reject(transaction.error);
     });

@@ -44,7 +44,7 @@ type Screen =
 const SurveyFlow: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('participantId');
   const [currentChoiceIndex, setCurrentChoiceIndex] = useState(0);
-  const { surveyData, autoFillChoices, hasSwitchingPoint, clearAutoFilledChoices, removeChoice } = useSurvey();
+  const { surveyData, autoFillChoices, hasSwitchingPoint, clearAutoFilledChoices, removeChoice, resetSurvey } = useSurvey();
 
   // Generate all choice questions based on randomized app order and token order
   const orderedTokenAmounts = surveyData.tokenOrder === 'ascending'
@@ -171,6 +171,15 @@ const SurveyFlow: React.FC = () => {
 
   const handleSwitchingPointDetected = () => {
     setCurrentScreen('switchingPointConfirmation');
+  };
+
+  const handleStartNewSurvey = async () => {
+    // Reset survey data (generates new ID, clears all data)
+    await resetSurvey();
+
+    // Reset screen state
+    setCurrentScreen('participantId');
+    setCurrentChoiceIndex(0);
   };
 
   const goToPreviousScreen = () => {
@@ -355,7 +364,9 @@ const SurveyFlow: React.FC = () => {
       {currentScreen === 'results' && (
         <ResultsScreen onNext={goToNextScreen} />
       )}
-      {currentScreen === 'thankYou' && <ThankYouScreen />}
+      {currentScreen === 'thankYou' && (
+        <ThankYouScreen onStartNewSurvey={handleStartNewSurvey} />
+      )}
     </>
   );
 };

@@ -20,8 +20,8 @@ interface SurveyContextType {
   removeChoice: (app: AppName, tokenAmount: number) => void;
   selectRandomChoice: () => Choice;
   updateTokenBalance: (amount: number) => void;
-  completeSurvey: () => void;
-  resetSurvey: () => void;
+  completeSurvey: () => Promise<void>;
+  resetSurvey: () => Promise<void>;
   setSwitchingPoint: (app: AppName, tokenAmount: number, switchedTo: 'tokens' | 'limit') => void;
   confirmSwitchingPoint: (app: AppName) => void;
   autoFillChoices: (app: AppName) => void;
@@ -64,7 +64,7 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     return saved ? JSON.parse(saved) : createInitialSurveyData();
   });
 
-  const [currentSurveyId] = useState<string>(() => {
+  const [currentSurveyId, setCurrentSurveyId] = useState<string>(() => {
     const saved = localStorage.getItem('currentSurveyId');
     return saved || uuidv4();
   });
@@ -224,10 +224,36 @@ export const SurveyProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     }
   };
 
-  const resetSurvey = () => {
+  const refreshSyncStatus = async () => {
+    const allSurveys = await safeIndexedDBOperation(
+      () => getAllFromIndexedDB(),
+      []
+    );
+
+    const pending = allSurveys.filter(s => !s.synced).length;
+    const synced = allSurveys.filter(s => s.synced).length;
+
+    setSyncStatus(prev => ({
+      ...prev,
+      pending,
+      synced,
+    }));
+  };
+
+  const resetSurvey = async () => {
+    // Generate new survey ID
+    const newId = uuidv4();
+
+    // Reset survey data
     const newSurveyData = createInitialSurveyData();
     setSurveyData(newSurveyData);
-    localStorage.setItem('currentSurveyId', uuidv4());
+
+    // Update survey ID in both state and localStorage
+    setCurrentSurveyId(newId);
+    localStorage.setItem('currentSurveyId', newId);
+
+    // Refresh sync status to show updated counts
+    await refreshSyncStatus();
   };
 
   const exportAllData = async () => {

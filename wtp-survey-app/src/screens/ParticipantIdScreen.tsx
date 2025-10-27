@@ -13,10 +13,10 @@ export const ParticipantIdScreen: React.FC<ParticipantIdScreenProps> = ({ onNext
   const { setParticipantId, resetSurvey } = useSurvey();
   const { language } = useLanguage();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (id.trim()) {
       // Clear any existing survey data before starting with new participant
-      resetSurvey();
+      await resetSurvey();
       setParticipantId(id.trim());
       onNext();
     }

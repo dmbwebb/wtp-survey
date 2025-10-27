@@ -16,7 +16,7 @@ export const VersionInfo: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 flex items-center gap-2 text-gray-400 text-sm">
+    <div className="fixed bottom-16 right-4 flex items-center gap-2 text-gray-400 text-sm z-40">
       <span>{APP_VERSION}</span>
       <button
         onClick={handleRefresh}

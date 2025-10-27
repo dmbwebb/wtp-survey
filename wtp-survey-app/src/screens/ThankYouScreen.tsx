@@ -4,7 +4,11 @@ import { Button } from '../components/Button';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
 
-export const ThankYouScreen: React.FC = () => {
+interface ThankYouScreenProps {
+  onStartNewSurvey: () => void;
+}
+
+export const ThankYouScreen: React.FC<ThankYouScreenProps> = ({ onStartNewSurvey }) => {
   const { language } = useLanguage();
   const { surveyData } = useSurvey();
 
@@ -19,8 +23,9 @@ export const ThankYouScreen: React.FC = () => {
     URL.revokeObjectURL(url);
   };
 
-  const startNewSurvey = () => {
-    window.location.reload();
+  const startNewSurvey = async () => {
+    // Call the reset callback from App.tsx
+    onStartNewSurvey();
   };
 
   return (
