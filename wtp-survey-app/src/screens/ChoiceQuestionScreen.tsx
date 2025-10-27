@@ -43,8 +43,23 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
       choice => choice.app === app && !choice.autoFilled && choice.tokenAmount !== tokenAmount
     );
 
-    // If this is the first choice for this app, no switch
+    // Special case: First choice for this app
     if (previousChoices.length === 0) {
+      // In descending order, we start with the MOST attractive offer (e.g., +5 tokens)
+      // If user chooses "limit" on first question, they're rejecting the best offer
+      // → they'll reject all worse offers → SWITCH detected
+      if (surveyData.tokenOrder === 'descending' && currentChoice === 'limit') {
+        return true;
+      }
+
+      // In ascending order, we start with the LEAST attractive offer (e.g., -10 tokens)
+      // If user chooses "tokens" on first question, they're accepting the worst offer
+      // → they'll accept all better offers → SWITCH detected
+      if (surveyData.tokenOrder === 'ascending' && currentChoice === 'tokens') {
+        return true;
+      }
+
+      // Otherwise, no switch on first choice
       return false;
     }
 
