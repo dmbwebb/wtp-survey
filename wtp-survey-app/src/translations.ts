@@ -536,24 +536,24 @@ export const translations = {
       es: 'Dado que prefieres limitar {app} en lugar de recibir estos tokens, asumimos que también preferirías limitar por cantidades menores (como 0 tokens), y que NO querrías PAGAR tokens para evitar limitar {app}.'
     },
     implicationLimitAscending: {
-      en: 'Since you prefer to limit {app} rather than pay these tokens, we assume you would also prefer to limit if you had to pay LESS, or even if you received tokens instead.',
-      es: 'Dado que prefieres limitar {app} en lugar de pagar estos tokens, asumimos que también preferirías limitar si tuvieras que pagar MENOS, o incluso si recibieras tokens.'
+      en: 'Since you prefer to limit {app} rather than pay these tokens, we assume you would also prefer to limit if you had to pay LESS.',
+      es: 'Dado que prefieres limitar {app} en lugar de pagar estos tokens, asumimos que también preferirías limitar si tuvieras que pagar MENOS.'
     },
     implicationLimitFromZero: {
-      en: 'Since you prefer to limit {app} rather than keep your tokens unchanged, we assume you would also prefer to limit even if you had to PAY tokens, or if you received tokens.',
-      es: 'Dado que prefieres limitar {app} en lugar de mantener tus tokens sin cambios, asumimos que también preferirías limitar incluso si tuvieras que PAGAR tokens, o si recibieras tokens.'
+      en: 'Since you prefer to limit {app} rather than keep your tokens unchanged, we assume you would also prefer to limit even if you had to PAY tokens.',
+      es: 'Dado que prefieres limitar {app} en lugar de mantener tus tokens sin cambios, asumimos que también preferirías limitar incluso si tuvieras que PAGAR tokens.'
     },
     implicationPayAscending: {
-      en: 'Since you were willing to pay tokens to avoid limiting {app}, we assume you would also be willing to pay LESS, pay nothing (0 tokens), or even RECEIVE tokens instead of limiting.',
-      es: 'Dado que estuviste dispuesto a pagar tokens para evitar limitar {app}, asumimos que también estarías dispuesto a pagar MENOS, no pagar nada (0 tokens), o incluso RECIBIR tokens en lugar de limitar.'
+      en: 'Since you were willing to pay tokens to avoid limiting {app}, we assume you would also be willing to pay LESS or pay nothing (0 tokens) to avoid limiting.',
+      es: 'Dado que estuviste dispuesto a pagar tokens para evitar limitar {app}, asumimos que también estarías dispuesto a pagar MENOS o no pagar nada (0 tokens) para evitar limitar.'
     },
     implicationReceiveDescending: {
       en: 'Since you chose to receive tokens rather than limit {app}, we assume you would also choose to receive smaller amounts, receive nothing (0 tokens), or even PAY tokens to avoid limiting.',
       es: 'Dado que elegiste recibir tokens en lugar de limitar {app}, asumimos que también elegirías recibir cantidades más pequeñas, no recibir nada (0 tokens), o incluso PAGAR tokens para evitar limitar.'
     },
     implicationTokensFromZero: {
-      en: 'Since you chose to keep your tokens rather than limit {app}, we assume you would also choose to receive tokens, or even PAY tokens to avoid limiting.',
-      es: 'Dado que elegiste mantener tus tokens en lugar de limitar {app}, asumimos que también elegirías recibir tokens, o incluso PAGAR tokens para evitar limitar.'
+      en: 'Since you chose to keep your tokens rather than limit {app}, we assume you would also be willing to PAY tokens to avoid limiting.',
+      es: 'Dado que elegiste mantener tus tokens en lugar de limitar {app}, asumimos que también estarías dispuesto a PAGAR tokens para evitar limitar.'
     },
     autoFillNotice: {
       en: 'We will automatically fill in the remaining {count} questions for {app} based on your choice.',
