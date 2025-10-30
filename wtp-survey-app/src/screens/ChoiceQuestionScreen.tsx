@@ -43,37 +43,72 @@ export const ChoiceQuestionScreen: React.FC<ChoiceQuestionScreenProps> = ({
       choice => choice.app === app && !choice.autoFilled && choice.tokenAmount !== tokenAmount
     );
 
+    // Get the ordered token amounts to verify consistency
+    const orderedTokenAmounts = surveyData.tokenOrder === 'ascending'
+      ? [...TOKEN_AMOUNTS].reverse()  // [-10, -8, -5, -2, -1, 0, 2, 5]
+      : TOKEN_AMOUNTS;                 // [5, 2, 0, -1, -2, -5, -8, -10]
+
+    const firstTokenAmount = orderedTokenAmounts[0];
+    const isFirstTokenForApp = previousChoices.length === 0 &&
+      Math.abs(tokenAmount - firstTokenAmount) < 0.01; // Allow for floating point comparison
+
+    console.log('[SWITCHING POINT DEBUG]', {
+      app,
+      tokenAmount,
+      currentChoice,
+      tokenOrder: surveyData.tokenOrder,
+      firstTokenAmount,
+      isFirstTokenForApp,
+      previousChoicesCount: previousChoices.length,
+      previousChoices: previousChoices.map(c => ({ token: c.tokenAmount, choice: c.selectedOption })),
+    });
+
     // Special case: First choice for this app
     if (previousChoices.length === 0) {
-      // In descending order, we start with the MOST attractive offer (e.g., +5 tokens)
-      // If user chooses "limit" on first question, they're rejecting the best offer
-      // → they'll reject all worse offers → SWITCH detected
-      if (surveyData.tokenOrder === 'descending' && currentChoice === 'limit') {
-        return true;
+      // DESCENDING order: Start with BEST offer (e.g., +5 tokens)
+      // - Choose 'tokens' (accept best) → Need to ask about worse offers → NO SWITCH
+      // - Choose 'limit' (reject best) → Will reject all worse offers → YES SWITCH
+      if (surveyData.tokenOrder === 'descending') {
+        const isSwitch = currentChoice === 'limit';
+        console.log('[FIRST CHOICE - DESCENDING]', { currentChoice, isSwitch });
+        return isSwitch;
       }
 
-      // In ascending order, we start with the LEAST attractive offer (e.g., -10 tokens)
-      // If user chooses "tokens" on first question, they're accepting the worst offer
-      // → they'll accept all better offers → SWITCH detected
-      if (surveyData.tokenOrder === 'ascending' && currentChoice === 'tokens') {
-        return true;
+      // ASCENDING order: Start with WORST offer (e.g., -10 tokens)
+      // - Choose 'tokens' (accept worst) → Will accept all better offers → YES SWITCH
+      // - Choose 'limit' (reject worst) → Need to ask about better offers → NO SWITCH
+      if (surveyData.tokenOrder === 'ascending') {
+        const isSwitch = currentChoice === 'tokens';
+        console.log('[FIRST CHOICE - ASCENDING]', { currentChoice, isSwitch });
+        return isSwitch;
       }
 
-      // Otherwise, no switch on first choice
+      // This should never happen (tokenOrder must be 'ascending' or 'descending')
+      console.error('[SWITCHING POINT ERROR] Invalid tokenOrder:', surveyData.tokenOrder);
       return false;
     }
 
-    // Check if all previous choices were the same and different from current
+    // Subsequent choices: Check if this represents a switch from previous pattern
     const allPreviousSame = previousChoices.every(
       choice => choice.selectedOption === previousChoices[0].selectedOption
     );
 
     if (!allPreviousSame) {
+      console.log('[SUBSEQUENT CHOICE] Inconsistent previous choices, no switch detected');
       return false; // Previous choices were inconsistent
     }
 
     const previousOption = previousChoices[0].selectedOption;
-    return previousOption !== currentChoice;
+    const isSwitch = previousOption !== currentChoice;
+
+    console.log('[SUBSEQUENT CHOICE]', {
+      previousOption,
+      currentChoice,
+      isSwitch,
+      tokenOrder: surveyData.tokenOrder,
+    });
+
+    return isSwitch;
   };
 
   const checkIfBreaksSwitchingPoint = (currentChoice: 'tokens' | 'limit'): boolean => {
