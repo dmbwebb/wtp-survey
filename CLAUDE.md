@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a willingness-to-pay (WTP) survey web application for research on students' preferences for blocking/limiting certain apps on their phones. The app implements a Becker-DeGroot-Marshak-style elicitation mechanism where participants make choices between receiving tokens (exchangeable for rewards) or blocking specific apps for one week.
+This is a willingness-to-pay (WTP) survey web application for research on students' preferences for blocking/limiting certain apps on their phones. The app implements a Becker-DeGroot-Marshak-style elicitation mechanism where participants make choices between paying tokens (reducing their reward) to avoid blocking specific apps, or choosing to block the apps for one week.
 
 ## Tech Stack
 
@@ -212,7 +212,7 @@ interface SurveyContextType {
 [survey.ts](wtp-survey-app/src/types/survey.ts) defines the core data structures:
 
 **Survey Constants:**
-- `TOKEN_AMOUNTS = [5, 2, 0, -1, -2, -5, -8, -10]` - All token values presented to participants
+- `TOKEN_AMOUNTS = [0, -2, -3, -5, -8, -10]` - All token values presented to participants (all payment amounts, no positive "receive" values)
 - `APPS = ['TikTok', 'WhatsApp']` - Apps participants can choose to block
 - `TOKEN_VALUE_COP = 1000` - Each token worth 1000 COP
 - `INITIAL_TOKENS = 10` - Starting token allocation
@@ -247,7 +247,9 @@ interface StoredSurvey {
 The survey generates all choice questions as a cartesian product:
 - For each app in randomized `appOrder`
 - Present each token amount from `TOKEN_AMOUNTS`
-- Results in 14 total choice questions (2 apps × 7 token amounts)
+- Results in 12 total choice questions (2 apps × 6 token amounts)
+
+All token amounts are payment values (0, 2, 3, 5, 8, 10 tokens to pay), with no positive "receive" amounts. The question framing is: "Would you rather pay X tokens to avoid limiting the app, or limit the app?"
 
 ## Key Implementation Details
 
