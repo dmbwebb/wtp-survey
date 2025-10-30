@@ -97,7 +97,7 @@ const SurveyFlow: React.FC = () => {
         break;
       case 'appIntroduction2':
         setCurrentScreen('choices');
-        setCurrentChoiceIndex(8);
+        setCurrentChoiceIndex(6);
         break;
       case 'choices': {
         // Get the current app from the current choice
@@ -123,8 +123,8 @@ const SurveyFlow: React.FC = () => {
         if (currentChoiceIndex === 0) {
           // After first question, show choice comprehension check
           setCurrentScreen('choiceComprehension');
-        } else if (currentChoiceIndex === 7) {
-          // After first 8 questions, show second app introduction
+        } else if (currentChoiceIndex === 5) {
+          // After first 6 questions, show second app introduction
           setCurrentScreen('appIntroduction2');
         } else if (currentChoiceIndex < allChoices.length - 1) {
           setCurrentChoiceIndex(currentChoiceIndex + 1);
@@ -157,7 +157,7 @@ const SurveyFlow: React.FC = () => {
       case 'autoFilledExplanation': {
         // After seeing auto-filled explanation, move to next app or summary
         // currentChoiceIndex should already be set to the next question for different app
-        if (currentChoiceIndex === 8) {
+        if (currentChoiceIndex === 6) {
           // Moving to second app
           setCurrentScreen('appIntroduction2');
         } else if (currentChoiceIndex < allChoices.length) {
@@ -221,7 +221,7 @@ const SurveyFlow: React.FC = () => {
         break;
       case 'appIntroduction2':
         setCurrentScreen('choices');
-        setCurrentChoiceIndex(7);
+        setCurrentChoiceIndex(5);
         break;
       case 'choiceComprehension':
         // Going back from choice comprehension to first question
@@ -285,7 +285,7 @@ const SurveyFlow: React.FC = () => {
         }
 
         // Normal back navigation
-        if (currentChoiceIndex === 8) {
+        if (currentChoiceIndex === 6) {
           // Going back from first question of second app batch
           setCurrentScreen('appIntroduction2');
         } else if (currentChoiceIndex === 1) {
