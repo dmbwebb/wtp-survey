@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
-import { AppName, TOKEN_VALUE_COP, TOKEN_AMOUNTS } from '../types/survey';
+import { AppName, TOKEN_AMOUNTS } from '../types/survey';
 import { useSurvey } from '../contexts/SurveyContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
@@ -43,74 +43,46 @@ export const SwitchingPointConfirmationScreen: React.FC<SwitchingPointConfirmati
   // Get all token amounts after the switching point
   const remainingTokenAmounts = orderedTokenAmounts.slice(switchIndex + 1);
 
-  // Format the explanation based on the choice
-  const getExplanation = () => {
+  // Get simplified explanation based on the choice
+  const getSimplifiedExplanation = () => {
     if (switchedTo === 'limit') {
       // They chose to limit rather than receive/pay tokens
       if (tokenAmount > 0) {
         // They chose to limit rather than receive positive tokens
-        return {
-          choice: t('switchingPoint.choseLimitOverReceive', language)
-            .replace('{app}', app)
-            .replace('{tokenAmount}', tokenAmount.toString())
-            .replace('{value}', `$${(tokenAmount * TOKEN_VALUE_COP).toLocaleString()}`),
-          implication: t('switchingPoint.implicationLimitDescending', language)
-            .replaceAll('{app}', app),
-        };
+        return t('switchingPoint.simplifiedLimitOverReceiveExplanation', language)
+          .replace('{app}', app)
+          .replace('{tokenAmount}', tokenAmount.toString());
       } else if (tokenAmount < 0) {
         // They chose to limit rather than pay tokens
-        return {
-          choice: t('switchingPoint.choseLimitOverPay', language)
-            .replace('{app}', app)
-            .replace('{tokenAmount}', Math.abs(tokenAmount).toString())
-            .replace('{value}', `$${(Math.abs(tokenAmount) * TOKEN_VALUE_COP).toLocaleString()}`),
-          implication: t('switchingPoint.implicationLimitAscending', language)
-            .replace('{app}', app),
-        };
+        return t('switchingPoint.simplifiedLimitExplanation', language)
+          .replace('{app}', app)
+          .replace('{tokenAmount}', Math.abs(tokenAmount).toString());
       } else {
         // tokenAmount === 0: They chose to limit rather than keep tokens unchanged
-        return {
-          choice: t('switchingPoint.choseLimitOverZero', language)
-            .replace('{app}', app),
-          implication: t('switchingPoint.implicationLimitFromZero', language)
-            .replace('{app}', app),
-        };
+        return t('switchingPoint.choseLimitOverZero', language)
+          .replace('{app}', app);
       }
     } else {
       // They chose tokens rather than limit
       if (tokenAmount < 0) {
         // They chose to pay tokens rather than limit (ascending order switch)
-        return {
-          choice: t('switchingPoint.chosePayOverLimit', language)
-            .replace('{app}', app)
-            .replace('{tokenAmount}', Math.abs(tokenAmount).toString())
-            .replace('{value}', `$${(Math.abs(tokenAmount) * TOKEN_VALUE_COP).toLocaleString()}`),
-          implication: t('switchingPoint.implicationPayAscending', language)
-            .replace('{app}', app),
-        };
+        return t('switchingPoint.simplifiedPayExplanation', language)
+          .replace('{app}', app)
+          .replace('{tokenAmount}', Math.abs(tokenAmount).toString());
       } else if (tokenAmount > 0) {
         // They chose to receive tokens rather than limit (descending order switch)
-        return {
-          choice: t('switchingPoint.choseReceiveOverLimit', language)
-            .replace('{app}', app)
-            .replace('{tokenAmount}', tokenAmount.toString())
-            .replace('{value}', `$${(tokenAmount * TOKEN_VALUE_COP).toLocaleString()}`),
-          implication: t('switchingPoint.implicationReceiveDescending', language)
-            .replace('{app}', app),
-        };
+        return t('switchingPoint.simplifiedReceiveExplanation', language)
+          .replace('{app}', app)
+          .replace('{tokenAmount}', tokenAmount.toString());
       } else {
         // tokenAmount === 0: They chose to keep tokens rather than limit
-        return {
-          choice: t('switchingPoint.choseZeroOverLimit', language)
-            .replace('{app}', app),
-          implication: t('switchingPoint.implicationTokensFromZero', language)
-            .replace('{app}', app),
-        };
+        return t('switchingPoint.choseZeroOverLimit', language)
+          .replace('{app}', app);
       }
     }
   };
 
-  const explanation = getExplanation();
+  const explanation = getSimplifiedExplanation();
 
   const handleConfirm = () => {
     confirmSwitchingPoint(app);
@@ -133,29 +105,15 @@ export const SwitchingPointConfirmationScreen: React.FC<SwitchingPointConfirmati
           </h1>
 
           <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 mb-6">
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">
-                {t('switchingPoint.yourChoice', language)}
-              </h2>
-              <p className="text-gray-700">
-                {explanation.choice}
-              </p>
-            </div>
-
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">
-                {t('switchingPoint.whatThisMeans', language)}
-              </h2>
-              <p className="text-gray-700">
-                {explanation.implication}
-              </p>
-            </div>
+            <p className="text-gray-700 mb-4">
+              {explanation}
+            </p>
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
               <p className="text-sm text-gray-700">
-                {t('switchingPoint.autoFillNotice', language)
+                [{t('switchingPoint.autoFillNotice', language)
                   .replace('{count}', remainingTokenAmounts.length.toString())
-                  .replace('{app}', app)}
+                  .replace('{app}', app)}]
               </p>
             </div>
           </div>

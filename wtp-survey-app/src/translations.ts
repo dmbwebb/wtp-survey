@@ -511,49 +511,32 @@ export const translations = {
       en: 'You chose to limit {app} rather than receive {tokenAmount} tokens (worth {value} COP).',
       es: 'Elegiste limitar {app} en lugar de recibir {tokenAmount} tokens (equivalente a {value} COP).'
     },
-    choseLimitOverPay: {
-      en: 'You chose to limit {app} rather than pay {tokenAmount} tokens (worth {value} COP) to avoid limiting.',
-      es: 'Elegiste limitar {app} en lugar de pagar {tokenAmount} tokens (equivalente a {value} COP) para evitar limitar.'
+    // Simplified explanations for "willing to pay" direction
+    simplifiedPayExplanation: {
+      en: 'Since you were willing to pay {tokenAmount} tokens to avoid limiting {app}, we assume you would also be willing to pay less.',
+      es: 'Dado que estuviste dispuesto a pagar {tokenAmount} tokens para evitar limitar {app}, asumimos que también estarías dispuesto a pagar menos.'
     },
+    // Simplified explanations for "willing to limit" direction
+    simplifiedLimitExplanation: {
+      en: 'Since you chose to limit {app} rather than pay {tokenAmount} tokens, we assume you would also choose to limit it for smaller payments.',
+      es: 'Dado que elegiste limitar {app} en lugar de pagar {tokenAmount} tokens, asumimos que también elegirías limitarla por pagos menores.'
+    },
+    // Keep old translations for edge cases with zero or receiving tokens
     choseLimitOverZero: {
-      en: 'You chose to limit {app} rather than keep your tokens unchanged.',
-      es: 'Elegiste limitar {app} en lugar de mantener tus tokens sin cambios.'
-    },
-    chosePayOverLimit: {
-      en: 'You were willing to pay {tokenAmount} tokens (worth {value} COP) to avoid limiting {app}.',
-      es: 'Estuviste dispuesto a pagar {tokenAmount} tokens (equivalente a {value} COP) para evitar limitar {app}.'
-    },
-    choseReceiveOverLimit: {
-      en: 'You chose to receive {tokenAmount} tokens (worth {value} COP) rather than limit {app}.',
-      es: 'Elegiste recibir {tokenAmount} tokens (equivalente a {value} COP) en lugar de limitar {app}.'
+      en: 'Since you chose to limit {app} rather than keep your tokens unchanged, we assume you would also choose to limit it even if you had to pay.',
+      es: 'Dado que elegiste limitar {app} en lugar de mantener tus tokens sin cambios, asumimos que también elegirías limitarla incluso si tuvieras que pagar.'
     },
     choseZeroOverLimit: {
-      en: 'You chose to keep your tokens unchanged rather than limit {app}.',
-      es: 'Elegiste mantener tus tokens sin cambios en lugar de limitar {app}.'
+      en: 'Since you chose to keep your tokens rather than limit {app}, we assume you would also be willing to pay to avoid limiting.',
+      es: 'Dado que elegiste mantener tus tokens en lugar de limitar {app}, asumimos que también estarías dispuesto a pagar para evitar limitar.'
     },
-    implicationLimitDescending: {
-      en: 'Since you prefer to limit {app} rather than receive these tokens, we assume you would also prefer to limit for smaller amounts (like 0 tokens), and that you would NOT want to PAY tokens to avoid limiting {app}.',
-      es: 'Dado que prefieres limitar {app} en lugar de recibir estos tokens, asumimos que también preferirías limitar por cantidades menores (como 0 tokens), y que NO querrías PAGAR tokens para evitar limitar {app}.'
+    simplifiedReceiveExplanation: {
+      en: 'Since you chose to receive {tokenAmount} tokens rather than limit {app}, we assume you would also choose to receive less, or even pay to avoid limiting.',
+      es: 'Dado que elegiste recibir {tokenAmount} tokens en lugar de limitar {app}, asumimos que también elegirías recibir menos, o incluso pagar para evitar limitar.'
     },
-    implicationLimitAscending: {
-      en: 'Since you prefer to limit {app} rather than pay these tokens, we assume you would also prefer to limit if you had to pay LESS.',
-      es: 'Dado que prefieres limitar {app} en lugar de pagar estos tokens, asumimos que también preferirías limitar si tuvieras que pagar MENOS.'
-    },
-    implicationLimitFromZero: {
-      en: 'Since you prefer to limit {app} rather than keep your tokens unchanged, we assume you would also prefer to limit even if you had to PAY tokens.',
-      es: 'Dado que prefieres limitar {app} en lugar de mantener tus tokens sin cambios, asumimos que también preferirías limitar incluso si tuvieras que PAGAR tokens.'
-    },
-    implicationPayAscending: {
-      en: 'Since you were willing to pay tokens to avoid limiting {app}, we assume you would also be willing to pay LESS or pay nothing (0 tokens) to avoid limiting.',
-      es: 'Dado que estuviste dispuesto a pagar tokens para evitar limitar {app}, asumimos que también estarías dispuesto a pagar MENOS o no pagar nada (0 tokens) para evitar limitar.'
-    },
-    implicationReceiveDescending: {
-      en: 'Since you chose to receive tokens rather than limit {app}, we assume you would also choose to receive smaller amounts, receive nothing (0 tokens), or even PAY tokens to avoid limiting.',
-      es: 'Dado que elegiste recibir tokens en lugar de limitar {app}, asumimos que también elegirías recibir cantidades más pequeñas, no recibir nada (0 tokens), o incluso PAGAR tokens para evitar limitar.'
-    },
-    implicationTokensFromZero: {
-      en: 'Since you chose to keep your tokens rather than limit {app}, we assume you would also be willing to PAY tokens to avoid limiting.',
-      es: 'Dado que elegiste mantener tus tokens en lugar de limitar {app}, asumimos que también estarías dispuesto a PAGAR tokens para evitar limitar.'
+    simplifiedLimitOverReceiveExplanation: {
+      en: 'Since you chose to limit {app} rather than receive {tokenAmount} tokens, we assume you would also choose to limit it for smaller amounts or even if you had to pay.',
+      es: 'Dado que elegiste limitar {app} en lugar de recibir {tokenAmount} tokens, asumimos que también elegirías limitarla por cantidades menores o incluso si tuvieras que pagar.'
     },
     autoFillNotice: {
       en: 'We will automatically fill in the remaining {count} questions for {app} based on your choice.',

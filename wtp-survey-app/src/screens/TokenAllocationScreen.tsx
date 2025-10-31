@@ -5,6 +5,7 @@ import { FinalTokenVisualizer } from '../components/FinalTokenVisualizer';
 import { INITIAL_TOKENS, TOKEN_VALUE_COP } from '../types/survey';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
+import pesosBillImage from '../assets/64213cfd4266a0.83197333-original.jpg';
 
 interface TokenAllocationScreenProps {
   onNext: () => void;
@@ -41,6 +42,13 @@ export const TokenAllocationScreen: React.FC<TokenAllocationScreenProps> = ({ on
           <p className="text-lg text-gray-600 mt-2">
             ({t('tokenAllocation.worth', language)} ${(INITIAL_TOKENS * TOKEN_VALUE_COP).toLocaleString()} COP)
           </p>
+          <div className="my-6">
+            <img
+              src={pesosBillImage}
+              alt="10,000 pesos bill"
+              className="w-full max-w-md mx-auto rounded-lg shadow-md"
+            />
+          </div>
           <FinalTokenVisualizer tokenCount={INITIAL_TOKENS} />
         </div>
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
