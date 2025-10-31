@@ -243,28 +243,34 @@ const SurveyFlow: React.FC = () => {
         break;
       }
       case 'autoFilledExplanation': {
-        // Going back from auto-filled explanation - clear auto-filled choices
+        // Going back from auto-filled explanation - need to remove switching point choice and auto-filled choices
         const currentApp = allChoices[currentChoiceIndex - 1]?.app || allChoices[0].app;
-        clearAutoFilledChoices(currentApp);
 
-        // Find the last manually answered question for this app
-        const lastManualIndex = surveyData.choices.findIndex(
-          choice => choice.app === currentApp && !choice.autoFilled
-        );
+        // Get the switching point before clearing it
+        const switchingPoint = surveyData.switchingPoints[currentApp];
 
-        if (lastManualIndex !== -1) {
-          // Find this question in allChoices
-          const manualChoice = surveyData.choices[lastManualIndex];
-          const indexInAllChoices = allChoices.findIndex(
-            q => q.app === manualChoice.app && q.tokenAmount === manualChoice.tokenAmount
-          );
-          setCurrentChoiceIndex(indexInAllChoices);
-        } else {
-          // Default to first question of this app
-          const firstIndexForApp = allChoices.findIndex(q => q.app === currentApp);
-          setCurrentChoiceIndex(firstIndexForApp);
+        // Remove the switching point choice itself to prevent duplicates
+        if (switchingPoint) {
+          removeChoice(currentApp, switchingPoint.tokenAmount);
         }
 
+        // Clear auto-filled choices and switching point data
+        clearAutoFilledChoices(currentApp);
+
+        // Find the switching point question index in allChoices
+        let targetIndex = 0;
+        if (switchingPoint) {
+          targetIndex = allChoices.findIndex(
+            q => q.app === currentApp && q.tokenAmount === switchingPoint.tokenAmount
+          );
+        }
+
+        // Fallback: find first question for this app if not found
+        if (targetIndex === -1) {
+          targetIndex = allChoices.findIndex(q => q.app === currentApp);
+        }
+
+        setCurrentChoiceIndex(targetIndex);
         setCurrentScreen('choices');
         break;
       }
