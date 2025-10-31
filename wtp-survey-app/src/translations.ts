@@ -56,12 +56,12 @@ export const translations = {
       es: 'Para obtener estas recompensas, recibirás tokens. Estos tokens tienen un valor de'
     },
     paragraph2b: {
-      en: ', and can be exchanged for a',
-      es: ', y pueden ser canjeados por una'
+      en: ', and can be exchanged for',
+      es: ', y pueden ser canjeados por'
     },
     paragraph2c: {
-      en: 'whatever you want at the school shop',
-      es: 'lo que quieras en la tienda escolar'
+      en: 'the gifts brought by the surveyors',
+      es: 'los regalos que trajeron los encuestadores'
     },
     paragraph3: {
       en: 'Please pay attention to the comprehension checks on the next screen to ensure you understand how the survey works.',
@@ -120,8 +120,8 @@ export const translations = {
       es: 'Tipo de Recompensa:'
     },
     rewardTypeText: {
-      en: 'You can exchange your tokens at the school shop to buy whatever you want.',
-      es: 'Puedes canjear tus tokens en la tienda escolar para comprar lo que quieras.'
+      en: 'You can exchange your tokens for the gifts brought by the surveyors.',
+      es: 'Puedes canjear tus tokens por los regalos que trajeron los encuestadores.'
     },
     outro: {
       en: "Please review these details carefully. You'll have another chance to answer the comprehension questions.",
@@ -456,8 +456,8 @@ export const translations = {
       es: 'Tus respuestas han sido registradas.'
     },
     contactInfo: {
-      en: 'Our team will contact you about implementing your selected choice (app limit or tokens) and redeeming your tokens at the school shop.',
-      es: 'Nuestro equipo te contactará sobre la implementación de tu decisión seleccionada (límite de aplicación o tokens) y el canje de tus tokens en la tienda escolar.'
+      en: 'Our team will contact you about implementing your selected choice (app limit or tokens) and redeeming your tokens for the gifts.',
+      es: 'Nuestro equipo te contactará sobre la implementación de tu decisión seleccionada (límite de aplicación o tokens) y el canje de tus tokens por los regalos.'
     },
     participantId: {
       en: 'Participant ID:',

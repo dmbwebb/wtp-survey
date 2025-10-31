@@ -21,7 +21,17 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
   const correctTokenValue = TOKEN_VALUE_COP.toString();
   const isTokenValueCorrect = tokenValue.trim() === correctTokenValue;
   const rewardLower = rewardType.toLowerCase().trim();
-  const isRewardTypeCorrect = rewardLower.includes('school shop') ||
+  const isRewardTypeCorrect = rewardLower.includes('gift') ||
+                               rewardLower.includes('gifts') ||
+                               rewardLower.includes('regalo') ||
+                               rewardLower.includes('regalos') ||
+                               rewardLower.includes('surveyor') ||
+                               rewardLower.includes('surveyors') ||
+                               rewardLower.includes('encuestador') ||
+                               rewardLower.includes('encuestadores') ||
+                               rewardLower.includes('encuestadore') ||  // common misspelling
+                               // Keep old school shop answers for backwards compatibility during transition
+                               rewardLower.includes('school shop') ||
                                rewardLower.includes('school') ||
                                rewardLower.includes('scool') ||  // common misspelling
                                rewardLower.includes('shool') ||  // common misspelling
