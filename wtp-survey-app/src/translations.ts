@@ -518,8 +518,8 @@ export const translations = {
     },
     // Simplified explanations for "willing to limit" direction
     simplifiedLimitExplanation: {
-      en: 'Since you chose to limit {app} rather than pay {tokenAmount} tokens, we assume you would also choose to limit it for smaller payments.',
-      es: 'Dado que elegiste limitar {app} en lugar de pagar {tokenAmount} tokens, asumimos que también elegirías limitarla por pagos menores.'
+      en: 'Since you chose to limit {app} rather than pay {tokenAmount} tokens, we assume you would also choose to limit it rather than pay more.',
+      es: 'Dado que elegiste limitar {app} en lugar de pagar {tokenAmount} tokens, asumimos que también elegirías limitarla en lugar de pagar más.'
     },
     // Keep old translations for edge cases with zero or receiving tokens
     choseLimitOverZero: {
