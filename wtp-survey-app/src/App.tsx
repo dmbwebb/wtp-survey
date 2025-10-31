@@ -187,16 +187,17 @@ const SurveyFlow: React.FC = () => {
   };
 
   const handleStartNewSurvey = async () => {
-    // Reset survey data (generates new ID, clears all data)
-    await resetSurvey();
-
-    // Clear screen position from localStorage
+    // Clear screen position from localStorage first
     localStorage.removeItem('currentScreen');
     localStorage.removeItem('currentChoiceIndex');
 
-    // Reset screen state
+    // Reset screen state BEFORE resetting survey data to avoid flash
     setCurrentScreen('participantId');
     setCurrentChoiceIndex(0);
+
+    // Reset survey data (generates new ID, clears all data)
+    // This happens last to prevent re-renders with old screen state
+    await resetSurvey();
   };
 
   const goToPreviousScreen = () => {
