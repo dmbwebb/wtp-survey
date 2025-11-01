@@ -1,0 +1,315 @@
+SPANISH TRANSLATIONS - WTP SURVEY APP
+=====================================
+
+This file contains all Spanish text that appears in the survey app, organized by screen.
+Perfect for reviewing and checking translations.
+
+Updated: 2025-11-01 (reflects v0.59)
+
+=====================================
+COMMON ELEMENTS (appear on multiple screens)
+=====================================
+
+Continuar
+
+Atrás
+
+Tokens
+
+o
+
+=====================================
+PARTICIPANT ID SCREEN
+=====================================
+
+Bienvenido a la Encuesta
+
+Por favor ingresa tu ID de participante para comenzar.
+
+ID de Participante
+
+Ingresa tu ID
+
+=====================================
+INSTRUCTIONS SCREEN
+=====================================
+
+Instrucciones de la Encuesta
+
+Vas a tomar algunas decisiones que te darán la oportunidad de ganar recompensas reales.
+
+Para obtener estas recompensas, recibirás tokens. Estos tokens tienen un valor de [AMOUNT], y pueden ser canjeados por los regalos que trajeron los encuestadores.
+
+Por favor presta atención a las preguntas de comprensión en la siguiente pantalla para asegurarte de que entiendes cómo funciona la encuesta.
+
+=====================================
+COMPREHENSION CHECK SCREEN
+=====================================
+
+Verificación de Comprensión
+
+¿Cuánto vale 1 token en COP?
+
+Ingresa la cantidad
+
+¿Dónde puedes canjear tus tokens para comprar cosas?
+
+Ingresa el lugar
+
+Incorrecto. Por favor revisa las instrucciones.
+
+=====================================
+REINSTRUCTIONS SCREEN (when comprehension check fails)
+=====================================
+
+Repasemos las Instrucciones
+
+Repasemos la información clave nuevamente:
+
+Valor del Token:
+
+Cada token vale [AMOUNT].
+
+Tipo de Recompensa:
+
+Puedes canjear tus tokens por los regalos que trajeron los encuestadores.
+
+Por favor revisa estos detalles cuidadosamente. Tendrás otra oportunidad para responder las preguntas de comprensión.
+
+Continuar a la Verificación de Comprensión
+
+=====================================
+TOKEN ALLOCATION SCREEN
+=====================================
+
+Tus Tokens Iniciales
+
+Se te han dado [NUMBER] tokens
+
+Equivalente a
+
+Tu saldo de tokens se muestra en la esquina superior derecha. Se actualizará durante la encuesta a medida que tomes tus decisiones. Lo que te quede al final podrás cobrarlo.
+
+=====================================
+CHOICE INSTRUCTIONS SCREEN 1
+=====================================
+
+Acerca de tus Decisiones
+
+Las decisiones que tomarás implicarán limitar ciertas aplicaciones a 30 minutos por día en tu teléfono.
+
+Si eliges establecer un límite, y esa opción es seleccionada, entonces nuestro equipo realmente limitará la aplicación a 30 minutos por día en tu teléfono por una semana más tarde hoy, y pondrá una contraseña para que no puedas cambiarlo.
+
+Por lo tanto, solo debes seleccionar las opciones que realmente prefieres.
+
+=====================================
+CHOICE INSTRUCTIONS SCREEN 2
+=====================================
+
+Importante:
+
+Harás múltiples decisiones, y solo una de tus decisiones será seleccionada al azar para ser implementada.
+
+Esto significa que cada pregunta debe ser tratada independientemente, y para cada decisión, debes dar tu respuesta honesta.
+
+Comenzar Decisiones
+
+=====================================
+APP INTRODUCTION SCREEN
+=====================================
+
+Preguntas sobre Limitar Aplicación:
+
+Ahora te haremos algunas preguntas para ver qué tan dispuesto estarías a limitar [APP NAME] a 30 minutos por día por 1 semana en tu teléfono.
+
+=====================================
+CHOICE QUESTION SCREEN
+=====================================
+
+Pregunta
+
+de
+
+Preferirías...
+
+RECIBIR
+
+PAGAR
+
+tokens
+
+equivalente a
+
+Limitar
+
+a 30 min/día por 1 semana
+
+Y NO limitar
+
+PERO NO limitar
+
+NO limitar
+
+y mantener el saldo de tokens
+
+=====================================
+CHOICE COMPREHENSION CHECK SCREEN (after first choice)
+=====================================
+
+Verificación de Comprensión
+
+Para confirmar, ¿preferirías {action} {tokens} tokens {connector} NO limitar {app}, para que termines con {finalBalance} tokens al final del experimento?
+
+Para confirmar, ¿preferirías NO limitar {app} y mantener tu saldo de tokens en {currentBalance} tokens al final del experimento?
+
+Para confirmar, ¿preferirías limitar {app} a 30 minutos por día por una semana, en lugar de {action} {tokens} tokens, por lo que tu saldo de tokens permanecería en {currentBalance} tokens al final del experimento?
+
+recibir
+
+pagar
+
+Y
+
+PERO
+
+Confirmo
+
+Volver
+
+=====================================
+SWITCHING POINT CONFIRMATION SCREEN
+(v0.57 update: simplified, removed section headers)
+=====================================
+
+Por Favor Confirma tu Decisión
+
+Elegiste limitar {app} en lugar de recibir {tokenAmount} tokens (equivalente a {value} COP).
+
+Dado que estuviste dispuesto a pagar {tokenAmount} tokens para evitar limitar {app}, asumimos que también estarías dispuesto a pagar menos.
+
+Dado que elegiste limitar {app} en lugar de pagar {tokenAmount} tokens, asumimos que también elegirías limitarla en lugar de pagar más.
+
+Dado que elegiste limitar {app} en lugar de mantener tus tokens sin cambios, asumimos que también elegirías limitarla incluso si tuvieras que pagar.
+
+Dado que elegiste mantener tus tokens en lugar de limitar {app}, asumimos que también estarías dispuesto a pagar para evitar limitar.
+
+Dado que elegiste recibir {tokenAmount} tokens en lugar de limitar {app}, asumimos que también elegirías recibir menos, o incluso pagar para evitar limitar.
+
+Dado que elegiste limitar {app} en lugar de recibir {tokenAmount} tokens, asumimos que también elegirías limitarla por cantidades menores o incluso si tuvieras que pagar.
+
+[Automáticamente completaremos las {count} preguntas restantes para {app} según tu decisión.]
+
+¿Es correcta esta interpretación?
+
+No, Volver
+
+Sí, Continuar
+
+=====================================
+AUTO-FILLED EXPLANATION SCREEN
+=====================================
+
+Preguntas Completadas para {app}
+
+Según tu decisión anterior, hemos completado automáticamente {count} preguntas restantes para {app}.
+
+Respuestas Completadas Automáticamente:
+
+Pregunta
+
+Decisión
+
+Si quieres cambiar tu respuesta, puedes volver atrás para modificar tu decisión.
+
+=====================================
+CHOICES SUMMARY SCREEN
+=====================================
+
+Tus Decisiones
+
+Seleccionando aleatoriamente una de tus decisiones...
+
+Aquí están todas las decisiones que tomaste. Haz clic abajo para seleccionar aleatoriamente una para implementar.
+
+Seleccionar Aleatoriamente una Decisión
+
+Seleccionando...
+
+ha sido seleccionada!
+
+Esta es la decisión que será implementada.
+
+Continuar a Resultados
+
+Recibir
+
+Pagar
+
+tokens
+
+Limitar
+
+a 30 min/día por 1 semana
+
+Decisión #
+
+=====================================
+RESULTS SCREEN
+=====================================
+
+Resultados de Implementación
+
+Qué sucederá:
+
+[APP NAME] será limitada a 30 minutos por día en tu teléfono por 1 semana comenzando hoy.
+
+Nuestro equipo establecerá el límite con una contraseña para que no puedas cambiarlo.
+
+Tú
+
+recibirás
+
+pagarás
+
+tokens
+
+Esto equivale a
+
+[APP NAME] no será limitada.
+
+Saldo Final de Tokens:
+
+Finalizar Encuesta
+
+=====================================
+THANK YOU SCREEN
+=====================================
+
+¡Gracias!
+
+Has completado la encuesta.
+
+Tus respuestas han sido registradas.
+
+Nuestro equipo te contactará sobre la implementación de tu decisión seleccionada (límite de aplicación o tokens) y el canje de tus tokens por los regalos.
+
+ID de Participante:
+
+Descargar Datos de la Encuesta (para pruebas)
+
+Iniciar Nueva Encuesta
+
+=====================================
+UI COMPONENTS
+=====================================
+
+Token Counter:
+Tokens
+
+Version Info:
+Forzar actualización y limpiar caché
+Forzar actualización
+
+=====================================
+END OF TRANSLATIONS
+=====================================
