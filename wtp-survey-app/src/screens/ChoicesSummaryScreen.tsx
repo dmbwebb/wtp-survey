@@ -5,6 +5,8 @@ import { useSurvey } from '../contexts/SurveyContext';
 import { Choice } from '../types/survey';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
+import { AudioPlayer } from '../components/AudioPlayer';
+import audioW9 from '../assets/audio_files/w9.mp3';
 
 interface ChoicesSummaryScreenProps {
   onNext: () => void;
@@ -88,9 +90,12 @@ export const ChoicesSummaryScreen: React.FC<ChoicesSummaryScreenProps> = ({ onNe
       </div>
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-3xl w-full bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-          {t('choicesSummary.title', language)}
-        </h1>
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 text-center">
+            {t('choicesSummary.title', language)}
+          </h1>
+          <AudioPlayer audioSrc={audioW9} />
+        </div>
 
         {!selectedChoice && (
           <p className="text-center text-gray-600 mb-6">

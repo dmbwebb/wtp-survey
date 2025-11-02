@@ -3,6 +3,8 @@ import { useSurvey } from '../contexts/SurveyContext';
 import { Button } from '../components/Button';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
+import { AudioPlayer } from '../components/AudioPlayer';
+import audioW10 from '../assets/audio_files/w10.mp3';
 
 interface ThankYouScreenProps {
   onStartNewSurvey: () => void;
@@ -32,9 +34,12 @@ export const ThankYouScreen: React.FC<ThankYouScreenProps> = ({ onStartNewSurvey
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8 text-center">
         <div className="text-6xl mb-6">🎉</div>
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          {t('thankYou.title', language)}
-        </h1>
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <h1 className="text-4xl font-bold text-gray-900">
+            {t('thankYou.title', language)}
+          </h1>
+          <AudioPlayer audioSrc={audioW10} />
+        </div>
         <p className="text-xl text-gray-700 mb-6">
           {t('thankYou.completed', language)}
         </p>

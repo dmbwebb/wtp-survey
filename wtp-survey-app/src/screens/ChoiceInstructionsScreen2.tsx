@@ -3,6 +3,8 @@ import { Button } from '../components/Button';
 import { TokenCounter } from '../components/TokenCounter';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
+import { AudioPlayer } from '../components/AudioPlayer';
+import audioW7 from '../assets/audio_files/w7.mp3';
 
 interface ChoiceInstructionsScreen2Props {
   onNext: () => void;
@@ -18,9 +20,12 @@ export const ChoiceInstructionsScreen2: React.FC<ChoiceInstructionsScreen2Props>
       </div>
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
+        <div className="flex items-center gap-3 mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">{t('choiceInstructions2.important', language)}</h2>
+          <AudioPlayer audioSrc={audioW7} />
+        </div>
         <div className="space-y-6 text-gray-700 text-lg leading-relaxed mb-8">
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-            <p className="font-semibold text-gray-900 mb-4 text-xl">{t('choiceInstructions2.important', language)}</p>
             <p className="mb-3">
               {t('choiceInstructions2.paragraph1', language)}
             </p>

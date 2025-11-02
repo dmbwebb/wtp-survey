@@ -3,6 +3,8 @@ import { Button } from '../components/Button';
 import { TOKEN_VALUE_COP } from '../types/survey';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
+import { AudioPlayer } from '../components/AudioPlayer';
+import audioW4 from '../assets/audio_files/w4.mp3';
 
 interface ReinstructionsScreenProps {
   onNext: () => void;
@@ -14,9 +16,12 @@ export const ReinstructionsScreen: React.FC<ReinstructionsScreenProps> = ({ onNe
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">
-          {t('reinstructions.title', language)}
-        </h1>
+        <div className="flex items-center gap-3 mb-6">
+          <h1 className="text-3xl font-bold text-gray-900">
+            {t('reinstructions.title', language)}
+          </h1>
+          <AudioPlayer audioSrc={audioW4} />
+        </div>
         <div className="space-y-4 text-gray-700 text-lg leading-relaxed mb-8">
           <p>
             {t('reinstructions.intro', language)}

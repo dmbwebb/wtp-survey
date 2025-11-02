@@ -6,6 +6,8 @@ import { INITIAL_TOKENS, TOKEN_VALUE_COP } from '../types/survey';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
 import pesosBillImage from '../assets/64213cfd4266a0.83197333-original.jpg';
+import { AudioPlayer } from '../components/AudioPlayer';
+import audioW5 from '../assets/audio_files/w5.mp3';
 
 interface TokenAllocationScreenProps {
   onNext: () => void;
@@ -29,9 +31,12 @@ export const TokenAllocationScreen: React.FC<TokenAllocationScreenProps> = ({ on
       )}
       <div className="flex-1 flex items-center justify-center">
         <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
-          {t('tokenAllocation.title', language)}
-        </h1>
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 text-center">
+            {t('tokenAllocation.title', language)}
+          </h1>
+          <AudioPlayer audioSrc={audioW5} />
+        </div>
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-32 h-32 bg-blue-100 rounded-full mb-4">
             <span className="text-5xl font-bold text-blue-600">{INITIAL_TOKENS}</span>

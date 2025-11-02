@@ -4,6 +4,8 @@ import { useSurvey } from '../contexts/SurveyContext';
 import { TOKEN_VALUE_COP } from '../types/survey';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
+import { AudioPlayer } from '../components/AudioPlayer';
+import audioW3 from '../assets/audio_files/w3.mp3';
 
 interface ComprehensionCheckScreenProps {
   onNext: () => void;
@@ -68,9 +70,12 @@ export const ComprehensionCheckScreen: React.FC<ComprehensionCheckScreenProps> =
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">
-          {t('comprehension.title', language)}
-        </h1>
+        <div className="flex items-center gap-3 mb-6">
+          <h1 className="text-3xl font-bold text-gray-900">
+            {t('comprehension.title', language)}
+          </h1>
+          <AudioPlayer audioSrc={audioW3} />
+        </div>
         <div className="space-y-6 mb-8">
           <div>
             <label htmlFor="tokenValue" className="block text-lg font-medium text-gray-700 mb-2">

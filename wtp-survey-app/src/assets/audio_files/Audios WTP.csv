@@ -1,0 +1,11 @@
+Code,pregunta
+w1,Bienvenido a la Encuesta. Por favor ingresa tu código único de participante para comenzar.
+w2,"Instrucciones. Vas a tomar algunas decisiones que te darán la oportunidad de ganar recompensas reales. Para obtener estas recompensas, recibirás tokens. Estos tokens tienen el valor que aparece en pantalla, y pueden ser canjeados por los regalos que trajeron los encuestadores. Por favor presta atención a las preguntas de comprensión en la siguiente pantalla para asegurarte de que entiendes cómo funciona la encuesta."
+w3,¿Cuánto vale 1 token en pesos colombianos? y ¿Dónde puedes canjear tus tokens para comprar cosas?
+w4,Repasemos la información clave nuevamente: Cada token vale lo que aparece en pantalla. Puedes canjear tus tokens por los regalos que trajeron los encuestadores. Por favor revisa estos detalles cuidadosamente. Tendrás otra oportunidad para responder las preguntas de comprensión.
+w5,Tus Tokens Iniciales. Se te han dado los tokens que aparecen en pantalla. Tu saldo de tokens se muestra en la esquina superior derecha. Se actualizará durante la encuesta a medida que tomes tus decisiones. Lo que te quede al final podrás pedirselo a los encuestadores.
+w6,"Las decisiones que tomarás implicarán limitar ciertas aplicaciones a 30 minutos por día en tu teléfono. Si eliges establecer un límite, y esa opción es seleccionada, entonces nuestro equipo realmente limitará la aplicación a 30 minutos por día en tu teléfono por una semana. Por lo tanto, solo debes seleccionar las opciones que realmente prefieres."
+w7,"Importante: Harás múltiples decisiones, y solo una de tus decisiones será seleccionada al azar para ser implementada. Esto significa que cada pregunta debe ser tratada independientemente, y para cada decisión, debes dar tu respuesta honesta."
+w8,Ahora te haremos algunas preguntas para ver qué tan dispuesto estarías a limitar el app que ves en pantalla a 30 minutos por día por 1 semana en tu teléfono.
+w9,Seleccionando aleatoriamente una de tus decisiones...Aquí están todas las decisiones que tomaste. Haz clic abajo para seleccionar aleatoriamente una para implementar.
+w10,¡Gracias! Has completado la encuesta. Tus respuestas han sido registradas. Nuestro equipo te contactará sobre la implementación de tu decisión seleccionada (límite de aplicación o tokens) y el canje de tus tokens por los regalos.

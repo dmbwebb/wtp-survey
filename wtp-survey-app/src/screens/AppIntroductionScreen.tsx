@@ -5,6 +5,8 @@ import tiktokLogo from '../assets/tiktok-logo.png';
 import whatsappLogo from '../assets/whatsapp-logo.png';
 import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
+import { AudioPlayer } from '../components/AudioPlayer';
+import audioW8 from '../assets/audio_files/w8.mp3';
 
 interface AppIntroductionScreenProps {
   app: string;
@@ -29,9 +31,12 @@ export const AppIntroductionScreen: React.FC<AppIntroductionScreenProps> = ({ ap
             alt={`${app} logo`}
             className="w-24 h-24 mb-6 object-contain"
           />
-          <h1 className="text-3xl font-bold text-gray-900 text-center">
-            {t('appIntroduction.title', language)} {app}
-          </h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-gray-900 text-center">
+              {t('appIntroduction.title', language)} {app}
+            </h1>
+            <AudioPlayer audioSrc={audioW8} />
+          </div>
         </div>
         <div className="space-y-4 text-gray-700 text-lg leading-relaxed mb-8">
           <p className="text-center">
