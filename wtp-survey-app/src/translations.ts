@@ -168,8 +168,8 @@ export const translations = {
       es: 'Las decisiones que tomarás implicarán limitar ciertas aplicaciones a 30 minutos por día en tu teléfono.'
     },
     paragraph2: {
-      en: 'If you choose to set a limit, and that option is chosen, then our team will actually limit the app to 30 minutes per day on your phone for one week later today, and set a password so you cannot change it.',
-      es: 'Si eliges establecer un límite, y esa opción es seleccionada, entonces nuestro equipo realmente limitará la aplicación a 30 minutos por día en tu teléfono por una semana más tarde hoy, y pondrá una contraseña para que no puedas cambiarlo.'
+      en: 'If you choose to set a limit, and that option is chosen, then our team will actually limit the app to 30 minutes per day on your phone for one week. So you should only select the options that you really prefer.',
+      es: 'Si eliges establecer un límite, y esa opción es seleccionada, entonces nuestro equipo realmente limitará la aplicación a 30 minutos por día en tu teléfono por una semana. Por lo tanto, solo debes seleccionar las opciones que realmente prefieres.'
     },
     paragraph3: {
       en: 'So you should only select the options that you really prefer.',
