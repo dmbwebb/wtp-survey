@@ -5,6 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { t } from '../translations';
 import { AudioPlayer } from '../components/AudioPlayer';
 import audioW10 from '../assets/audio_files/w10.mp3';
+import { TOKEN_VALUE_COP } from '../types/survey';
 
 interface ThankYouScreenProps {
   onStartNewSurvey: () => void;
@@ -30,6 +31,9 @@ export const ThankYouScreen: React.FC<ThankYouScreenProps> = ({ onStartNewSurvey
     onStartNewSurvey();
   };
 
+  const selectedChoice = surveyData.selectedChoice;
+  const willLimit = selectedChoice?.selectedOption === 'limit';
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-8 text-center">
@@ -43,6 +47,40 @@ export const ThankYouScreen: React.FC<ThankYouScreenProps> = ({ onStartNewSurvey
         <p className="text-xl text-gray-700 mb-6">
           {t('thankYou.completed', language)}
         </p>
+
+        {/* Show results summary */}
+        {selectedChoice && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6 text-left">
+            <h2 className="text-lg font-semibold text-gray-900 mb-3 text-center">
+              {t('results.title', language)}
+            </h2>
+            {willLimit ? (
+              <div className="space-y-2">
+                <p className="text-gray-700">
+                  <strong>{selectedChoice.app}</strong> {t('results.limitMessage1', language)} {t('results.limitMessage2', language)}
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-gray-700">
+                  {t('results.tokenMessage1', language)} <strong>{selectedChoice.tokenAmount >= 0 ? `${t('results.receive', language)} ${selectedChoice.tokenAmount} ${t('results.tokens', language)}` : `${t('results.pay', language)} ${Math.abs(selectedChoice.tokenAmount)} ${t('results.tokens', language)}`}</strong>.
+                </p>
+                <p className="text-gray-700">
+                  {selectedChoice.app} {t('results.willNotBeLimited', language)}
+                </p>
+              </div>
+            )}
+            <div className="mt-4 pt-4 border-t border-blue-200">
+              <p className="text-gray-700">
+                <strong>{t('results.finalTokenBalance', language)}:</strong> {surveyData.tokenBalance} {t('results.tokens', language)}
+              </p>
+              <p className="text-gray-600 text-sm mt-1">
+                (${(surveyData.tokenBalance * TOKEN_VALUE_COP).toLocaleString()} COP)
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">
           <p className="text-gray-700 mb-2">
             {t('thankYou.recorded', language)}
