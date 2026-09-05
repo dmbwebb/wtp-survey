@@ -410,7 +410,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /surveys/{surveyId} {
       allow create: if request.auth != null;
-      allow read: if request.auth != null;
+      allow get, list: if false; // Survey records are never readable by clients
       allow update: if request.auth != null &&
                        resource.data.deviceId == request.resource.data.deviceId;
       allow delete: if false; // Prevent accidental deletion
