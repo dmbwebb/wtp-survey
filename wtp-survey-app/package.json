@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test:firestore-rules": "npm --prefix tests/firestore-rules test",
     "preview": "vite preview",
     "test:console": "node tests/check-console-errors.cjs",
     "predeploy": "npm run build",
